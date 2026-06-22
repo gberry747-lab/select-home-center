@@ -1,0 +1,311 @@
+/* ============================================================
+   Select Home Center — Stylesheet
+   Brand: Navy (#101a7a) + warm gold CTA + lavender-grays
+   ============================================================ */
+
+:root{
+  --navy:#101a7a;
+  --navy-2:#313a8d;
+  --ink:#0f1535;
+  --gray:#565c77;
+  --line:#d8dcec;
+  --bg-soft:#f4f6fb;
+  --lav:#d1d5e4;
+  --gold:#f5a623;
+  --gold-dk:#e08c00;
+  --green:#1f9d57;
+  --white:#ffffff;
+  --shadow:0 10px 30px rgba(16,26,122,.10);
+  --shadow-lg:0 24px 60px rgba(16,26,122,.18);
+  --radius:14px;
+  --radius-sm:10px;
+  --maxw:1200px;
+  --header-h:78px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{
+  font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  color:var(--ink);
+  line-height:1.6;
+  background:var(--white);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4{font-family:'Montserrat',var(--navy),sans-serif;line-height:1.15;color:var(--navy);font-weight:800;letter-spacing:-.01em}
+h1{font-size:clamp(2.1rem,5vw,3.6rem)}
+h2{font-size:clamp(1.7rem,3.6vw,2.6rem)}
+h3{font-size:1.25rem}
+p{color:var(--gray)}
+a{color:var(--navy);text-decoration:none}
+img{max-width:100%;display:block}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+section{padding:72px 0}
+.eyebrow{display:inline-block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:12px}
+.section-head{text-align:center;max-width:720px;margin:0 auto 48px}
+.section-head p{font-size:1.08rem;margin-top:14px}
+.center{text-align:center}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:1rem;padding:15px 28px;border-radius:50px;border:2px solid transparent;cursor:pointer;transition:.2s;white-space:nowrap}
+.btn-gold{background:var(--gold);color:#3a2a00;box-shadow:0 8px 22px rgba(245,166,35,.4)}
+.btn-gold:hover{background:var(--gold-dk);color:#fff;transform:translateY(-2px)}
+.btn-navy{background:var(--navy);color:#fff}
+.btn-navy:hover{background:var(--navy-2);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.7)}
+.btn-outline:hover{background:#fff;color:var(--navy)}
+.btn-ghost{background:#fff;color:var(--navy);border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--navy);transform:translateY(-2px)}
+.btn-lg{padding:17px 34px;font-size:1.08rem}
+.btn svg{width:18px;height:18px}
+
+/* ---------- Header ---------- */
+.header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:.3s;background:transparent}
+.header.scrolled{background:#fff;box-shadow:0 4px 20px rgba(16,26,122,.08)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:var(--header-h)}
+.logo{display:flex;align-items:center;gap:10px}
+.logo img{height:46px;width:auto;transition:.3s}
+.logo-badge{background:#fff;padding:6px 10px;border-radius:10px;box-shadow:var(--shadow)}
+.header.scrolled .logo-badge{box-shadow:none;padding:0}
+.nav-links{display:flex;align-items:center;gap:30px;list-style:none}
+.nav-links a{font-family:'Montserrat',sans-serif;font-weight:600;font-size:.97rem;color:#fff;transition:.2s}
+.header.scrolled .nav-links a{color:var(--navy)}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{display:flex;align-items:center;gap:14px}
+.phone-link{display:flex;align-items:center;gap:8px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;color:#fff}
+.header.scrolled .phone-link{color:var(--navy)}
+.phone-link svg{width:20px;height:20px}
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
+.hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:3px;margin:5px 0;transition:.3s}
+.header.scrolled .hamburger span{background:var(--navy)}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;color:#fff;padding-top:var(--header-h)}
+.hero-bg{position:absolute;inset:0;z-index:-2;background:url('../assets/img/hero-home.jpg') center/cover no-repeat}
+.hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,rgba(16,26,122,.88) 0%,rgba(16,26,122,.62) 45%,rgba(15,21,53,.35) 100%)}
+.hero-inner{max-width:680px;padding:40px 0}
+.hero h1{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.25)}
+.hero h1 .accent{color:var(--gold)}
+.hero-sub{font-size:1.2rem;color:rgba(255,255,255,.92);margin:22px 0 10px;max-width:560px}
+.hero-warranty{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.25);padding:10px 18px;border-radius:50px;font-weight:600;margin:18px 0 26px;font-size:.98rem}
+.hero-warranty svg{width:22px;height:22px;color:var(--gold)}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px}
+.hero-trust{display:flex;flex-wrap:wrap;gap:24px;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.2)}
+.hero-trust div{display:flex;align-items:center;gap:9px;font-size:.94rem;font-weight:600}
+.hero-trust svg{width:20px;height:20px;color:var(--gold);flex-shrink:0}
+
+/* ---------- Stat bar ---------- */
+.statbar{background:var(--navy);color:#fff;padding:0}
+.statbar .container{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{text-align:center;padding:30px 16px;border-right:1px solid rgba(255,255,255,.12)}
+.stat:last-child{border-right:none}
+.stat .num{font-family:'Montserrat',sans-serif;font-weight:800;font-size:2rem;color:var(--gold)}
+.stat .lbl{font-size:.9rem;color:rgba(255,255,255,.85);margin-top:4px}
+
+/* ---------- Value pillars ---------- */
+.pillars{background:var(--bg-soft)}
+.pillar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.pillar{background:#fff;border-radius:var(--radius);padding:36px 30px;box-shadow:var(--shadow);border:1px solid var(--line);transition:.25s}
+.pillar:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.pillar .ico{width:62px;height:62px;border-radius:16px;background:linear-gradient(135deg,var(--navy),var(--navy-2));display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.pillar .ico svg{width:30px;height:30px;color:var(--gold)}
+.pillar h3{margin-bottom:10px}
+
+/* ---------- Featured homes ---------- */
+.home-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.home-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);transition:.25s;display:flex;flex-direction:column}
+.home-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+.home-card .img{position:relative;aspect-ratio:4/3;overflow:hidden}
+.home-card .img img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.home-card:hover .img img{transform:scale(1.06)}
+.home-card .badge{position:absolute;top:14px;left:14px;background:var(--gold);color:#3a2a00;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.74rem;padding:6px 12px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em}
+.home-card .body{padding:22px;display:flex;flex-direction:column;flex:1}
+.home-card .mfr{font-size:.8rem;font-weight:700;color:var(--gold-dk);text-transform:uppercase;letter-spacing:.06em}
+.home-card h3{margin:4px 0 12px}
+.home-specs{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
+.home-specs span{display:flex;align-items:center;gap:6px;font-size:.9rem;color:var(--gray);font-weight:600}
+.home-specs svg{width:17px;height:17px;color:var(--navy)}
+.home-card .price{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--navy);font-size:1.15rem;margin-top:auto}
+.home-card .price small{display:block;font-size:.78rem;color:var(--gray);font-weight:500}
+.home-card .card-btn{margin-top:16px}
+.home-card .card-btn a{display:block;text-align:center;background:var(--bg-soft);color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:700;padding:12px;border-radius:50px;transition:.2s}
+.home-card .card-btn a:hover{background:var(--navy);color:#fff}
+
+/* ---------- Warranty band ---------- */
+.warranty{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff}
+.warranty h2{color:#fff}
+.warranty .wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.warranty .lead{font-size:1.12rem;color:rgba(255,255,255,.9);margin:16px 0 28px}
+.warranty-items{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.warranty-item{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:18px;border-radius:var(--radius-sm)}
+.warranty-item svg{width:30px;height:30px;color:var(--gold);flex-shrink:0}
+.warranty-item b{font-family:'Montserrat',sans-serif;font-size:.98rem;display:block}
+.warranty-seal{text-align:center}
+.warranty-seal .seal{display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:230px;height:230px;border-radius:50%;background:rgba(255,255,255,.1);border:3px dashed var(--gold);padding:20px}
+.warranty-seal .seal .big{font-family:'Montserrat',sans-serif;font-weight:800;font-size:2.6rem;color:var(--gold);line-height:1}
+.warranty-seal .seal .sm{margin-top:8px;font-weight:600}
+
+/* ---------- Financing ---------- */
+.financing .wrap{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+.fin-card{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:40px}
+.fin-list{list-style:none;margin:22px 0}
+.fin-list li{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;font-size:1.02rem;color:var(--ink)}
+.fin-list svg{width:24px;height:24px;color:var(--green);flex-shrink:0;margin-top:1px}
+.lender-note{font-size:.9rem;color:var(--gray);margin-top:18px}
+
+/* ---------- Manufacturers ---------- */
+.mfrs{background:var(--bg-soft)}
+.mfr-strip{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:18px;margin-top:10px}
+.mfr-chip{background:#fff;border:1px solid var(--line);border-radius:50px;padding:16px 34px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.15rem;color:var(--navy);box-shadow:var(--shadow)}
+
+/* ---------- Gallery ---------- */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.gallery-grid a{border-radius:var(--radius-sm);overflow:hidden;aspect-ratio:1;box-shadow:var(--shadow)}
+.gallery-grid img{width:100%;height:100%;object-fit:cover;transition:.4s}
+.gallery-grid a:hover img{transform:scale(1.08)}
+
+/* ---------- Reviews ---------- */
+.reviews{background:var(--bg-soft)}
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:36px}
+.review{background:#fff;border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);border:1px solid var(--line)}
+.stars{color:var(--gold);font-size:1.2rem;letter-spacing:2px;margin-bottom:12px}
+.review p{color:var(--ink);font-style:italic;margin-bottom:16px}
+.review .who{font-family:'Montserrat',sans-serif;font-weight:700;color:var(--navy);font-size:.95rem}
+.review .ph{color:var(--gray);font-style:normal;font-size:.92rem}
+
+/* ---------- CTA / Lead form ---------- */
+.lead{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff}
+.lead .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:50px;align-items:center}
+.lead h2{color:#fff}
+.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-top:16px}
+.lead-points{list-style:none;margin-top:24px}
+.lead-points li{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-weight:600}
+.lead-points svg{width:22px;height:22px;color:var(--gold)}
+.lead-phone{margin-top:28px;font-size:1.1rem}
+.lead-phone a{color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.5rem}
+.form-card{background:#fff;border-radius:var(--radius);padding:36px;box-shadow:var(--shadow-lg)}
+.form-card h3{font-size:1.5rem;margin-bottom:6px}
+.form-card .sub{color:var(--gray);margin-bottom:22px;font-size:.96rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:.86rem;font-weight:600;color:var(--ink);margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.field input,.field select,.field textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:.98rem;color:var(--ink);transition:.2s;background:#fff}
+.field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(16,26,122,.1)}
+.field textarea{resize:vertical;min-height:84px}
+.hp{position:absolute;left:-9999px}
+.form-note{font-size:.82rem;color:var(--gray);text-align:center;margin-top:12px}
+.form-card .btn{width:100%;justify-content:center}
+
+/* ---------- Service area ---------- */
+.area .wrap{display:grid;grid-template-columns:1fr 1fr;gap:46px;align-items:center}
+.area-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.area-list span{background:var(--bg-soft);border:1px solid var(--line);border-radius:50px;padding:9px 18px;font-weight:600;font-size:.92rem;color:var(--navy)}
+.map-embed{border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line);min-height:340px}
+.map-embed iframe{width:100%;height:100%;min-height:340px;border:0;display:block}
+
+/* ---------- Footer ---------- */
+.footer{background:var(--ink);color:rgba(255,255,255,.78);padding:60px 0 26px}
+.footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.2fr;gap:36px;margin-bottom:40px}
+.footer h4{color:#fff;font-size:1rem;margin-bottom:18px;text-transform:uppercase;letter-spacing:.06em}
+.footer .flogo{background:#fff;display:inline-block;padding:12px 16px;border-radius:12px;margin-bottom:16px}
+.footer .flogo img{height:44px}
+.footer ul{list-style:none}
+.footer ul li{margin-bottom:10px}
+.footer a{color:rgba(255,255,255,.78);transition:.2s}
+.footer a:hover{color:var(--gold)}
+.footer .contact-line{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.footer .contact-line svg{width:18px;height:18px;color:var(--gold);flex-shrink:0;margin-top:3px}
+.social{display:flex;gap:12px;margin-top:8px}
+.social a{width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;transition:.2s}
+.social a:hover{background:var(--gold)}
+.social svg{width:19px;height:19px;color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.12);padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.85rem}
+.habla{display:inline-flex;align-items:center;gap:8px;background:rgba(245,166,35,.15);color:var(--gold);border-radius:50px;padding:7px 16px;font-weight:700;font-size:.85rem}
+
+/* ---------- Sticky mobile call bar ---------- */
+.mobile-call{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:var(--gold);box-shadow:0 -4px 20px rgba(0,0,0,.15)}
+.mobile-call a{display:flex;align-items:center;justify-content:center;gap:10px;padding:15px;color:#3a2a00;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.1rem}
+.mobile-call svg{width:22px;height:22px}
+
+/* ---------- Page hero (sub-pages) ---------- */
+.page-hero{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:calc(var(--header-h) + 60px) 0 60px;text-align:center}
+.page-hero h1{color:#fff}
+.page-hero p{color:rgba(255,255,255,.9);max-width:640px;margin:14px auto 0;font-size:1.1rem}
+.breadcrumb{font-size:.88rem;color:rgba(255,255,255,.7);margin-bottom:14px}
+.breadcrumb a{color:rgba(255,255,255,.9)}
+
+/* ---------- Dropdown nav (matches live site menu) ---------- */
+.nav-links{gap:20px}
+.nav-links > li > a{font-size:.92rem}
+.has-dropdown{position:relative}
+.dropdown-toggle{display:inline-flex;align-items:center;gap:5px;cursor:pointer}
+.dropdown-toggle .car{font-size:.7em;opacity:.8}
+.dropdown{position:absolute;top:calc(100% + 14px);left:50%;transform:translateX(-50%);background:#fff;border-radius:12px;box-shadow:var(--shadow-lg);padding:10px;list-style:none;min-width:210px;opacity:0;visibility:hidden;transition:.2s;border:1px solid var(--line)}
+.has-dropdown:hover .dropdown{opacity:1;visibility:visible;top:calc(100% + 6px)}
+.dropdown::before{content:"";position:absolute;top:-16px;left:0;right:0;height:16px}
+.dropdown li a{display:block;padding:11px 14px;border-radius:8px;color:var(--navy) !important;font-size:.92rem;font-weight:600}
+.dropdown li a:hover{background:var(--bg-soft)}
+
+/* ---------- Image placeholder (models awaiting current photos) ---------- */
+.ph-img{position:absolute;inset:0;background:linear-gradient(135deg,var(--navy),var(--navy-2));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:rgba(255,255,255,.92);text-align:center;padding:16px}
+.ph-img svg{width:44px;height:44px;color:var(--gold);opacity:.9}
+.ph-img span{font-size:.8rem;font-weight:600;line-height:1.35}
+
+/* ---------- Floor-plan tables ---------- */
+.included-bar{background:#fff;border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:18px 22px;margin:0 auto 40px;max-width:920px;font-size:.95rem;color:var(--ink)}
+.included-bar b{color:var(--navy);font-family:'Montserrat',sans-serif}
+.plan-series{margin-bottom:42px}
+.plan-series h3{font-size:1.35rem;margin-bottom:18px;padding-bottom:8px;border-bottom:3px solid var(--gold);display:inline-block}
+.plan-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--line)}
+.plan-table th{background:var(--navy);color:#fff;text-align:left;padding:13px 16px;font-family:'Montserrat',sans-serif;font-size:.82rem;letter-spacing:.03em;font-weight:700}
+.plan-table td{padding:12px 16px;border-top:1px solid var(--line);font-size:.93rem;color:var(--ink)}
+.plan-table tr:nth-child(even) td{background:var(--bg-soft)}
+.plan-table .model{font-weight:700;color:var(--navy);font-family:'Montserrat',sans-serif}
+.plan-table .mnum{font-size:.82rem;color:var(--gray)}
+
+/* ---------- Realtor card ---------- */
+.realtor-card{display:flex;gap:24px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);max-width:700px;margin:0 auto;flex-wrap:wrap}
+.realtor-card .avatar{width:92px;height:92px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--navy-2));display:flex;align-items:center;justify-content:center;color:var(--gold);font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.9rem;flex-shrink:0}
+.realtor-card .rc-body{flex:1;min-width:240px}
+.realtor-card h3{margin-bottom:4px}
+
+/* ---------- Contact layout ---------- */
+.contact-wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:46px;align-items:start}
+.info-card{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:30px}
+.info-card .row{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
+.info-card .row svg{width:22px;height:22px;color:var(--navy);flex-shrink:0;margin-top:2px}
+.info-card .row b{font-family:'Montserrat',sans-serif;color:var(--navy)}
+
+/* ---------- Responsive ---------- */
+@media(max-width:980px){
+  .contact-wrap{grid-template-columns:1fr;gap:30px}
+  .warranty .wrap,.financing .wrap,.lead .wrap,.area .wrap{grid-template-columns:1fr;gap:34px}
+  .home-grid,.pillar-grid,.review-grid{grid-template-columns:repeat(2,1fr)}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .warranty-seal{order:-1}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  section{padding:54px 0}
+  .nav-links,.nav-cta .phone-link span{display:none}
+  .nav-links.open{display:flex;position:absolute;top:var(--header-h);left:0;right:0;flex-direction:column;background:#fff;padding:22px;gap:16px;box-shadow:var(--shadow-lg);max-height:80vh;overflow-y:auto}
+  .nav-links.open a{color:var(--navy);font-size:1.05rem}
+  .dropdown{position:static;transform:none;opacity:1;visibility:visible;box-shadow:none;border:none;padding:6px 0 0 16px;min-width:0}
+  .dropdown::before{display:none}
+  .dropdown li a{font-size:.98rem;padding:7px 0}
+  .plan-table thead{display:none}
+  .plan-table,.plan-table tbody,.plan-table tr,.plan-table td{display:block;width:100%}
+  .plan-table tr{margin-bottom:14px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .plan-table td{border-top:none}
+  .plan-table td::before{content:attr(data-l)": ";font-weight:700;color:var(--navy)}
+  .hamburger{display:block}
+  .statbar .container{grid-template-columns:1fr 1fr}
+  .stat{border-bottom:1px solid rgba(255,255,255,.12)}
+  .stat:nth-child(odd){border-right:1px solid rgba(255,255,255,.12)}
+  .stat:nth-child(even){border-right:none}
+  .home-grid,.pillar-grid,.review-grid,.warranty-items,.form-row,.footer-grid{grid-template-columns:1fr}
+  .hero{min-height:auto;padding-bottom:60px}
+  .mobile-call{display:block}
+  body{padding-bottom:54px}
+  .hero-trust{gap:14px}
+}
