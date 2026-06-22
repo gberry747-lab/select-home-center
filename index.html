@@ -233,8 +233,16 @@
   </div>
 </section>
 
-<!-- ===== REVIEWS =====
-     TODO (Gregory): replace the 3 SAMPLE reviews with REAL Google reviews before publishing. Never publish fabricated reviews. -->
+<!-- ===== REVIEWS — LIVE GOOGLE REVIEWS via Featurable (free, auto-updating, 5-star filtered) =====
+     ONE-TIME SETUP (~5 min):
+       1) featurable.com  →  create a free account (no card)
+       2) "Sign in with Google" (read-only access)
+       3) select "Select Home Center"
+       4) choose a layout (grid or carousel)
+       5) Filters → set MINIMUM rating = 5 stars, and enable the rating/summary header
+       6) Generate embed → copy YOUR <div id="featurable-..."> + <script>
+       7) Replace the placeholder block below (the <div id="featurable-WIDGET_ID"> and the featurable <script>) with what Featurable gives you.
+     No fabricated reviews are on this site — only your real Google reviews show once connected. -->
 <section class="reviews" id="reviews">
   <div class="container">
     <div class="section-head">
@@ -243,12 +251,13 @@
       <img src="assets/img/star-ratings.png" alt="5-star rated" style="height:50px;display:block;margin:12px auto 0">
       <p>Real reviews from real neighbors across Southeast Georgia and Northeast Florida.</p>
     </div>
-    <div class="review-grid">
-      <div class="review"><div class="stars">★★★★★</div><p>"[Sample — replace with a real Google review.] They made buying our first home so easy and never pressured us."</p><div class="who">Customer Name <span class="ph">· Verified Buyer</span></div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>"[Sample — replace with a real Google review.] Honest, friendly, and the lifetime warranty gave us real peace of mind."</p><div class="who">Customer Name <span class="ph">· Verified Buyer</span></div></div>
-      <div class="review"><div class="stars">★★★★★</div><p>"[Sample — replace with a real Google review.] They handled delivery and setup and everything was perfect."</p><div class="who">Customer Name <span class="ph">· Verified Buyer</span></div></div>
+    <!-- Featurable live Google Reviews widget (replace the div id + script below with YOUR generated embed) -->
+    <div id="featurable-WIDGET_ID" data-featurable-async>
+      <!-- Fallback shown until the real Featurable widget ID is pasted in: -->
+      <p style="text-align:center;color:var(--gray);max-width:620px;margin:0 auto">We're proud of the families we've helped across Southeast Georgia &amp; Northeast Florida — read their reviews on Google below.</p>
     </div>
-    <div class="center"><a href="https://www.google.com/search?q=Select+Home+Center+Folkston+GA+reviews" target="_blank" class="btn btn-ghost btn-lg">Read Our Google Reviews</a></div>
+    <script src="https://featurable.com/assets/js/widget.js" async></script>
+    <div class="center" style="margin-top:30px"><a href="https://www.google.com/search?q=Select+Home+Center+Folkston+GA+reviews" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">Read Our Google Reviews</a></div>
   </div>
 </section>
 
