@@ -90,7 +90,7 @@ section{padding:72px 0}
 .hero-warranty{display:inline-flex;align-items:center;gap:10px;background:rgba(16,26,122,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.42);padding:11px 20px;border-radius:50px;font-weight:600;margin:18px 0 26px;font-size:.98rem;color:#fff;text-decoration:none;cursor:pointer;transition:.2s;box-shadow:0 6px 20px rgba(8,10,30,.25)}
 a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,255,.65);transform:translateY(-1px)}
 .hero-warranty svg{width:22px;height:22px;color:var(--gold)}
-.hero-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:22px}
 .hero-trust{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.2)}
 .hero-trust div{display:flex;align-items:center;gap:9px;font-size:.94rem;font-weight:600}
 .hero-trust svg{width:20px;height:20px;color:var(--gold);flex-shrink:0}
