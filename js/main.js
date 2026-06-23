@@ -1,4 +1,4 @@
-/* Select Home Center — site interactions */
+/* Select Home Center - site interactions */
 (function () {
   'use strict';
 
@@ -23,14 +23,14 @@
     });
   }
 
-  // Lead form — AJAX submit to Formspree with an inline success message (no page redirect).
+  // Lead form - AJAX submit to Formspree with an inline success message (no page redirect).
   var form = document.getElementById('leadForm');
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var action = form.getAttribute('action') || '';
       if (action.indexOf('YOUR_FORM_ID') !== -1) {
-        alert('Thanks! Please call or text us at 912-208-6065 — our online form is being finalized.');
+        alert('Thanks! Please call or text us at 912-208-6065. Our online form is being finalized.');
         return;
       }
       var btn = form.querySelector('button[type="submit"]');
@@ -45,7 +45,7 @@
         })
         .catch(function () {
           if (btn) { btn.textContent = orig; btn.disabled = false; }
-          alert('Sorry — something went wrong sending your request. Please call or text 912-208-6065 and we\'ll help right away.');
+          alert('Sorry, something went wrong sending your request. Please call or text 912-208-6065 and we\'ll help right away.');
         });
     });
   }

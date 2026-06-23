@@ -1,4 +1,4 @@
-/* Select Home Center — model photo lightbox */
+/* Select Home Center - model photo lightbox */
 (function () {
   'use strict';
   var grid = document.querySelector('.gal-grid');
