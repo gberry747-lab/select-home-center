@@ -40,6 +40,7 @@ p{color:var(--gray)}
 a{color:var(--navy);text-decoration:none}
 img{max-width:100%;display:block}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.wrap>*{min-width:0}
 section{padding:72px 0}
 .eyebrow{display:inline-block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:12px}
 .section-head{text-align:center;max-width:720px;margin:0 auto 48px}
