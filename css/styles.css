@@ -84,7 +84,7 @@ section{padding:72px 0}
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;color:#fff;padding-top:var(--header-h)}
 .hero-bg{position:absolute;inset:0;z-index:-2;background:url('../assets/img/hero-home.jpg') center/cover no-repeat}
 .hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,rgba(16,26,122,.88) 0%,rgba(16,26,122,.62) 45%,rgba(15,21,53,.35) 100%)}
-.hero-inner{max-width:840px;padding:40px 0;margin:0 auto;text-align:center}
+.hero-inner{max-width:840px;padding:40px 22px;margin:0 auto;text-align:center}
 .hero h1{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.25)}
 .hero h1 .accent{color:var(--gold)}
 .hero-sub{font-size:1.2rem;color:rgba(255,255,255,.92);margin:22px auto 10px;max-width:650px}
@@ -308,6 +308,8 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
   .home-grid,.pillar-grid,.review-grid,.warranty-items,.form-row,.footer-grid{grid-template-columns:1fr}
   .hero{min-height:auto;padding-bottom:60px}
   .hero-btns{margin-top:40px}
+  .btn{white-space:normal}
+  .statbar .stat{min-width:0}
   .mobile-call{display:block}
   body{padding-bottom:54px}
   .hero-trust{gap:14px}
