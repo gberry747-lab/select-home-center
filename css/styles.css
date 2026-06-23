@@ -87,7 +87,7 @@ section{padding:72px 0}
 .hero-inner{max-width:840px;padding:40px 22px;margin:0 auto;text-align:center}
 .hero h1{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.25)}
 .hero h1 .accent{color:var(--gold)}
-.hero-sub{font-size:1.2rem;color:rgba(255,255,255,.92);margin:22px auto 10px;max-width:650px}
+.hero-sub{font-size:1.2rem;color:rgba(255,255,255,.92);margin:2in auto 10px;max-width:650px}
 .hero-warranty{display:inline-flex;align-items:center;gap:10px;background:rgba(16,26,122,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.42);padding:11px 20px;border-radius:50px;font-weight:600;margin:18px 0 26px;font-size:.98rem;color:#fff;text-decoration:none;cursor:pointer;transition:.2s;box-shadow:0 6px 20px rgba(8,10,30,.25)}
 a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,255,.65);transform:translateY(-1px)}
 .hero-warranty svg{width:22px;height:22px;color:var(--gold)}
@@ -167,7 +167,7 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
 .gallery-grid a:hover img{transform:scale(1.08)}
 
 /* ---------- Reviews ---------- */
-.reviews{background:var(--bg-soft)}
+.reviews{background:var(--bg-soft);overflow-x:clip}
 .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:36px}
 .review{background:#fff;border-radius:var(--radius);padding:30px;box-shadow:var(--shadow);border:1px solid var(--line)}
 .stars{color:var(--gold);font-size:1.2rem;letter-spacing:2px;margin-bottom:12px}
@@ -307,6 +307,7 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
   .stat:nth-child(even){border-right:none}
   .home-grid,.pillar-grid,.review-grid,.warranty-items,.form-row,.footer-grid{grid-template-columns:1fr}
   .hero{min-height:auto;padding-bottom:60px}
+  .hero-sub{margin-top:40px}
   .hero-btns{margin-top:40px}
   .btn{white-space:normal}
   .statbar .stat{min-width:0}
