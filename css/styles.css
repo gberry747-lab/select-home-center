@@ -85,13 +85,13 @@ section{padding:72px 0}
 .hero-bg{position:absolute;inset:0;z-index:-2;background:url('../assets/img/hero-home.jpg') center/cover no-repeat}
 .hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,rgba(16,26,122,.88) 0%,rgba(16,26,122,.62) 45%,rgba(15,21,53,.35) 100%)}
 .hero-inner{max-width:840px;padding:40px 0;margin:0 auto;text-align:center}
-.hero h1{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.25);transform:translateY(-70px)}
+.hero h1{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.25)}
 .hero h1 .accent{color:var(--gold)}
 .hero-sub{font-size:1.2rem;color:rgba(255,255,255,.92);margin:22px auto 10px;max-width:650px}
 .hero-warranty{display:inline-flex;align-items:center;gap:10px;background:rgba(16,26,122,.62);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.42);padding:11px 20px;border-radius:50px;font-weight:600;margin:18px 0 26px;font-size:.98rem;color:#fff;text-decoration:none;cursor:pointer;transition:.2s;box-shadow:0 6px 20px rgba(8,10,30,.25)}
 a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,255,.65);transform:translateY(-1px)}
 .hero-warranty svg{width:22px;height:22px;color:var(--gold)}
-.hero-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:22px}
+.hero-btns{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:2in}
 .hero-trust{display:flex;flex-wrap:wrap;gap:24px;justify-content:center;margin-top:34px;padding-top:26px;border-top:1px solid rgba(255,255,255,.2)}
 .hero-trust div{display:flex;align-items:center;gap:9px;font-size:.94rem;font-weight:600}
 .hero-trust svg{width:20px;height:20px;color:var(--gold);flex-shrink:0}
@@ -307,7 +307,7 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
   .stat:nth-child(even){border-right:none}
   .home-grid,.pillar-grid,.review-grid,.warranty-items,.form-row,.footer-grid{grid-template-columns:1fr}
   .hero{min-height:auto;padding-bottom:60px}
-  .hero h1{transform:none}
+  .hero-btns{margin-top:40px}
   .mobile-call{display:block}
   body{padding-bottom:54px}
   .hero-trust{gap:14px}
