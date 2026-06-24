@@ -13,7 +13,6 @@
   --lav:#d1d5e4;
   --gold:#f5a623;
   --gold-dk:#e08c00;
-  --gold-text:#8a6d00;
   --green:#1f9d57;
   --white:#ffffff;
   --shadow:0 10px 30px rgba(16,26,122,.10);
@@ -43,7 +42,7 @@ img{max-width:100%;display:block}
 .container{max-width:var(--maxw);margin:0 auto;padding:0 22px}
 .wrap>*{min-width:0}
 section{padding:72px 0}
-.eyebrow{display:inline-block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-text);margin-bottom:12px}
+.eyebrow{display:inline-block;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:12px}
 .section-head{text-align:center;max-width:720px;margin:0 auto 48px}
 .section-head p{font-size:1.08rem;margin-top:14px}
 .center{text-align:center}
@@ -123,7 +122,7 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
 .home-card:hover .img img{transform:scale(1.06)}
 .home-card .badge{position:absolute;top:14px;left:14px;background:var(--gold);color:#3a2a00;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.74rem;padding:6px 12px;border-radius:50px;text-transform:uppercase;letter-spacing:.05em}
 .home-card .body{padding:22px;display:flex;flex-direction:column;flex:1}
-.home-card .mfr{font-size:.8rem;font-weight:700;color:var(--gold-text);text-transform:uppercase;letter-spacing:.06em}
+.home-card .mfr{font-size:.8rem;font-weight:700;color:var(--gold-dk);text-transform:uppercase;letter-spacing:.06em}
 .home-card h3{margin:4px 0 12px}
 .home-specs{display:flex;gap:16px;margin-bottom:16px;flex-wrap:wrap}
 .home-specs span{display:flex;align-items:center;gap:6px;font-size:.9rem;color:var(--gray);font-weight:600}
