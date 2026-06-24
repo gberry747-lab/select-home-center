@@ -5,22 +5,25 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Select Home Center | New Manufactured Homes in Folkston, GA</title>
 <meta name="description" content="New manufactured & mobile homes in Folkston, GA from Clayton & Scotbilt. Every new home includes a FREE Lifetime Home Warranty + delivery, A/C, steps & skirting. Financing for all credit. Se Habla Español. Call 912-208-6065.">
+<meta property="og:url" content="https://selecthomecenter.com/">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Select Home Center">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="keywords" content="manufactured homes Folkston GA, mobile homes for sale Georgia, Clayton homes, Scotbilt homes, TRU homes, new mobile homes, manufactured home dealer">
 <link rel="canonical" href="https://selecthomecenter.com/">
 <meta property="og:title" content="Select Home Center | New Manufactured Homes in Folkston, GA">
 <meta property="og:description" content="Affordable, stylish new homes with a FREE Lifetime Home Warranty. Financing for all credit. Se Habla Español.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/img/hero-home.jpg">
+<meta property="og:image" content="https://selecthomecenter.com/assets/img/hero-home.jpg">
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg"><link rel="icon" type="image/png" href="assets/img/favicon.png"><link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"HomeGoodsStore","name":"Select Home Center","image":"https://selecthomecenter.com/assets/img/hero-home.jpg","telephone":"+1-912-208-6065","address":{"@type":"PostalAddress","streetAddress":"6047 Second St. N.","addressLocality":"Folkston","addressRegion":"GA","postalCode":"31537","addressCountry":"US"},"url":"https://selecthomecenter.com/","areaServed":"Southeast Georgia & Northeast Florida","priceRange":"$$","openingHours":["Mo-Fr 09:00-17:00","Sa 10:00-14:00"]}
-</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":["LocalBusiness","HomeAndConstructionBusiness"],"@id":"https://selecthomecenter.com/#business","name":"Select Home Center","image":"https://selecthomecenter.com/assets/img/hero-home.jpg","telephone":"+1-912-208-6065","email":"hello@selecthomecenter.com","address":{"@type":"PostalAddress","streetAddress":"6047 Second St. N.","addressLocality":"Folkston","addressRegion":"GA","postalCode":"31537","addressCountry":"US"},"geo":{"@type":"GeoCoordinates","latitude":30.8316,"longitude":-82.0098},"url":"https://selecthomecenter.com/","areaServed":"Southeast Georgia & Northeast Florida","priceRange":"$$","openingHours":["Mo-Fr 09:00-17:00","Sa 10:00-14:00"],"sameAs":["https://www.facebook.com/SelectHomeCenter/"],"description":"Select Home Center is a manufactured and mobile home dealer in Folkston, GA selling new Clayton and Scotbilt homes with a free lifetime home warranty, delivery, setup, and financing for all credit."}</script>
 </head>
 <body>
+<a href="#main" class="skip-link">Skip to main content</a>
 
 <!-- ===== HEADER ===== -->
 <header class="header" id="header">
@@ -30,8 +33,8 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="inventory.html">Inventory</a></li>
       <li class="has-dropdown">
-        <a class="dropdown-toggle">Floor Plans <span class="car">▾</span></a>
-        <ul class="dropdown">
+        <a class="dropdown-toggle" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="ddFloorPlans">Floor Plans <span class="car">▾</span></a>
+        <ul class="dropdown" id="ddFloorPlans">
           <li><a href="clayton-homes.html">Clayton Homes</a></li>
           <li><a href="scotbilt-homes.html">Scotbilt Homes</a></li>
         </ul>
@@ -44,13 +47,13 @@
     </ul>
     <div class="nav-cta">
       <a href="tel:9122086065" class="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>912-208-6065</span></a>
-      <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </header>
 
 <!-- ===== HERO ===== -->
-<section class="hero">
+<section id="main" tabindex="-1" class="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="container hero-inner">
@@ -88,8 +91,8 @@
   <div class="container" style="max-width:880px;text-align:center">
     <span class="eyebrow">Welcome to Select Home Center</span>
     <h2>Your Trusted Manufactured Home Dealer in Folkston, GA</h2>
-    <p style="font-size:1.12rem;margin-top:16px">Nestled in the charming town of Folkston, Georgia, Select Home Center is your ultimate destination for all your manufactured home needs. Renowned for our steadfast dedication to quality and customer satisfaction, we've proudly established ourselves as a trusted name from Glennville to Brunswick to Folkston, and all the way down to Jacksonville, Florida.</p>
-    <p style="font-size:1.12rem;margin-top:18px">We're committed to providing the highest-quality homes and helping you find the perfect fit for your lifestyle and budget. Explore an expansive selection of new manufactured homes for sale in Folkston and the surrounding areas, and let our team make your journey to homeownership seamless, honest, and stress-free. Visit us today and experience the quality and service that set us apart.</p>
+    <p style="font-size:1.12rem;margin-top:16px">Select Home Center is your ultimate destination for all your manufactured home needs. We are a family-owned, locally operated dealer here in Folkston, Georgia, and since opening our doors in early 2024 we have helped families across Southeast Georgia and Northeast Florida find a quality new home they can be proud of.</p>
+    <p style="font-size:1.12rem;margin-top:18px">We believe buying a home should be refreshingly simple: honest pricing, no pressure, and real help from your first question to move-in day. Every new home comes with our FREE Lifetime Home Warranty, plus delivery, setup, A/C, steps, and skirting included. Come see us in Folkston, or call 912-208-6065 and we will help you find the home that fits your family and your budget.</p>
   </div>
 </section>
 
@@ -106,7 +109,7 @@
       <article class="home-card"><div class="img"><span class="badge">Clayton</span><a href="clayton-snowcap.html"><picture><source srcset="assets/img/models/clayton-snowcap.webp" type="image/webp"><img src="assets/img/models/clayton-snowcap.jpg" alt="The Snowcap by Clayton Homes" loading="lazy" decoding="async"></picture></a></div><div class="body"><div class="mfr">Clayton · Epic Experience</div><h3>The Snowcap</h3><div class="home-specs"><span>4 Beds</span><span>3 Baths</span><span>2,001 sq ft</span></div><div class="price">Call for Price <small>Free Lifetime Warranty</small></div><div class="card-btn"><a href="clayton-snowcap.html">Photos &amp; Details</a></div></div></article>
       <article class="home-card"><div class="img"><span class="badge">Scotbilt</span><a href="scotbilt-magnolia-2854412.html"><picture><source srcset="assets/img/models/scotbilt-magnolia-2854412.webp" type="image/webp"><img src="assets/img/models/scotbilt-magnolia-2854412.jpg" alt="The Magnolia by Scotbilt Homes" loading="lazy" decoding="async"></picture></a></div><div class="body"><div class="mfr">Scotbilt · Magnolia Series</div><h3>The Magnolia</h3><div class="home-specs"><span>3 Beds</span><span>2 Baths</span><span>1,404 sq ft</span></div><div class="price">Call for Price <small>Free Lifetime Warranty</small></div><div class="card-btn"><a href="scotbilt-magnolia-2854412.html">Photos &amp; Details</a></div></div></article>
       <article class="home-card"><div class="img"><span class="badge">Clayton</span><a href="clayton-boone.html"><picture><source srcset="assets/img/models/clayton-boone.webp" type="image/webp"><img src="assets/img/models/clayton-boone.jpg" alt="The Boone by Clayton Homes" loading="lazy" decoding="async"></picture></a></div><div class="body"><div class="mfr">Clayton · Epic Journey</div><h3>The Boone</h3><div class="home-specs"><span>4 Beds</span><span>2 Baths</span><span>1,475 sq ft</span></div><div class="price">Call for Price <small>Free Lifetime Warranty</small></div><div class="card-btn"><a href="clayton-boone.html">Photos &amp; Details</a></div></div></article>
-      <article class="home-card"><div class="img"><span class="badge">Scotbilt</span><a href="scotbilt-freedom-2860520.html"><picture><source srcset="assets/img/models/scotbilt-freedom-2860520.webp" type="image/webp"><img src="assets/img/models/scotbilt-freedom-2860520.jpg" alt="Scotbilt Freedom 2860520" loading="lazy" decoding="async"></picture></a></div><div class="body"><div class="mfr">Scotbilt · Freedom Series</div><h3>Freedom 2860520</h3><div class="home-specs"><span>3 Beds</span><span>2 Baths</span><span>1,560 sq ft</span></div><div class="price">Call for Price <small>Free Lifetime Warranty</small></div><div class="card-btn"><a href="scotbilt-freedom-2860520.html">Photos &amp; Details</a></div></div></article>
+      <article class="home-card"><div class="img"><span class="badge">Scotbilt</span><a href="scotbilt-freedom-2860520.html"><picture><source srcset="assets/img/models/scotbilt-freedom-2860520.webp" type="image/webp"><img src="assets/img/models/scotbilt-freedom-2860520.jpg" alt="The Freedom by Scotbilt Homes" loading="lazy" decoding="async"></picture></a></div><div class="body"><div class="mfr">Scotbilt · Freedom Series</div><h3>The Freedom</h3><div class="home-specs"><span>3 Beds</span><span>2 Baths</span><span>1,560 sq ft</span></div><div class="price">Call for Price <small>Free Lifetime Warranty</small></div><div class="card-btn"><a href="scotbilt-freedom-2860520.html">Photos &amp; Details</a></div></div></article>
       <article class="home-card"><div class="img"><span class="badge">Clayton</span><a href="clayton-explorer.html"><picture><source srcset="assets/img/models/clayton-explorer.webp" type="image/webp"><img src="assets/img/models/clayton-explorer.jpg" alt="The Explorer by Clayton Homes" loading="lazy" decoding="async"></picture></a></div><div class="body"><div class="mfr">Clayton · Epic Experience</div><h3>The Explorer</h3><div class="home-specs"><span>3 Beds</span><span>2 Baths</span><span>1,475 sq ft</span></div><div class="price">Call for Price <small>Free Lifetime Warranty</small></div><div class="card-btn"><a href="clayton-explorer.html">Photos &amp; Details</a></div></div></article>
     </div>
     <div class="center" style="margin-top:42px;display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
@@ -125,7 +128,7 @@
       <p>No nickel-and-diming. Every new home from Select Home Center includes the essentials to move in with confidence.</p>
     </div>
     <div class="included-bar" style="text-align:center">
-      <b>Every new home includes:</b> Delivery &amp; setup within 100 miles · A/C &amp; heat pump · Trim-out · Steps · Metal skirting · <b style="color:var(--gold-dk)">FREE Lifetime Home Warranty</b>
+      <b>Every new home includes:</b> Delivery &amp; setup within 100 miles · A/C &amp; heat pump · Trim-out · Steps · Metal skirting · <b style="color:var(--gold-text)">FREE Lifetime Home Warranty</b>
     </div>
   </div>
 </section>
@@ -261,24 +264,24 @@
     </div>
     <div class="form-card">
       <h3>Request Your Quote</h3>
-      <p class="sub">We'll reach out within one business day.</p>
+      <p class="sub">We respond fast, usually the same business day.</p>
       <form action="https://formspree.io/f/xnjkqrlw" method="POST" id="leadForm">
         <input type="text" name="_gotcha" class="hp" tabindex="-1" autocomplete="off">
         <input type="hidden" name="_subject" value="New website lead: Select Home Center">
         <div class="form-row">
-          <div class="field"><label>First Name*</label><input type="text" name="first_name" required></div>
-          <div class="field"><label>Last Name*</label><input type="text" name="last_name" required></div>
+          <div class="field"><label for="first_name">First Name*</label><input id="first_name" type="text" name="first_name" required autocomplete="given-name"></div>
+          <div class="field"><label for="last_name">Last Name*</label><input id="last_name" type="text" name="last_name" required autocomplete="family-name"></div>
         </div>
         <div class="form-row">
-          <div class="field"><label>Phone*</label><input type="tel" name="phone" required></div>
-          <div class="field"><label>Email</label><input type="email" name="email"></div>
+          <div class="field"><label for="phone">Phone*</label><input id="phone" type="tel" name="phone" required autocomplete="tel"></div>
+          <div class="field"><label for="email">Email</label><input id="email" type="email" name="email" autocomplete="email"></div>
         </div>
         <div class="form-row">
-          <div class="field"><label>Bedrooms</label><select name="bedrooms"><option value="">Any</option><option>2 Beds</option><option>3 Beds</option><option>4+ Beds</option></select></div>
-          <div class="field"><label>Budget</label><select name="budget"><option value="">Not sure yet</option><option>Under $80k</option><option>$80k-$120k</option><option>$120k-$160k</option><option>$160k+</option></select></div>
+          <div class="field"><label for="bedrooms">Bedrooms</label><select id="bedrooms" name="bedrooms"><option value="">Any</option><option>2 Beds</option><option>3 Beds</option><option>4+ Beds</option></select></div>
+          <div class="field"><label for="budget">Budget</label><select id="budget" name="budget"><option value="">Not sure yet</option><option>Under $80k</option><option>$80k-$120k</option><option>$120k-$160k</option><option>$160k+</option></select></div>
         </div>
-        <div class="field"><label>Do you have land?</label><select name="land"><option value="">Select one</option><option>Yes, I own land</option><option>No, I need land too</option><option>I rent a lot in a community</option></select></div>
-        <div class="field"><label>Anything else?</label><textarea name="message" placeholder="Tell us what you're looking for..."></textarea></div>
+        <div class="field"><label for="land">Do you have land?</label><select id="land" name="land"><option value="">Select one</option><option>Yes, I own land</option><option>No, I need land too</option><option>I rent a lot in a community</option></select></div>
+        <div class="field"><label for="message">Anything else?</label><textarea id="message" name="message" placeholder="Tell us what you're looking for..."></textarea></div>
         <button type="submit" class="btn btn-gold btn-lg">Send My Free Quote Request</button>
         <p class="form-note">By submitting, you agree to be contacted by Select Home Center. We respect your privacy.</p>
       </form>
@@ -335,7 +338,7 @@
         <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Mon-Fri 9-5 · Sat 10-2<br>Sunday closed</span></div>
         <div class="social">
           <a href="https://www.facebook.com/SelectHomeCenter/" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          <a href="#" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
+          <a href="https://www.instagram.com/selecthomecenter/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a>
         </div>
       </div>
     </div>

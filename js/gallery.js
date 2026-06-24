@@ -1,4 +1,4 @@
-/* Select Home Center - model photo lightbox */
+/* Select Home Center - model photo lightbox (accessible) */
 (function () {
   'use strict';
   var grid = document.querySelector('.gal-grid');
@@ -9,30 +9,45 @@
 
   var lb = document.createElement('div');
   lb.className = 'lb';
+  lb.setAttribute('role', 'dialog');
+  lb.setAttribute('aria-modal', 'true');
+  lb.setAttribute('aria-label', 'Photo viewer');
   lb.innerHTML =
-    '<button class="lb-close" aria-label="Close">&times;</button>' +
-    '<button class="lb-nav lb-prev" aria-label="Previous">&#8249;</button>' +
+    '<button class="lb-close" type="button" aria-label="Close photo viewer">&times;</button>' +
+    '<button class="lb-nav lb-prev" type="button" aria-label="Previous photo">&#8249;</button>' +
     '<img alt="Home photo">' +
-    '<button class="lb-nav lb-next" aria-label="Next">&#8250;</button>' +
-    '<div class="lb-count"></div>';
+    '<button class="lb-nav lb-next" type="button" aria-label="Next photo">&#8250;</button>' +
+    '<div class="lb-count" aria-live="polite"></div>';
   document.body.appendChild(lb);
 
   var img = lb.querySelector('img');
   var count = lb.querySelector('.lb-count');
+  var closeBtn = lb.querySelector('.lb-close');
   var idx = 0;
+  var lastFocus = null;
 
   function show(i) {
     idx = (i + photos.length) % photos.length;
     img.src = photos[idx];
-    count.textContent = (idx + 1) + ' / ' + photos.length;
+    count.textContent = 'Photo ' + (idx + 1) + ' of ' + photos.length;
   }
-  function open(i) { show(i); lb.classList.add('open'); document.body.style.overflow = 'hidden'; }
-  function close() { lb.classList.remove('open'); document.body.style.overflow = ''; }
+  function open(i) {
+    lastFocus = document.activeElement;
+    show(i);
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
 
   thumbs.forEach(function (a, i) {
     a.addEventListener('click', function (e) { e.preventDefault(); open(i); });
   });
-  lb.querySelector('.lb-close').addEventListener('click', close);
+  closeBtn.addEventListener('click', close);
   lb.querySelector('.lb-prev').addEventListener('click', function () { show(idx - 1); });
   lb.querySelector('.lb-next').addEventListener('click', function () { show(idx + 1); });
   lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
