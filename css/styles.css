@@ -326,3 +326,27 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .has-dropdown.open .dropdown{opacity:1;visibility:visible;top:calc(100% + 6px)}
 #main{scroll-margin-top:90px}
+
+/* shc-content: blog articles + service-area pages */
+.article{max-width:760px;margin:0 auto;padding:54px 0 4px}
+.article .post-meta{font-family:'Montserrat',sans-serif;font-weight:700;font-size:.78rem;letter-spacing:.09em;text-transform:uppercase;color:var(--gold-dk);margin-bottom:16px}
+.article .lead{font-size:1.2rem;line-height:1.7;color:var(--gray);margin:0 0 26px}
+.article p{font-size:1.08rem;line-height:1.75;color:var(--ink);margin:0 0 20px}
+.article h2{font-size:1.5rem;margin:38px 0 14px;color:var(--navy)}
+.article h3{font-size:1.16rem;margin:26px 0 10px}
+.article ul,.article ol{margin:0 0 22px;padding-left:22px}
+.article li{font-size:1.06rem;line-height:1.7;color:var(--ink);margin-bottom:9px}
+.article a:not(.btn){color:var(--navy);font-weight:600;text-decoration:underline;text-underline-offset:2px}
+.article a:not(.btn):hover{color:var(--gold-dk)}
+.callout{background:var(--bg-soft);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:20px 24px;margin:26px 0}
+.callout p{margin-bottom:0;font-size:1.02rem}
+.callout b{color:var(--navy);font-family:'Montserrat',sans-serif}
+.article-cta{background:linear-gradient(135deg,var(--navy),var(--navy-2));border-radius:var(--radius);padding:36px 30px;text-align:center;color:#fff;margin:40px 0 6px}
+.article-cta h3{color:#fff;font-size:1.42rem;margin-bottom:10px}
+.article-cta p{color:rgba(255,255,255,.9);margin:0 auto 22px;font-size:1.05rem;max-width:520px}
+.home-card .excerpt{color:var(--gray);font-size:.97rem;line-height:1.6;margin:2px 0 0}
+.home-card .cat{font-size:.8rem;font-weight:700;color:var(--gold-dk);text-transform:uppercase;letter-spacing:.06em;font-family:'Montserrat',sans-serif}
+.svc-facts{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}
+.svc-facts .f{background:var(--bg-soft);border:1px solid var(--line);border-radius:10px;padding:14px 18px;flex:1;min-width:150px}
+.svc-facts .f b{display:block;font-family:'Montserrat',sans-serif;color:var(--navy);font-size:1.15rem}
+.svc-facts .f span{font-size:.9rem;color:var(--gray)}
