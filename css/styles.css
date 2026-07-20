@@ -60,6 +60,10 @@ section{padding:72px 0}
 .btn-lg{padding:17px 34px;font-size:1.08rem}
 .btn svg{width:18px;height:18px}
 
+/* Highlighted text: force readable colors instead of the OS accent color */
+::selection{background:var(--navy);color:#fff}
+::-moz-selection{background:var(--navy);color:#fff}
+
 /* ---------- Header ---------- */
 .header{position:fixed;top:0;left:0;right:0;z-index:1000;transition:.3s;background:transparent}
 .header.scrolled{background:#fff;box-shadow:0 4px 20px rgba(16,26,122,.08)}
@@ -176,10 +180,10 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
 .review .ph{color:var(--gray);font-style:normal;font-size:.92rem}
 
 /* ---------- CTA / Lead form ---------- */
-.lead{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff}
-.lead .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:50px;align-items:center}
-.lead h2{color:#fff}
-.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-top:16px}
+section.lead{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);color:#fff}
+section.lead .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:50px;align-items:center}
+section.lead h2{color:#fff}
+section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-top:16px}
 .lead-points{list-style:none;margin-top:24px}
 .lead-points li{display:flex;align-items:center;gap:12px;margin-bottom:14px;font-weight:600}
 .lead-points svg{width:22px;height:22px;color:var(--gold)}
@@ -230,11 +234,19 @@ a.hero-warranty:hover{background:rgba(16,26,122,.82);border-color:rgba(255,255,2
 .mobile-call svg{width:22px;height:22px}
 
 /* ---------- Page hero (sub-pages) ---------- */
-.page-hero{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:calc(var(--header-h) + 60px) 0 60px;text-align:center}
-.page-hero h1{color:#fff}
-.page-hero p{color:rgba(255,255,255,.9);max-width:640px;margin:14px auto 0;font-size:1.1rem}
-.breadcrumb{font-size:.88rem;color:rgba(255,255,255,.7);margin-bottom:14px}
-.breadcrumb a{color:rgba(255,255,255,.9)}
+.page-hero{background:linear-gradient(180deg,#fff 0%,var(--bg-soft) 100%);color:var(--ink);border-bottom:1px solid var(--line);padding:calc(var(--header-h) + 60px) 0 60px;text-align:center}
+.page-hero h1{color:var(--navy)}
+.page-hero p{color:var(--gray);max-width:640px;margin:14px auto 0;font-size:1.1rem}
+.breadcrumb{font-size:.88rem;color:var(--gray);margin-bottom:14px}
+.breadcrumb a{color:var(--navy)}
+
+/* Light page hero needs a solid header, otherwise the white nav vanishes */
+body:has(.page-hero) .header{background:#fff;box-shadow:0 4px 20px rgba(16,26,122,.08)}
+body:has(.page-hero) .logo-badge{box-shadow:none;padding:0}
+body:has(.page-hero) .nav-links a,
+body:has(.page-hero) .phone-link{color:var(--navy)}
+body:has(.page-hero) .nav-links a:hover{color:var(--gold)}
+body:has(.page-hero) .hamburger span{background:var(--navy)}
 
 /* ---------- Dropdown nav (matches live site menu) ---------- */
 .nav-links{gap:20px}
