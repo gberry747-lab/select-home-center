@@ -234,19 +234,11 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
 .mobile-call svg{width:22px;height:22px}
 
 /* ---------- Page hero (sub-pages) ---------- */
-.page-hero{background:linear-gradient(180deg,#fff 0%,var(--bg-soft) 100%);color:var(--ink);border-bottom:1px solid var(--line);padding:calc(var(--header-h) + 60px) 0 60px;text-align:center}
-.page-hero h1{color:var(--navy)}
-.page-hero p{color:var(--gray);max-width:640px;margin:14px auto 0;font-size:1.1rem}
-.breadcrumb{font-size:.88rem;color:var(--gray);margin-bottom:14px}
-.breadcrumb a{color:var(--navy)}
-
-/* Light page hero needs a solid header, otherwise the white nav vanishes */
-body:has(.page-hero) .header{background:#fff;box-shadow:0 4px 20px rgba(16,26,122,.08)}
-body:has(.page-hero) .logo-badge{box-shadow:none;padding:0}
-body:has(.page-hero) .nav-links a,
-body:has(.page-hero) .phone-link{color:var(--navy)}
-body:has(.page-hero) .nav-links a:hover{color:var(--gold)}
-body:has(.page-hero) .hamburger span{background:var(--navy)}
+.page-hero{background:linear-gradient(135deg,var(--navy),var(--navy-2));color:#fff;padding:calc(var(--header-h) + 60px) 0 60px;text-align:center}
+.page-hero h1{color:#fff}
+.page-hero p{color:rgba(255,255,255,.9);max-width:640px;margin:14px auto 0;font-size:1.1rem}
+.breadcrumb{font-size:.88rem;color:rgba(255,255,255,.7);margin-bottom:14px}
+.breadcrumb a{color:rgba(255,255,255,.9)}
 
 /* ---------- Dropdown nav (matches live site menu) ---------- */
 .nav-links{gap:20px}
