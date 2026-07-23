@@ -83,6 +83,12 @@ section{padding:72px 0}
 .hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px}
 .hamburger span{display:block;width:26px;height:3px;background:#fff;border-radius:3px;margin:5px 0;transition:.3s}
 .header.scrolled .hamburger span{background:var(--navy)}
+.lang-switch{display:flex;align-items:center;gap:2px;font-family:'Montserrat',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:.02em}
+.lang-switch a{color:#fff;opacity:.65;padding:3px 7px;border-radius:6px;line-height:1;transition:.2s}
+.lang-switch a:hover{opacity:1}
+.lang-switch a.active{opacity:1;background:rgba(255,255,255,.2)}
+.header.scrolled .lang-switch a{color:var(--navy)}
+.header.scrolled .lang-switch a.active{background:var(--navy);color:#fff;opacity:1}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;min-height:calc(100vh - 3in);display:flex;align-items:center;color:#fff;padding-top:var(--header-h)}
