@@ -47,3 +47,6 @@
   .gal-grid .gphoto:first-child{aspect-ratio:4/3}
   .lb-nav{width:46px;height:46px}
 }
+
+/* offset for annbar (2026-08) */
+.detail-head{padding-top:calc(var(--header-h) + var(--annbar-h) + 34px)}
