@@ -372,15 +372,15 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
 /* --- 500-credit-score promo (2026-08) --- */
 :root{--annbar-h:40px}
 .annbar{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:6px;min-height:var(--annbar-h);background:#c81e1e;color:#fff;text-align:center;padding:8px 14px;font-size:.92rem}
-.annbar b{color:#000}
-.annbar a{color:#000;font-weight:700;text-decoration:underline;white-space:nowrap}
+.annbar b{color:var(--gold)}
+.annbar a{color:var(--gold);font-weight:700;text-decoration:underline;white-space:nowrap}
 .annbar .sm-only{display:none}
 .hero{padding-top:calc(var(--header-h) + var(--annbar-h))}
 .page-hero{padding-top:calc(var(--header-h) + var(--annbar-h) + 60px)}
 .promo500{background:#c81e1e;color:#fff;padding:56px 0;text-align:center}
 .promo500 .flag{display:inline-block;background:#000;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.78rem;letter-spacing:.14em;padding:6px 16px;border-radius:50px;margin-bottom:16px;text-transform:uppercase}
 .promo500 h2{color:#fff;font-size:clamp(1.7rem,4.5vw,2.6rem);line-height:1.15}
-.promo500 h2 em{font-style:normal;color:#000}
+.promo500 h2 em{font-style:normal;color:var(--gold)}
 .promo500 p{margin:14px auto 0;max-width:640px;color:rgba(255,255,255,.92);font-size:1.06rem}
 .promo500 .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
 .promo500 .fine{color:rgba(255,255,255,.75);font-size:.72rem;margin-top:18px}
