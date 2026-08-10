@@ -97,7 +97,7 @@ section{padding:72px 0}
 /* ---------- Hero ---------- */
 .hero{position:relative;min-height:calc(100vh - 3in);display:flex;align-items:center;color:#fff;padding-top:var(--header-h)}
 .hero-bg{position:absolute;inset:0;z-index:-2;background:url('../assets/img/hero-home.jpg') center/cover no-repeat}
-.hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,rgba(16,26,122,.88) 0%,rgba(16,26,122,.62) 45%,rgba(15,21,53,.35) 100%)}
+.hero-overlay{position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,rgba(49,58,141,.72) 0%,rgba(49,58,141,.5) 45%,rgba(30,38,90,.28) 100%)}
 .hero-inner{max-width:840px;padding:40px 22px;margin:0 auto;text-align:center}
 .hero h1{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.25);margin-top:0.25in}
 .hero h1 .accent{color:var(--gold)}
@@ -390,3 +390,23 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
   .annbar .sm-only{display:inline}
   .nav-links.open{top:calc(var(--header-h) + var(--annbar-h))}
 }
+
+/* --- Redwood Manager's Special (2026-08) --- */
+.mgr-special{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 80%);color:#fff;padding:56px 0;overflow:hidden}
+.mgr-special .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center}
+.mgr-special .photo{position:relative;border-radius:var(--radius);overflow:hidden;box-shadow:0 14px 40px rgba(0,0,0,.35)}
+.mgr-special .photo img{display:block;width:100%;height:auto}
+.mgr-flag{display:inline-block;background:#c81e1e;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:.16em;padding:7px 18px;border-radius:50px;margin-bottom:14px;text-transform:uppercase}
+.mgr-special h2{color:#fff;font-size:clamp(1.6rem,4vw,2.4rem);line-height:1.15;margin-bottom:6px}
+.mgr-special .specs{color:rgba(255,255,255,.85);font-weight:600;margin-bottom:10px}
+.mgr-price{position:relative;display:inline-block;font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(2.3rem,5.5vw,3.6rem);color:var(--gold);line-height:1.1;margin:6px 0 4px}
+.mgr-price::after{content:'';position:absolute;inset:-6px -14px;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.45) 50%,transparent 70%);transform:translateX(-130%);animation:mgrshine 4.5s ease-in-out infinite;pointer-events:none}
+@keyframes mgrshine{0%{transform:translateX(-130%)}55%{transform:translateX(130%)}100%{transform:translateX(130%)}}
+.mgr-special .was{color:rgba(255,255,255,.65);font-size:.95rem;margin-bottom:16px}
+.mgr-special .btns{display:flex;gap:14px;flex-wrap:wrap;margin-top:18px}
+.mgr-burst{position:absolute;top:12px;right:12px;width:118px;height:118px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#c81e1e;color:#fff;clip-path:polygon(50.00% 0.00%, 60.09% 12.33%, 75.00% 6.70%, 77.58% 22.42%, 93.30% 25.00%, 87.67% 39.91%, 100.00% 50.00%, 87.67% 60.09%, 93.30% 75.00%, 77.58% 77.58%, 75.00% 93.30%, 60.09% 87.67%, 50.00% 100.00%, 39.91% 87.67%, 25.00% 93.30%, 22.42% 77.58%, 6.70% 75.00%, 12.33% 60.09%, 0.00% 50.00%, 12.33% 39.91%, 6.70% 25.00%, 22.42% 22.42%, 25.00% 6.70%, 39.91% 12.33%);transform:rotate(-8deg);animation:mgrpulse 2.4s ease-in-out infinite;z-index:2;line-height:1.15}
+.mgr-burst .t1{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.56rem;letter-spacing:.06em}
+.mgr-burst .t2{font-family:'Montserrat',sans-serif;font-weight:800;font-size:.9rem}
+@keyframes mgrpulse{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(-8deg) scale(1.07)}}
+.price .mgr-chip{display:inline-block;background:#c81e1e;color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.68rem;letter-spacing:.1em;padding:4px 12px;border-radius:50px;margin-bottom:6px;text-transform:uppercase}
+@media(max-width:860px){.mgr-special .wrap{grid-template-columns:1fr}.mgr-burst{width:96px;height:96px}.mgr-burst .t2{font-size:.78rem}}
