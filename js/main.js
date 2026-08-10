@@ -72,6 +72,7 @@
       fetch(action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } })
         .then(function (r) {
           if (!r.ok) throw new Error('bad response');
+          if (typeof gtag === 'function') gtag('event', 'generate_lead', { form_id: form.id || 'leadForm' });
           form.innerHTML = '<div style="text-align:center;padding:24px 8px">' +
             '<h3 style="color:var(--navy);font-family:Montserrat,sans-serif;font-size:1.5rem;margin-bottom:10px">Thank you!</h3>' +
             '<p style="color:var(--gray);font-size:1.02rem">We\'ve got your request and will get back to you fast, usually the same business day.<br>Prefer to talk now? Call or text <a href="tel:9122086065" style="color:var(--navy);font-weight:700">912-208-6065</a>.</p></div>';
@@ -82,4 +83,12 @@
         });
     });
   }
+
+  // Analytics - count taps on any phone link as a phone_call event
+  document.addEventListener('click', function (e) {
+    var tel = e.target.closest('a[href^="tel:"]');
+    if (tel && typeof gtag === 'function') {
+      gtag('event', 'phone_call', { link_text: (tel.textContent || '').trim().slice(0, 60) });
+    }
+  });
 })();
