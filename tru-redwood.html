@@ -83,11 +83,5 @@
 <script src="js/main.js"></script>
 <script src="js/gallery.js"></script>
 
-<script>
-(function(){var el=document.getElementById('mgrPrice');if(!el)return;var target=132071.22,t0=null;
-function fmt(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/1200,1);var e=1-Math.pow(1-p,3);el.textContent=fmt(target*e);if(p<1)requestAnimationFrame(step);}
-requestAnimationFrame(step);})();
-</script>
 </body>
 </html>
