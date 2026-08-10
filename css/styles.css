@@ -371,7 +371,7 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
 
 /* --- 500-credit-score promo (2026-08) --- */
 :root{--annbar-h:40px}
-.annbar{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:6px;min-height:var(--annbar-h);background:linear-gradient(90deg,#0d1560,var(--navy-2));color:#fff;text-align:center;padding:8px 14px;font-size:.92rem}
+.annbar{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;column-gap:6px;min-height:var(--annbar-h);background:linear-gradient(90deg,#0a5c2c,#178a47);color:#fff;text-align:center;padding:8px 14px;font-size:.92rem}
 .annbar b{color:var(--gold)}
 .annbar a{color:var(--gold);font-weight:700;text-decoration:underline;white-space:nowrap}
 .annbar .sm-only{display:none}
