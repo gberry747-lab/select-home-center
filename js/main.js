@@ -84,6 +84,17 @@
     });
   }
 
+  // Prefill the lead form when arriving from a model page (?model=...)
+  var model = new URLSearchParams(location.search).get('model');
+  if (model && form) {
+    var msg = form.querySelector('[name="message"], [name="description"]');
+    var isEs = (document.documentElement.lang || '').indexOf('es') === 0;
+    var line = (isEs ? 'Me interesa ' : "I'm interested in ") + model + '.';
+    if (msg && !msg.value) msg.value = line;
+    var subj = form.querySelector('[name="_subject"]');
+    if (subj) subj.value += ' - ' + model;
+  }
+
   // Analytics - count taps on any phone link as a phone_call event
   document.addEventListener('click', function (e) {
     var tel = e.target.closest('a[href^="tel:"]');
