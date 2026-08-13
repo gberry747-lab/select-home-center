@@ -455,4 +455,5 @@ h2[id],section[id]{scroll-margin-top:150px}
   .form-card{padding:24px 20px}
   .btn-lg{padding:15px 22px;font-size:1rem}
   .cc-dept a{display:inline-block;padding:8px 2px}
+  section.lead .wrap{grid-template-columns:1fr;gap:30px}
 }
