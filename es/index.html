@@ -299,6 +299,10 @@
     <!-- Featurable LIVE Google Reviews widget - connected to Select Home Center's Google Business Profile (auto-updating) -->
     <div id="featurable-42e89a7d-fe58-474a-91d3-6429b009df4d" data-featurable-async></div>
     <script src="https://cdn.featurable.com/widget/v2/embed.js" defer charset="UTF-8"></script>
+<script>
+/* Equalize Featurable review card heights (slick carousel inside its open shadow root) */
+(function(){var tries=0,t=setInterval(function(){tries++;var w=document.querySelector('[id^=featurable] .shadow-wrapper');var r=w&&w.shadowRoot;if(r&&r.querySelector('.slick-track')){clearInterval(t);var s=document.createElement('style');s.textContent='.slick-track{display:flex!important}.slick-slide{height:inherit!important;display:flex!important}.slick-slide>div{display:flex!important;width:100%}.carousel__card{display:flex!important;width:100%}.carousel__card .review{height:100%!important;width:100%;box-sizing:border-box;display:flex;flex-direction:column}';r.appendChild(s);}else if(tries>50){clearInterval(t);}},300);})();
+</script>
     <div class="center" style="margin-top:30px"><a href="https://www.google.com/search?q=Select+Home+Center+Folkston+GA+reviews" target="_blank" rel="noopener" class="btn btn-ghost btn-lg">Lea Nuestras Reseñas de Google</a></div>
   </div>
 </section>
