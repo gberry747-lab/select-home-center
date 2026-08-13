@@ -439,3 +439,4 @@ h2[id],section[id]{scroll-margin-top:150px}
 .milband h3{color:var(--ink);font-family:Montserrat,sans-serif;font-size:1.12rem;margin:0 0 3px;letter-spacing:.2px}
 .milband p{color:var(--gray);font-size:.97rem;margin:0;line-height:1.45}
 @media (max-width:560px){.milband .wrap{flex-direction:column;text-align:center;gap:10px}}
+.cc-sell p{color:#fff}
