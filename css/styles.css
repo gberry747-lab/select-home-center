@@ -24,7 +24,7 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+html{scroll-behavior:smooth;scroll-padding-top:150px}
 body{
   font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
   color:var(--ink);
@@ -206,7 +206,7 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:.86rem;font-weight:600;color:var(--ink);margin-bottom:6px;font-family:'Montserrat',sans-serif}
-.field input,.field select,.field textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:.98rem;color:var(--ink);transition:.2s;background:#fff}
+.field input,.field select,.field textarea{width:100%;padding:13px 15px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;font-size:1rem;color:var(--ink);transition:.2s;background:#fff}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(16,26,122,.1)}
 .field textarea{resize:vertical;min-height:84px}
 .hp{position:absolute;left:-9999px}
@@ -333,7 +333,7 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
   .btn{white-space:normal}
   .statbar .stat{min-width:0}
   .mobile-call{display:block}
-  body{padding-bottom:54px}
+  body{padding-bottom:64px}
   .hero-trust{gap:14px}
 }
 
@@ -345,7 +345,7 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
 .skip-link:focus{top:12px;color:#fff}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .has-dropdown.open .dropdown{opacity:1;visibility:visible;top:calc(100% + 6px)}
-#main{scroll-margin-top:90px}
+#main{scroll-margin-top:150px}
 
 /* shc-content: blog articles + service-area pages */
 .article{max-width:760px;margin:0 auto;padding:54px 0 4px}
@@ -385,12 +385,14 @@ section.lead .lead-copy p{color:rgba(255,255,255,.9);font-size:1.08rem;margin-to
 .promo500 h2 em{font-style:normal;color:var(--gold)}
 .promo500 p{margin:14px auto 0;max-width:640px;color:rgba(255,255,255,.92);font-size:1.06rem}
 .promo500 .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px}
-.promo500 .fine{color:rgba(255,255,255,.75);font-size:.72rem;margin-top:18px}
+.promo500 .fine{color:rgba(255,255,255,.75);font-size:.8rem;margin-top:18px}
 @media(max-width:760px){
   .annbar{font-size:.82rem}
   .annbar .lg-only{display:none}
   .annbar .sm-only{display:inline}
-  .nav-links.open{top:calc(var(--header-h) + var(--annbar-h))}
+  .annbar .mid{display:none}
+  .annbar a{font-size:.92rem}
+  .nav-links.open{top:100%}
 }
 
 /* --- Redwood Manager's Special (2026-08) --- */
@@ -443,3 +445,14 @@ h2[id],section[id]{scroll-margin-top:150px}
 
 /* Manager's Special buttons: keep the pair on one line on desktop */
 @media (min-width:768px){.mgr-special .btns{flex-wrap:nowrap;gap:10px}.mgr-special .btns .btn{padding-left:19px;padding-right:19px}}
+
+/* Mobile QA fixes 2026-08-12: tap targets, form spacing, long ES labels */
+@media(max-width:760px){
+  .lang-switch a{padding:8px 12px;font-size:.78rem}
+  .phone-link{padding:12px}
+  .footer ul a{display:inline-block;padding:6px 0}
+  .nav-links.open > li > a{display:block;padding:10px 0}
+  .form-card{padding:24px 20px}
+  .btn-lg{padding:15px 22px;font-size:1rem}
+  .cc-dept a{display:inline-block;padding:8px 2px}
+}
