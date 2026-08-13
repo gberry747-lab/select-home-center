@@ -433,7 +433,7 @@ h2[id],section[id]{scroll-margin-top:150px}
 .cc-sell b{color:var(--gold)}
 
 /* ===== Military & veteran families band (homepage) ===== */
-.milband{background:#eef0e8 url("../assets/img/camo-band.webp?v=2") center/cover;border-top:1px solid #d6dcc8;border-bottom:1px solid #d6dcc8;padding:26px 14px}
+.milband{background:#eef0e8 url("../assets/img/camo-band.webp?v=3") center/cover;border-top:1px solid #d6dcc8;border-bottom:1px solid #d6dcc8;padding:26px 14px}
 .milband .wrap{max-width:820px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:18px;text-align:left}
 .milband .flag{flex:0 0 auto;width:52px;height:auto;border-radius:3px;box-shadow:0 1px 3px rgba(15,21,53,.25)}
 .milband h3{color:var(--ink);font-family:Montserrat,sans-serif;font-size:1.12rem;margin:0 0 3px;letter-spacing:.2px}
