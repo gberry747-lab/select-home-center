@@ -94,7 +94,7 @@ CARD_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
  .qr{flex:0 0 150px} .qr svg{width:150px;height:150px}
  .steps{font-size:.8rem;color:#1c2340;line-height:1.5}
  .steps b{color:#101a7a}
- .url{margin:0 20px 4px;background:#eef1ff;border:1.5px dashed #101a7a;border-radius:9px;padding:10px 12px;text-align:center;font-family:Menlo,monospace;font-size:.92rem;font-weight:700;color:#101a7a;letter-spacing:.02em}
+ .url{margin:0 20px 4px;background:#eef1ff;border:1.5px dashed #101a7a;border-radius:9px;padding:10px 12px;text-align:center;font-family:Menlo,monospace;font-size:.85rem;font-weight:700;color:#101a7a;letter-spacing:.01em;word-break:break-all}
  .keep{text-align:center;font-size:.72rem;color:#6a7090;padding:6px 20px 2px}
  .bot{background:#101a7a;color:#c9cdf0;text-align:center;font-size:.7rem;padding:9px;margin-top:10px}
  .bot b{color:#f5a623}
