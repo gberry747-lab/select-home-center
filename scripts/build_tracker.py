@@ -131,6 +131,55 @@ def build_card(name, slug, outdir):
             .replace("{URL}", url.replace("https://", "")))
     (outdir / "card.html").write_text(page, encoding="utf-8")
 
+
+STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Home Tracker - Team Page</title>
+<style>
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;padding:0 16px 40px}
+ .wrap{max-width:640px;margin:0 auto}
+ header{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;margin:0 -16px;padding:22px 20px}
+ header .brand{font-weight:800;font-size:.9rem} header .brand span{color:#f5a623}
+ header h1{font-size:1.3rem;margin:8px 0 0}
+ .howto{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:16px 0;font-size:.88rem;line-height:1.6}
+ .howto b{color:#101a7a}
+ .cust{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:10px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+ .cust .who{font-weight:800;font-size:1rem} .cust .deal{color:#6a7090;font-size:.8rem}
+ .btns{display:flex;gap:8px;flex-wrap:wrap}
+ .btns a,.btns button{border:0;cursor:pointer;text-decoration:none;font-weight:700;font-size:.8rem;border-radius:9px;padding:9px 13px;font-family:inherit}
+ .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00}
+ .note{font-size:.75rem;color:#6a7090;margin-top:18px;text-align:center}
+</style></head><body><div class="wrap">
+<header><div class="brand">SELECT <span>HOME CENTER</span> - TEAM ONLY</div>
+<h1>Customer Home Trackers</h1></header>
+<div class="howto"><b>New customer checklist:</b><br>
+1. <b>Print card:</b> tap their gold-framed "Print card" button, then File &gt; Print. Card goes in their paperwork folder.<br>
+2. <b>Send link:</b> tap "Copy link", then paste it into a text or email to the customer from your phone:<br>
+<i>"Congratulations! Here's your personal Home Tracker - watch every step of your new home: [paste link]. Save this text!"</i><br>
+3. That's it. The page updates by itself as Monday statuses change. Keep this team page bookmarked; do not share this page's address with customers.</div>
+{ROWS}
+<div class="note">Updated automatically from the Monday board each time the tracker refreshes. Questions: ask Gregory.</div>
+</div>
+<script>
+function cp(u,btn){navigator.clipboard.writeText(u).then(()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy link",1500);});}
+</script></body></html>"""
+
+def build_staff_page(entries):
+    """entries: list of (name, deal, slug)"""
+    rows = []
+    for name, deal, slug in entries:
+        url = f"{SITE}/track/{slug}/"
+        rows.append(f'''<div class="cust"><div><div class="who">{html.escape(name)}</div>
+<div class="deal">Deal #{html.escape(deal) if deal else "-"} · {url.replace("https://","")}</div></div>
+<div class="btns"><a class="b-view" href="{url}" target="_blank">View page</a>
+<a class="b-card" href="{url}card.html" target="_blank">Print card</a>
+<button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button></div></div>''')
+    code = slug_for("staff-page", "")
+    outdir = REPO / "track" / f"team-{code[5:]}"
+    outdir.mkdir(parents=True, exist_ok=True)
+    (outdir / "index.html").write_text(STAFF_TEMPLATE.replace("{ROWS}", "\n".join(rows)), encoding="utf-8")
+    print(f"staff page: {SITE}/track/team-{code[5:]}/")
+
 def status_class(text):
     t = (text or "").strip().lower()
     if t in ("complete", "completed", "done"): return "done"
@@ -207,11 +256,13 @@ def build_demo():
     build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”",
                steps, outdir)
     build_card("Johnson Family", "demo", outdir)
-    print("built track/demo/ (+card)")
+    build_staff_page([("Johnson Family (demo)", "341", "demo")])
+    print("built track/demo/ (+card +staff page)")
 
 def build_all():
     board = fetch_board()
     n = 0
+    entries = []
     for item in board["items_page"]["items"]:
         if item["group"]["title"] not in ACTIVE_GROUPS:
             continue
@@ -231,7 +282,9 @@ def build_all():
         build_page(item["name"], deal, vin, make, model, steps, outdir)
         build_card(item["name"], slug, outdir)
         print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
+        entries.append((item["name"], deal, slug))
         n += 1
+    build_staff_page(entries)
     print(f"{n} customer pages built. Commit + push to deploy.")
 
 if __name__ == "__main__":

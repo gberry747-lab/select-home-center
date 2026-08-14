@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Home Tracker - Team Page</title>
+<style>
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;padding:0 16px 40px}
+ .wrap{max-width:640px;margin:0 auto}
+ header{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;margin:0 -16px;padding:22px 20px}
+ header .brand{font-weight:800;font-size:.9rem} header .brand span{color:#f5a623}
+ header h1{font-size:1.3rem;margin:8px 0 0}
+ .howto{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:16px 0;font-size:.88rem;line-height:1.6}
+ .howto b{color:#101a7a}
+ .cust{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:10px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+ .cust .who{font-weight:800;font-size:1rem} .cust .deal{color:#6a7090;font-size:.8rem}
+ .btns{display:flex;gap:8px;flex-wrap:wrap}
+ .btns a,.btns button{border:0;cursor:pointer;text-decoration:none;font-weight:700;font-size:.8rem;border-radius:9px;padding:9px 13px;font-family:inherit}
+ .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00}
+ .note{font-size:.75rem;color:#6a7090;margin-top:18px;text-align:center}
+</style></head><body><div class="wrap">
+<header><div class="brand">SELECT <span>HOME CENTER</span> - TEAM ONLY</div>
+<h1>Customer Home Trackers</h1></header>
+<div class="howto"><b>New customer checklist:</b><br>
+1. <b>Print card:</b> tap their gold-framed "Print card" button, then File &gt; Print. Card goes in their paperwork folder.<br>
+2. <b>Send link:</b> tap "Copy link", then paste it into a text or email to the customer from your phone:<br>
+<i>"Congratulations! Here's your personal Home Tracker - watch every step of your new home: [paste link]. Save this text!"</i><br>
+3. That's it. The page updates by itself as Monday statuses change. Keep this team page bookmarked; do not share this page's address with customers.</div>
+<div class="cust"><div><div class="who">Johnson Family (demo)</div>
+<div class="deal">Deal #341 · selecthomecenter.com/track/demo/</div></div>
+<div class="btns"><a class="b-view" href="https://selecthomecenter.com/track/demo/" target="_blank">View page</a>
+<a class="b-card" href="https://selecthomecenter.com/track/demo/card.html" target="_blank">Print card</a>
+<button class="b-copy" onclick="cp('https://selecthomecenter.com/track/demo/',this)">Copy link</button></div></div>
+<div class="note">Updated automatically from the Monday board each time the tracker refreshes. Questions: ask Gregory.</div>
+</div>
+<script>
+function cp(u,btn){navigator.clipboard.writeText(u).then(()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy link",1500);});}
+</script></body></html>
