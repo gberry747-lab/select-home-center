@@ -84,21 +84,21 @@ CARD_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
 <title>Home Tracker Card - {NAME}</title>
 <style>
- body{{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;margin:0;padding:24px;display:flex;justify-content:center}}
- .card{{width:5.5in;background:#fff;border:2px solid #101a7a;border-radius:14px;overflow:hidden}}
- .top{{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:16px 20px}}
- .top .brand{{font-weight:800;font-size:.85rem;letter-spacing:.02em}}
- .top .brand span{{color:#f5a623}}
- .top h1{{font-size:1.15rem;margin:8px 0 0}}
- .mid{{display:flex;gap:16px;padding:16px 20px;align-items:center}}
- .qr{{flex:0 0 150px}} .qr svg{{width:150px;height:150px}}
- .steps{{font-size:.8rem;color:#1c2340;line-height:1.5}}
- .steps b{{color:#101a7a}}
- .url{{margin:0 20px 4px;background:#eef1ff;border:1.5px dashed #101a7a;border-radius:9px;padding:10px 12px;text-align:center;font-family:Menlo,monospace;font-size:.92rem;font-weight:700;color:#101a7a;letter-spacing:.02em}}
- .keep{{text-align:center;font-size:.72rem;color:#6a7090;padding:6px 20px 2px}}
- .bot{{background:#101a7a;color:#c9cdf0;text-align:center;font-size:.7rem;padding:9px;margin-top:10px}}
- .bot b{{color:#f5a623}}
- @media print{{body{{background:#fff;padding:0}} .card{{border-radius:0}}}}
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;margin:0;padding:24px;display:flex;justify-content:center}
+ .card{width:5.5in;background:#fff;border:2px solid #101a7a;border-radius:14px;overflow:hidden}
+ .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:16px 20px}
+ .top .brand{font-weight:800;font-size:.85rem;letter-spacing:.02em}
+ .top .brand span{color:#f5a623}
+ .top h1{font-size:1.15rem;margin:8px 0 0}
+ .mid{display:flex;gap:16px;padding:16px 20px;align-items:center}
+ .qr{flex:0 0 150px} .qr svg{width:150px;height:150px}
+ .steps{font-size:.8rem;color:#1c2340;line-height:1.5}
+ .steps b{color:#101a7a}
+ .url{margin:0 20px 4px;background:#eef1ff;border:1.5px dashed #101a7a;border-radius:9px;padding:10px 12px;text-align:center;font-family:Menlo,monospace;font-size:.92rem;font-weight:700;color:#101a7a;letter-spacing:.02em}
+ .keep{text-align:center;font-size:.72rem;color:#6a7090;padding:6px 20px 2px}
+ .bot{background:#101a7a;color:#c9cdf0;text-align:center;font-size:.7rem;padding:9px;margin-top:10px}
+ .bot b{color:#f5a623}
+ @media print{body{background:#fff;padding:0} .card{border-radius:0}}
 </style></head><body>
 <div class="card">
  <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div>
