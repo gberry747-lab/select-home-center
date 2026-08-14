@@ -147,15 +147,16 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
  .cust .who{font-weight:800;font-size:1rem} .cust .deal{color:#6a7090;font-size:.8rem}
  .btns{display:flex;gap:8px;flex-wrap:wrap}
  .btns a,.btns button{border:0;cursor:pointer;text-decoration:none;font-weight:700;font-size:.8rem;border-radius:9px;padding:9px 13px;font-family:inherit}
- .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00}
+ .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00} .b-mail{background:#2e8b57;color:#fff}
  .note{font-size:.75rem;color:#6a7090;margin-top:18px;text-align:center}
 </style></head><body><div class="wrap">
 <header><div class="brand">SELECT <span>HOME CENTER</span> - TEAM ONLY</div>
 <h1>Customer Home Trackers</h1></header>
 <div class="howto"><b>New customer checklist:</b><br>
 1. <b>Print card:</b> tap their gold-framed "Print card" button, then File &gt; Print. Card goes in their paperwork folder.<br>
-2. <b>Send link:</b> tap "Copy link", then paste it into a text or email to the customer from your phone:<br>
-<i>"Congratulations! Here's your personal Home Tracker - watch every step of your new home: [paste link]. Save this text!"</i><br>
+2. <b>Send link</b>, either way:<br>
+&nbsp;&nbsp;&bull; <b>Email customer</b> (green button): opens an email that's already written - type their address, hit Send. On the office computer signed into hello@selecthomecenter.com it sends from the store address.<br>
+&nbsp;&nbsp;&bull; Or <b>Copy link</b> and paste into a text from your phone: <i>"Congratulations! Here's your personal Home Tracker - watch every step of your new home: [paste link]. Save this text!"</i><br>
 3. That's it. The page updates by itself as Monday statuses change. Keep this team page bookmarked; do not share this page's address with customers.</div>
 {ROWS}
 <div class="note">Updated automatically from the Monday board each time the tracker refreshes. Questions: ask Gregory.</div>
@@ -167,13 +168,24 @@ function cp(u,btn){navigator.clipboard.writeText(u).then(()=>{btn.textContent="C
 def build_staff_page(entries):
     """entries: list of (name, deal, slug)"""
     rows = []
+    import urllib.parse
     for name, deal, slug in entries:
         url = f"{SITE}/track/{slug}/"
+        subj = urllib.parse.quote("Your Home Tracker - Select Home Center")
+        body = urllib.parse.quote(
+            "Congratulations from all of us at Select Home Center!\n\n"
+            "Here is your personal Home Tracker - watch every step of your new home, "
+            f"from financing to keys day:\n\n{url}\n\n"
+            "Tip: open it on your phone and follow the 'Save this page' steps so it's always one tap away. "
+            "Para espanol, toque 'Espanol' arriba en la pagina.\n\n"
+            "Questions any time: 912-208-6065\n\n- Your Select Home Center Team\nSelectHomeCenter.com")
+        mailto = f"mailto:?subject={subj}&body={body}"
         rows.append(f'''<div class="cust"><div><div class="who">{html.escape(name)}</div>
 <div class="deal">Deal #{html.escape(deal) if deal else "-"} · {url.replace("https://","")}</div></div>
 <div class="btns"><a class="b-view" href="{url}" target="_blank">View page</a>
 <a class="b-card" href="{url}card.html" target="_blank">Print card</a>
-<button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button></div></div>''')
+<button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button>
+<a class="b-mail" href="{mailto}">Email customer</a></div></div>''')
     code = slug_for("staff-page", "")
     outdir = REPO / "track" / f"team-{code[5:]}"
     outdir.mkdir(parents=True, exist_ok=True)
