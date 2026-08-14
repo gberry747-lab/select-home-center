@@ -45,6 +45,11 @@
   .active .badge{background:var(--active-soft);color:var(--gold-dk)}
   .scheduled .badge{background:#eef1ff;color:var(--indigo)}
   .wait .badge{background:#f0f1f7;color:var(--muted)}
+  .save{margin:14px 18px 0;background:#eef1ff;border:1px solid #ccd3f5;border-radius:14px;padding:14px 16px}
+  .savehead{font-weight:800;font-size:.95rem;color:var(--navy)}
+  .save ol{margin:8px 0 0 2px;padding-left:20px;font-size:.87rem;color:var(--ink)}
+  .save li{margin:6px 0}
+  .save .lost{margin-top:10px;padding-top:9px;border-top:1px dashed #ccd3f5;font-size:.8rem;color:var(--muted)}
   .cta{display:flex;gap:10px;margin:14px 18px 0}
   .cta a{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;border-radius:11px;padding:13px 8px}
   .call{background:var(--navy);color:#fff}
@@ -80,6 +85,22 @@
   <h3 data-en="Your journey home" data-es="El camino a su casa">Your journey home</h3>
   {{STEPS}}
 </section>
+<div class="save" id="savecard">
+  <div class="savehead">
+    <span data-en="&#128204; Save this page so you never lose it" data-es="&#128204; Guarde esta página para no perderla">&#128204; Save this page so you never lose it</span>
+  </div>
+  <ol id="save-ios" style="display:none">
+    <li data-en="Tap the Share button at the bottom of your screen (the square with the arrow &#8963;)" data-es="Toque el botón Compartir abajo en su pantalla (el cuadrito con la flecha &#8963;)">Tap the Share button at the bottom of your screen (the square with the arrow &#8963;)</li>
+    <li data-en="Scroll down and tap 'Add to Home Screen'" data-es="Deslice hacia abajo y toque 'Agregar a inicio'">Scroll down and tap "Add to Home Screen"</li>
+    <li data-en="Tap 'Add'. Done! Your home now has its own button on your phone." data-es="Toque 'Agregar'. ¡Listo! Su casa ahora tiene su propio botón en su teléfono.">Tap "Add". Done! Your home now has its own button on your phone.</li>
+  </ol>
+  <ol id="save-android" style="display:none">
+    <li data-en="Tap the three dots &#8942; at the top right of your screen" data-es="Toque los tres puntos &#8942; arriba a la derecha">Tap the three dots &#8942; at the top right of your screen</li>
+    <li data-en="Tap 'Add to Home screen'" data-es="Toque 'Agregar a pantalla principal'">Tap "Add to Home screen"</li>
+    <li data-en="Tap 'Add'. Done! Your home now has its own button on your phone." data-es="Toque 'Agregar'. ¡Listo! Su casa ahora tiene su propio botón en su teléfono.">Tap "Add". Done! Your home now has its own button on your phone.</li>
+  </ol>
+  <p class="lost" data-en="Lost this link? No problem - it's also in the welcome text we sent you, or call/text us at 912-208-6065 and we'll send it again." data-es="¿Perdió este enlace? No hay problema: también está en el mensaje de bienvenida que le enviamos, o llámenos al 912-208-6065 y se lo reenviamos.">Lost this link? No problem - it's also in the welcome text we sent you, or call/text us at 912-208-6065 and we'll send it again.</p>
+</div>
 <div class="cta">
   <a class="call" href="tel:{{PHONE}}" data-en="&#128222; Call us" data-es="&#128222; Llámenos">&#128222; Call us</a>
   <a class="text" href="sms:{{PHONE}}" data-en="&#128172; Text us" data-es="&#128172; Mensaje">&#128172; Text us</a>
@@ -91,6 +112,16 @@
 </footer>
 </div>
 <script>
+(function(){
+  const ua = navigator.userAgent;
+  const isIOS = /iPhone|iPad|iPod/.test(ua);
+  const isAndroid = /Android/.test(ua);
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  if (standalone) { document.getElementById('savecard').style.display = 'none'; }
+  else if (isIOS) { document.getElementById('save-ios').style.display = 'block'; }
+  else if (isAndroid) { document.getElementById('save-android').style.display = 'block'; }
+  else { document.getElementById('save-ios').style.display = 'block'; document.getElementById('save-android').style.display = 'block'; }
+})();
 let es=false;
 function toggleLang(){
   es=!es;
