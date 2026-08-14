@@ -72,8 +72,64 @@ def fetch_board():
     }} }}'''
     return monday_query(q)["boards"][0]
 
-def slug_for(item_id):
-    return hashlib.sha256(f"{SALT}:{item_id}".encode()).hexdigest()[:12]
+def slug_for(item_id, deal=""):
+    """Readable, typeable, unguessable: deal341-XK7M2R (charset avoids 0/O/1/I/L)."""
+    digest = hashlib.sha256(f"{SALT}:{item_id}".encode()).hexdigest()
+    charset = "23456789ABCDEFGHJKMNPQRSTUVWXYZ"
+    code = "".join(charset[int(digest[i*2:i*2+2], 16) % len(charset)] for i in range(6))
+    prefix = f"deal{deal}-" if deal else "home-"
+    return prefix + code
+
+CARD_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Home Tracker Card - {NAME}</title>
+<style>
+ body{{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;margin:0;padding:24px;display:flex;justify-content:center}}
+ .card{{width:5.5in;background:#fff;border:2px solid #101a7a;border-radius:14px;overflow:hidden}}
+ .top{{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:16px 20px}}
+ .top .brand{{font-weight:800;font-size:.85rem;letter-spacing:.02em}}
+ .top .brand span{{color:#f5a623}}
+ .top h1{{font-size:1.15rem;margin:8px 0 0}}
+ .mid{{display:flex;gap:16px;padding:16px 20px;align-items:center}}
+ .qr{{flex:0 0 150px}} .qr svg{{width:150px;height:150px}}
+ .steps{{font-size:.8rem;color:#1c2340;line-height:1.5}}
+ .steps b{{color:#101a7a}}
+ .url{{margin:0 20px 4px;background:#eef1ff;border:1.5px dashed #101a7a;border-radius:9px;padding:10px 12px;text-align:center;font-family:Menlo,monospace;font-size:.92rem;font-weight:700;color:#101a7a;letter-spacing:.02em}}
+ .keep{{text-align:center;font-size:.72rem;color:#6a7090;padding:6px 20px 2px}}
+ .bot{{background:#101a7a;color:#c9cdf0;text-align:center;font-size:.7rem;padding:9px;margin-top:10px}}
+ .bot b{{color:#f5a623}}
+ @media print{{body{{background:#fff;padding:0}} .card{{border-radius:0}}}}
+</style></head><body>
+<div class="card">
+ <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div>
+  <h1>The {NAME} Home Tracker</h1></div>
+ <div class="mid">
+  <div class="qr">{QR_SVG}</div>
+  <div class="steps"><b>Watch your new home come to life:</b><br>
+   1. Point your phone camera at this code<br>
+   2. Tap the link that pops up<br>
+   3. On the page, follow the 3 steps under<br>&nbsp;&nbsp;&nbsp;"Save this page" so it's always one tap away<br>
+   <span style="color:#6a7090">Para español: toque "Español" en la página</span></div>
+ </div>
+ <div class="url">{URL}</div>
+ <div class="keep">Keep this card - you can type the address above into any phone or computer, any time.</div>
+ <div class="bot">Questions any time: <b>912-208-6065</b> · Se Habla Español · SelectHomeCenter.com</div>
+</div>
+</body></html>"""
+
+def build_card(name, slug, outdir):
+    try:
+        import segno
+    except ImportError:
+        print("  (segno not installed - skipping QR card. Fix: python3 -m pip install segno)")
+        return
+    url = f"{SITE}/track/{slug}/"
+    qr = segno.make(url, error="q")
+    svg = qr.svg_inline(scale=4, dark="#101a7a")
+    page = (CARD_TEMPLATE.replace("{NAME}", html.escape(name))
+            .replace("{QR_SVG}", svg)
+            .replace("{URL}", url.replace("https://", "")))
+    (outdir / "card.html").write_text(page, encoding="utf-8")
 
 def status_class(text):
     t = (text or "").strip().lower()
@@ -147,9 +203,11 @@ def build_demo():
               ("Electric", ES_STEP["Electric"], "wait", "", ""),
               ("HVAC", ES_STEP["HVAC"], "wait", "", ""),
               ("Steps", ES_STEP["Steps"], "wait", "", "")]
+    outdir = REPO / "track" / "demo"
     build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”",
-               steps, REPO / "track" / "demo")
-    print("built track/demo/")
+               steps, outdir)
+    build_card("Johnson Family", "demo", outdir)
+    print("built track/demo/ (+card)")
 
 def build_all():
     board = fetch_board()
@@ -168,9 +226,11 @@ def build_all():
                 continue
             t = cv["column"]["title"]
             steps.append((t, ES_STEP.get(t, t), status_class(cv.get("text")), "", ""))
-        slug = slug_for(item["id"])
-        build_page(item["name"], deal, vin, make, model, steps, REPO / "track" / slug)
-        print(f"built track/{slug}/  ({item['name']}, deal {deal})")
+        slug = slug_for(item["id"], deal)
+        outdir = REPO / "track" / slug
+        build_page(item["name"], deal, vin, make, model, steps, outdir)
+        build_card(item["name"], slug, outdir)
+        print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
         n += 1
     print(f"{n} customer pages built. Commit + push to deploy.")
 
