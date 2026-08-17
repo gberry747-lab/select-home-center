@@ -210,11 +210,11 @@ def build_page(name, deal, vin, make, model, steps, outdir):
     current = next((s for s in steps if s[2] == "active"), None) or \
               next((s for s in steps if s[2] == "scheduled"), None) or \
               next((s for s in steps if s[2] == "wait"), None)
+    rank = {"done": 0, "active": 1, "scheduled": 2, "wait": 3}
+    steps = sorted([s_ for s_ in steps if s_[2] != "na"], key=lambda s_: rank[s_[2]])
     rows = []
     for i, (en, es, cls, note_en, note_es) in enumerate(steps, 1):
-        if cls == "na":
-            continue
-        icon = "&#10003;" if cls == "done" else ("&#9679;" if cls == "active" else str(i))
+        icon = "&#10003;" if cls == "done" else ("&#9679;" if cls == "active" else "&#9675;")
         badge = {"done": ("Complete", "Completado"), "active": ("In progress", "En proceso"),
                  "scheduled": ("Scheduled", "Programado"), "wait": ("Upcoming", "Pendiente")}[cls]
         rows.append(f'''<div class="step {cls}"><div class="dot">{icon}</div><div class="scard">
@@ -258,11 +258,11 @@ def build_demo():
     steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
     steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
               ("Dirt Pad", ES_STEP["Dirt Pad"], "done", "", ""),
-              ("Well", ES_STEP["Well"], "done", "", ""),
-              ("Septic", ES_STEP["Septic"], "active", "", ""),
+              ("Well", ES_STEP["Well"], "wait", "", ""),
+              ("Septic", ES_STEP["Septic"], "done", "", ""),
               ("Power Pole", ES_STEP["Power Pole"], "scheduled", "", ""),
               ("Electric", ES_STEP["Electric"], "wait", "", ""),
-              ("HVAC", ES_STEP["HVAC"], "wait", "", ""),
+              ("HVAC", ES_STEP["HVAC"], "active", "", ""),
               ("Steps", ES_STEP["Steps"], "wait", "", "")]
     outdir = REPO / "track" / "demo"
     build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”",

@@ -58,6 +58,14 @@
   footer .warr{color:var(--gold);font-weight:800;font-size:.85rem;margin-bottom:5px}
   footer a{color:#fff;font-weight:700;text-decoration:underline}
   @media(min-width:600px){body{padding:24px 0}.app{border-radius:22px;overflow:hidden}}
+  @media(min-width:900px){
+    .app{max-width:900px}
+    section.tl{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;row-gap:0}
+    .tl h3{grid-column:1/-1}
+    .step{padding-bottom:14px}
+    .step:not(:last-child)::before{display:none}
+    .save,.next,.progresscard,.cta{margin-left:18px;margin-right:18px}
+  }
 </style>
 </head>
 <body>
@@ -77,7 +85,7 @@
 </div>
 <div class="next">
   <div class="tag" data-en="Happening now" data-es="En proceso">Happening now</div>
-  <h2 data-en="Septic" data-es="Sistema séptico">Septic</h2>
+  <h2 data-en="HVAC" data-es="Aire acondicionado y calefacción">HVAC</h2>
   <p data-en="Our team is on it. We&#x27;ll update this page and message you the moment it&#x27;s done." data-es="Nuestro equipo está en ello. Actualizaremos esta página y le avisaremos en cuanto esté listo.">Our team is on it. We&#x27;ll update this page and message you the moment it&#x27;s done.</p>
   
 </div>
@@ -99,21 +107,21 @@
 <div class="srow"><span class="sname" data-en="Dirt Pad" data-es="Plataforma de tierra">Dirt Pad</span></div>
 <span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
 <div class="step done"><div class="dot">&#10003;</div><div class="scard">
-<div class="srow"><span class="sname" data-en="Well" data-es="Pozo de agua">Well</span></div>
+<div class="srow"><span class="sname" data-en="Septic" data-es="Sistema séptico">Septic</span></div>
 <span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
 <div class="step active"><div class="dot">&#9679;</div><div class="scard">
-<div class="srow"><span class="sname" data-en="Septic" data-es="Sistema séptico">Septic</span></div>
+<div class="srow"><span class="sname" data-en="HVAC" data-es="Aire acondicionado y calefacción">HVAC</span></div>
 <span class="badge" data-en="In progress" data-es="En proceso">In progress</span></div></div>
-<div class="step scheduled"><div class="dot">8</div><div class="scard">
+<div class="step scheduled"><div class="dot">&#9675;</div><div class="scard">
 <div class="srow"><span class="sname" data-en="Power Pole" data-es="Poste de electricidad">Power Pole</span></div>
 <span class="badge" data-en="Scheduled" data-es="Programado">Scheduled</span></div></div>
-<div class="step wait"><div class="dot">9</div><div class="scard">
+<div class="step wait"><div class="dot">&#9675;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Well" data-es="Pozo de agua">Well</span></div>
+<span class="badge" data-en="Upcoming" data-es="Pendiente">Upcoming</span></div></div>
+<div class="step wait"><div class="dot">&#9675;</div><div class="scard">
 <div class="srow"><span class="sname" data-en="Electric" data-es="Conexión eléctrica">Electric</span></div>
 <span class="badge" data-en="Upcoming" data-es="Pendiente">Upcoming</span></div></div>
-<div class="step wait"><div class="dot">10</div><div class="scard">
-<div class="srow"><span class="sname" data-en="HVAC" data-es="Aire acondicionado y calefacción">HVAC</span></div>
-<span class="badge" data-en="Upcoming" data-es="Pendiente">Upcoming</span></div></div>
-<div class="step wait"><div class="dot">11</div><div class="scard">
+<div class="step wait"><div class="dot">&#9675;</div><div class="scard">
 <div class="srow"><span class="sname" data-en="Steps" data-es="Escalones">Steps</span></div>
 <span class="badge" data-en="Upcoming" data-es="Pendiente">Upcoming</span></div></div>
 </section>

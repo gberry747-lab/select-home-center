@@ -58,6 +58,14 @@
   footer .warr{color:var(--gold);font-weight:800;font-size:.85rem;margin-bottom:5px}
   footer a{color:#fff;font-weight:700;text-decoration:underline}
   @media(min-width:600px){body{padding:24px 0}.app{border-radius:22px;overflow:hidden}}
+  @media(min-width:900px){
+    .app{max-width:900px}
+    section.tl{display:grid;grid-template-columns:1fr 1fr;column-gap:18px;row-gap:0}
+    .tl h3{grid-column:1/-1}
+    .step{padding-bottom:14px}
+    .step:not(:last-child)::before{display:none}
+    .save,.next,.progresscard,.cta{margin-left:18px;margin-right:18px}
+  }
 </style>
 </head>
 <body>
