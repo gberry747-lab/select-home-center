@@ -209,7 +209,8 @@ GATE_PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">{ROBOTS}
 <title>{TITLE} | Select Home Center</title>
 <style>
- body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+ *{box-sizing:border-box;margin:0}
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;display:flex;flex-direction:column;align-items:center;min-height:100vh}
  .back{display:inline-block;margin:14px 16px 0;background:#fff;border:1.5px solid #c9cddf;color:#101a7a;font-weight:700;font-size:.78rem;text-decoration:none;border-radius:999px;padding:7px 14px}
  .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:auto 16px 0;overflow:hidden}
  .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
@@ -305,7 +306,8 @@ def build_myhome_gate(cust_entries):
     extra = ('<div class="help">Use the last name and cell phone number from your purchase paperwork. '
              'No luck? Call or text us at <a href="tel:9122086065">912-208-6065</a> and we&#39;ll send your link. '
              '&iquest;Necesita ayuda en espa&ntilde;ol? Ll&aacute;menos.</div>'
-             '<a class="sample" href="/track/demo/">See a sample Home Tracker &rarr;</a>')
+             '<a class="sample" href="/track/demo/">See a sample Home Tracker &rarr;</a>'
+             '<a class="sample" href="/warranty-checklist/">See a sample Warranty Checklist &rarr;</a>')
     cred_js = ("document.getElementById('ln').value.toLowerCase().replace(/[^a-z]/g,'')"
                "+document.getElementById('ph').value.replace(/[^0-9]/g,'').slice(-10)")
     _gate_page("my-home", "Track My Home",
@@ -377,6 +379,22 @@ def build_page(name, deal, vin, make, model, steps, outdir):
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "index.html").write_text(page, encoding="utf-8")
 
+def build_demo_page():
+    """Just the Johnson demo page + card (safe to run after build_all)."""
+    steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
+    steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
+              ("Dirt Pad", ES_STEP["Dirt Pad"], "done", "", ""),
+              ("Well", ES_STEP["Well"], "wait", "", ""),
+              ("Septic", ES_STEP["Septic"], "done", "", ""),
+              ("Power Pole", ES_STEP["Power Pole"], "scheduled", "", ""),
+              ("Electric", ES_STEP["Electric"], "wait", "", ""),
+              ("HVAC", ES_STEP["HVAC"], "active", "", ""),
+              ("Steps", ES_STEP["Steps"], "wait", "", "")]
+    outdir = REPO / "track" / "demo"
+    build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”", steps, outdir)
+    build_card("Johnson Family", "demo", outdir)
+    print("built track/demo/ (+card)")
+
 def build_demo():
     steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
     steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
@@ -429,6 +447,7 @@ def build_all():
     team_code = slug_for("staff-page", "")
     build_team_gate(f"team-{team_code[5:]}"[6:] if False else f"team-{team_code[5:]}")
     build_myhome_gate(gate_entries)
+    build_demo_page()
     print(f"{n} customer pages built. Commit + push to deploy.")
 
 if __name__ == "__main__":
