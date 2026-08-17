@@ -18,7 +18,7 @@ import argparse, hashlib, html, json, os, pathlib, sys, urllib.request
 BOARD_ID = "9770686595"          # Customer Projects board, Select workspace ONLY
 SITE = "https://selecthomecenter.com"
 PHONE = "9122086065"
-REVIEW_URL = "REVIEW_URL_PLACEHOLDER"   # set to the Google review link (g.page/r/...)
+REVIEW_URL = "https://g.page/r/CaaWPBbx_KDPEBE/review"   # SHC Google review link (from master plan binder)
 SALT = "shc-tracker-2026"
 ACTIVE_GROUPS = ("Active Projects", "SHS/NADP Projects", "Finished Projects")
 REPO = pathlib.Path(__file__).resolve().parent.parent
