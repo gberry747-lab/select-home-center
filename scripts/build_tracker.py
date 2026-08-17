@@ -20,7 +20,7 @@ SITE = "https://selecthomecenter.com"
 PHONE = "9122086065"
 REVIEW_URL = "REVIEW_URL_PLACEHOLDER"   # set to the Google review link (g.page/r/...)
 SALT = "shc-tracker-2026"
-ACTIVE_GROUPS = ("Active Projects", "SHS/NADP Projects")
+ACTIVE_GROUPS = ("Active Projects", "SHS/NADP Projects", "Finished Projects")
 REPO = pathlib.Path(__file__).resolve().parent.parent
 
 # Milestones that come before the site-work statuses on the board.
@@ -229,6 +229,7 @@ def build_page(name, deal, vin, make, model, steps, outdir):
                   "Todos los pasos están terminados. Fue un honor acompañarlos. "
                   "Si le cuidamos bien, una reseña en Google ayuda a otras familias a encontrarnos.")
         review_html = f'<a class="review" href="{REVIEW_URL}" data-en="&#11088; Leave us a Google review" data-es="&#11088; Déjanos una reseña en Google">&#11088; Leave us a Google review</a>'
+        review_html += f'<a class="review" style="background:#101a7a;color:#fff;margin-top:8px" href="{SITE}/assets/docs/SHC-Warranty-Owners-Checklist.pdf" data-en="&#128220; Your Warranty Owner&#39;s Checklist (PDF)" data-es="&#128220; Su lista de garantía (PDF)">&#128220; Your Warranty Owner&#39;s Checklist (PDF)</a>'
     else:
         head_en, head_es = f"Your home is on its way, {name}!", f"¡Su casa está en camino, {name}!"
         cur_en = current[0] if current else "Next steps"
