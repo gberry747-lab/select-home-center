@@ -193,52 +193,81 @@ def build_staff_page(entries):
     print(f"staff page: {SITE}/track/team-{code[5:]}/")
 
 
-# ---------- Access gates (Team + Track My Home) ----------
-import base64, secrets
 
-GATE_ITER = 200000
+# ---------- Site chrome (real header/footer from the live site) ----------
+import re as _re
 
-def _gate_encrypt(credential, slug):
-    salt = secrets.token_bytes(16)
-    pad = hashlib.pbkdf2_hmac("sha256", credential.encode(), salt, GATE_ITER, dklen=64)
-    plain = ("OK:" + slug).encode()
-    ct = bytes(a ^ b for a, b in zip(plain, pad))
-    return {"s": base64.b64encode(salt).decode(), "c": base64.b64encode(ct).decode()}
+def _absolutize(chunk):
+    chunk = _re.sub(r'href="((?!https?:|/|#|tel:|mailto:)[^"]+\.html)"', r'href="/\1"', chunk)
+    chunk = chunk.replace('src="assets/', 'src="/assets/').replace('href="assets/', 'href="/assets/')
+    chunk = chunk.replace('src="js/', 'src="/js/').replace('href="css/', 'href="/css/')
+    return chunk
 
-GATE_PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">{ROBOTS}
+_CHROME = None
+def site_chrome():
+    global _CHROME
+    if _CHROME is None:
+        src = (REPO / "contact.html").read_text(encoding="utf-8")
+        css = _re.search(r'<link rel="stylesheet" href="(css/styles\.css[^"]*)">', src).group(1)
+        header = src[src.index("<body>") + 6 : src.index("</header>") + 9]
+        footer = src[src.index('<footer class="footer">') : src.index("</body>")]
+        _CHROME = (f'<link rel="stylesheet" href="/{css}">', _absolutize(header), _absolutize(footer))
+    return _CHROME
+
+SITE_PAGE = """<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+{ROBOTS}
 <title>{TITLE} | Select Home Center</title>
-<style>
- *{box-sizing:border-box;margin:0}
- body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;display:flex;flex-direction:column;align-items:center;min-height:100vh}
- .back{display:inline-block;margin:14px 16px 0;background:#fff;border:1.5px solid #c9cddf;color:#101a7a;font-weight:700;font-size:.78rem;text-decoration:none;border-radius:999px;padding:7px 14px}
- .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:auto 16px 0;overflow:hidden}
- .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
- .top .brand{font-weight:800;font-size:.85rem}.top .brand span{color:#f5a623}
- .top h1{font-size:1.3rem;margin:10px 0 0}
- .body{padding:22px 24px}
- label{display:block;font-weight:700;font-size:.85rem;margin:12px 0 5px}
- input{width:100%;padding:12px;border:2px solid #d9dcec;border-radius:10px;font-size:1rem;font-family:inherit}
- input:focus{outline:none;border-color:#101a7a}
- button{width:100%;margin-top:18px;background:#f5a623;color:#3a2a00;border:0;border-radius:11px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit}
- .err{display:none;margin-top:12px;background:#fdecea;color:#8c2f26;border-radius:9px;padding:10px 12px;font-size:.85rem}
- .help{margin-top:14px;font-size:.8rem;color:#6a7090;line-height:1.5}
- .help a{color:#101a7a;font-weight:700}
- .sample{display:block;text-align:center;margin-top:10px;font-size:.85rem;color:#101a7a;font-weight:700}
- footer{margin-top:auto;padding:16px;font-size:.75rem;color:#6a7090;text-align:center}
-</style></head><body>
-<div class="card">
- <div class="top"><a href="/" style="text-decoration:none;color:#fff"><div class="brand">SELECT <span>HOME CENTER</span></div></a><h1>{TITLE}</h1></div>
- <div class="body">
-  {FIELDS}
-  <button onclick="go()" id="btn">{BUTTON}</button>
-  <div class="err" id="err">{ERRMSG}</div>
-  {EXTRA}
- </div>
-</div>
-<a class="back" href="/">&larr; Back to SelectHomeCenter.com</a>
-<footer>Select Home Center · 912-208-6065 · <a href="/" style="color:#101a7a">SelectHomeCenter.com</a></footer>
-<script>
+<meta name="description" content="{DESC}">
+{CSSLINK}
+<style>{CSS}</style>
+</head>
+<body>
+{HEADER}
+<section id="main" tabindex="-1" class="page-hero">
+  <div class="container">
+    <h1>{H1}</h1>
+    <p>{TAGLINE}</p>
+  </div>
+</section>
+<section>
+  <div class="container" style="max-width:{MAXW};padding-top:34px;padding-bottom:56px">
+{CONTENT}
+  </div>
+</section>
+{FOOTER}
+{SCRIPT}
+</body>
+</html>"""
+
+def build_site_page(outpath, *, title, desc, h1, tagline, content, css, script, maxw="560px", noindex=False):
+    csslink, header, footer = site_chrome()
+    page = (SITE_PAGE.replace("{ROBOTS}", '<meta name="robots" content="noindex,nofollow">' if noindex else '')
+            .replace("{TITLE}", title).replace("{DESC}", desc).replace("{CSSLINK}", csslink)
+            .replace("{CSS}", css).replace("{HEADER}", header).replace("{H1}", h1)
+            .replace("{TAGLINE}", tagline).replace("{MAXW}", maxw).replace("{CONTENT}", content)
+            .replace("{FOOTER}", footer).replace("{SCRIPT}", script))
+    outdir = REPO / outpath
+    outdir.mkdir(parents=True, exist_ok=True)
+    (outdir / "index.html").write_text(page, encoding="utf-8")
+
+GATE_CSS = """
+.gcard{background:#fff;border:1px solid #e2e4f0;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.10);padding:26px 26px 24px}
+.gcard label{display:block;font-weight:700;font-size:.85rem;margin:12px 0 5px;color:#1c2340}
+.gcard input{width:100%;box-sizing:border-box;padding:12px;border:2px solid #d9dcec;border-radius:10px;font-size:1rem;font-family:inherit}
+.gcard input:focus{outline:none;border-color:#101a7a}
+.gcard .gbtn{width:100%;margin-top:18px;background:#f5a623;color:#3a2a00;border:0;border-radius:11px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit}
+.gcard .gbtn:hover{background:#e08c00}
+.gerr{display:none;margin-top:12px;background:#fdecea;color:#8c2f26;border-radius:9px;padding:10px 12px;font-size:.85rem}
+.ghelp{margin-top:14px;font-size:.82rem;color:#6a7090;line-height:1.5}
+.ghelp a{color:#101a7a;font-weight:700}
+.gsample{display:block;text-align:center;margin-top:12px;font-size:.9rem;color:#101a7a;font-weight:700}
+"""
+
+GATE_SCRIPT = """<script>
 const ENTRIES={ENTRIES};
 const ITER={ITER};
 function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
@@ -251,26 +280,40 @@ async function tryEntry(cred,e){
  return txt.startsWith('OK:')?txt.slice(3):null;
 }
 async function go(){
- const btn=document.getElementById('btn');btn.textContent='{CHECKING}';
+ const btn=document.getElementById('gbtn');btn.textContent='{CHECKING}';
  const cred={CRED};
  for(const e of ENTRIES){
   try{const slug=await tryEntry(cred,e);if(slug){location.href='/track/'+slug+'/';return;}}catch(x){}
  }
  btn.textContent='{BUTTON}';
- document.getElementById('err').style.display='block';
+ document.getElementById('gerr').style.display='block';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
-</script></body></html>"""
+</script>"""
 
-def _gate_page(path, title, fields, button, checking, errmsg, extra, entries, cred_js, robots='<meta name="robots" content="noindex,nofollow">'):
-    page = (GATE_PAGE.replace("{TITLE}", title).replace("{FIELDS}", fields)
-            .replace("{BUTTON}", button).replace("{CHECKING}", checking)
-            .replace("{ERRMSG}", errmsg).replace("{EXTRA}", extra)
-            .replace("{ENTRIES}", json.dumps(entries)).replace("{ITER}", str(GATE_ITER))
-            .replace("{CRED}", cred_js).replace("{ROBOTS}", robots))
-    outdir = REPO / path
-    outdir.mkdir(parents=True, exist_ok=True)
-    (outdir / "index.html").write_text(page, encoding="utf-8")
+# ---------- Access gates (Team + Track My Home) ----------
+import base64, secrets
+
+GATE_ITER = 200000
+
+def _gate_encrypt(credential, slug):
+    salt = secrets.token_bytes(16)
+    pad = hashlib.pbkdf2_hmac("sha256", credential.encode(), salt, GATE_ITER, dklen=64)
+    plain = ("OK:" + slug).encode()
+    ct = bytes(a ^ b for a, b in zip(plain, pad))
+    return {"s": base64.b64encode(salt).decode(), "c": base64.b64encode(ct).decode()}
+
+def _gate_page(path, title, h1, tagline, fields, button, checking, errmsg, extra, entries, cred_js, noindex=False):
+    content = f"""<div class="gcard">
+{fields}
+  <button class="gbtn" id="gbtn" onclick="go()">{button}</button>
+  <div class="gerr" id="gerr">{errmsg}</div>
+  {extra}
+</div>"""
+    script = (GATE_SCRIPT.replace("{ENTRIES}", json.dumps(entries)).replace("{ITER}", str(GATE_ITER))
+              .replace("{CHECKING}", checking).replace("{BUTTON}", button).replace("{CRED}", cred_js))
+    build_site_page(path, title=title, desc=tagline, h1=h1, tagline=tagline,
+                    content=content, css=GATE_CSS, script=script, noindex=noindex)
 
 def build_team_gate(team_slug):
     pw_file = pathlib.Path.home() / ".config/shc/team_gate_password"
@@ -278,12 +321,13 @@ def build_team_gate(team_slug):
         print("  (no team gate password file - skipping team gate)")
         return
     pw = pw_file.read_text().strip()
-    _gate_page("team", "Team Sign-In",
+    _gate_page("team", "Team Sign-In", "Team Sign-In",
+        "Select Home Center staff only.",
         '<label for="pw">Team password</label><input id="pw" type="password" autocomplete="current-password">',
         "Open Team Page", "Checking...",
         "That password didn&#39;t match. Check with Gregory if you need it.",
         "", [_gate_encrypt(pw, team_slug)],
-        "document.getElementById('pw').value.trim()")
+        "document.getElementById(\'pw\').value.trim()", noindex=True)
     print("team gate: /team/")
 
 def _norm_last(name):
@@ -301,20 +345,147 @@ def build_myhome_gate(cust_entries):
         ph = _norm_phone(phone or "")
         if len(ph) == 10:
             entries.append(_gate_encrypt(_norm_last(name) + ph, slug))
-    fields = ('<label for="ln">Last name / Apellido</label><input id="ln" autocomplete="family-name" placeholder="Smith">' 
+    fields = ('<label for="ln">Last name / Apellido</label><input id="ln" autocomplete="family-name" placeholder="Smith">'
               '<label for="ph">Mobile phone / Tel&eacute;fono</label><input id="ph" type="tel" autocomplete="tel" placeholder="912-555-1234">')
-    extra = ('<div class="help">Use the last name and cell phone number from your purchase paperwork. '
+    extra = ('<div class="ghelp">Use the last name and cell phone number from your purchase paperwork. '
              'No luck? Call or text us at <a href="tel:9122086065">912-208-6065</a> and we&#39;ll send your link. '
              '&iquest;Necesita ayuda en espa&ntilde;ol? Ll&aacute;menos.</div>'
-             '<a class="sample" href="/track/demo/">See a sample Home Tracker &rarr;</a>'
-             '<a class="sample" href="/warranty-checklist/">See a sample Warranty Checklist &rarr;</a>')
-    cred_js = ("document.getElementById('ln').value.toLowerCase().replace(/[^a-z]/g,'')"
-               "+document.getElementById('ph').value.replace(/[^0-9]/g,'').slice(-10)")
-    _gate_page("my-home", "Track My Home",
+             '<a class="gsample" href="/track/demo/">See a sample Home Tracker &rarr;</a>'
+             '<a class="gsample" href="/warranty-checklist/">See a sample Warranty Checklist &rarr;</a>')
+    cred_js = ("document.getElementById(\'ln\').value.toLowerCase().replace(/[^a-z]/g,\'\')"
+               "+document.getElementById(\'ph\').value.replace(/[^0-9]/g,\'\').slice(-10)")
+    _gate_page("my-home", "Track My Home", "Track My Home",
+        "Watch your new home come to life - every Select Home Center family gets a private tracking page.",
         fields, "Find My Home", "Looking...",
         "We couldn&#39;t find a match. Double-check the spelling and number, or call us at 912-208-6065 - we&#39;ll get you your link right away.",
-        extra, entries, cred_js, robots='<meta name="robots" content="index,follow">')
+        extra, entries, cred_js, noindex=False)
     print(f"my-home gate: /my-home/ ({len(entries)} matchable customers)")
+
+
+# ---------- Interactive Warranty Checklist page (site chrome) ----------
+WC_CSS = """
+.wc-progress{background:#fff;border:1px solid #e2e4f0;border-radius:14px;box-shadow:0 6px 24px rgba(16,26,122,.08);padding:16px 20px;margin-bottom:18px}
+.wc-pct{font-size:1.3rem;font-weight:800;color:#101a7a}
+.wc-bar{height:9px;background:#e2e4f0;border-radius:999px;margin-top:8px;overflow:hidden}
+.wc-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#f5a623,#e08c00);border-radius:999px;transition:width .3s}
+.wc-h{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:#6a7090;font-weight:800;margin:18px 0 10px}
+.wc-h.red{color:#a93226}
+.wc-item{display:flex;gap:12px;background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:13px 14px;margin-bottom:8px;cursor:pointer;user-select:none}
+.wc-item input{width:22px;height:22px;flex:0 0 22px;accent-color:#2e8b57;cursor:pointer}
+.wc-item.done .wc-t{text-decoration:line-through;color:#6a7090}
+.wc-t{font-size:.92rem;font-weight:600;color:#1c2340}
+.wc-n{font-size:.8rem;color:#6a7090;font-weight:400;margin-top:2px}
+.wc-r{display:inline-block;font-size:.65rem;font-weight:800;letter-spacing:.05em;background:#eef1ff;color:#313a8d;border-radius:999px;padding:2px 8px;margin-top:6px;text-transform:uppercase}
+.wc-actions{display:flex;gap:10px;margin-top:18px}
+.wc-actions a,.wc-actions button{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:.85rem;border-radius:11px;padding:12px 8px;border:0;cursor:pointer;font-family:inherit}
+.wc-print{background:#101a7a;color:#fff}
+.wc-reset{background:#fff;border:2px solid #e2e4f0;color:#6a7090}
+.wc-note{margin-top:12px;font-size:.78rem;color:#6a7090}
+.wc-lang{float:right;background:#eef1ff;border:1px solid #ccd3f5;color:#101a7a;border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
+"""
+
+def _wc_item(k, t_en, t_es, n_en=None, n_es=None, repeat=False):
+    note = (f'<div class="wc-n" data-en="{n_en}" data-es="{n_es}">{n_en}</div>' if n_en else "")
+    rep = ('<span class="wc-r" data-en="Repeats yearly" data-es="Se repite cada a&ntilde;o">Repeats yearly</span>' if repeat else "")
+    return (f'<div class="wc-item" data-k="{k}"><input type="checkbox"><div>'
+            f'<div class="wc-t" data-en="{t_en}" data-es="{t_es}">{t_en}</div>{note}{rep}</div></div>')
+
+WC_SCRIPT = """<script>
+const KEY='shc-warranty-checklist';
+const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+const items=[...document.querySelectorAll('.wc-item')];
+function refresh(){
+ const done=items.filter(i=>i.querySelector('input').checked).length;
+ document.getElementById('done').textContent=done;
+ document.getElementById('total').textContent=items.length;
+ document.getElementById('bar').style.width=(100*done/items.length)+'%';
+}
+items.forEach(it=>{
+ const k=it.dataset.k, cb=it.querySelector('input');
+ cb.checked=!!saved[k];
+ it.classList.toggle('done',cb.checked);
+ it.addEventListener('click',e=>{
+  if(e.target!==cb) cb.checked=!cb.checked;
+  saved[k]=cb.checked;
+  it.classList.toggle('done',cb.checked);
+  localStorage.setItem(KEY,JSON.stringify(saved));
+  refresh();
+ });
+});
+refresh();
+function resetAll(){
+ ['filter','insp-sched','insp-done'].forEach(k=>{delete saved[k];});
+ localStorage.setItem(KEY,JSON.stringify(saved));
+ location.reload();
+}
+let es=false;
+function toggleLang(){
+ es=!es;
+ document.getElementById('langbtn').textContent=es?'English':'Espa\u00f1ol';
+ document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
+}
+</script>"""
+
+def build_warranty_page():
+    parts = []
+    def H(en, es, red=False):
+        cls = " red" if red else ""
+        parts.append(f'<div class="wc-h{cls}" data-en="{en}" data-es="{es}">{en}</div>')
+    def I(*a, **kw):
+        parts.append(_wc_item(*a, **kw))
+    H("At closing (day one)", "Al cierre (d&iacute;a uno)")
+    I("reg", "Signed the warranty Registration Page (including the annual-inspection acknowledgment)",
+      "Firm&eacute; la p&aacute;gina de registro de la garant&iacute;a (incluida la inspecci&oacute;n anual)")
+    I("date", "Wrote down my Agreement Date (closing day) and my anniversary date",
+      "Anot&eacute; mi fecha de contrato (d&iacute;a de cierre) y mi aniversario")
+    I("docs", "Put the warranty booklet AND sales receipt together somewhere safe",
+      "Guard&eacute; juntos el folleto de garant&iacute;a Y el recibo de compra",
+      "You may need both to get service.", "Puede necesitar ambos para obtener servicio.")
+    I("remind", "Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date",
+      "Puse 3 recordatorios: 60 d&iacute;as antes, 30 d&iacute;as antes y EN mi aniversario")
+    H("Your first year", "Su primer a&ntilde;o")
+    I("wait", "I know the first 30 days are a waiting period (year-one problems go to the manufacturer&#39;s warranty)",
+      "S&eacute; que los primeros 30 d&iacute;as son de espera (el primer a&ntilde;o los problemas van a la garant&iacute;a del fabricante)")
+    I("factory", "Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended",
+      "Report&eacute; TODO problema al fabricante por escrito antes de terminar la garant&iacute;a de f&aacute;brica de 1 a&ntilde;o",
+      "Call us at 912-208-6065 if you need help writing it up.", "Ll&aacute;menos al 912-208-6065 si necesita ayuda.")
+    H("All year, every year", "Todo el a&ntilde;o, cada a&ntilde;o")
+    I("filter", "Doing the owner&#39;s-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS",
+      "Hago el mantenimiento del manual (filtros, serpentines, drenajes) y GUARDO RECIBOS",
+      "No proof of maintenance can void coverage.", "Sin comprobantes, pueden anular la cobertura.", repeat=True)
+    H("The big one: annual inspection", "Lo m&aacute;s importante: inspecci&oacute;n anual", red=True)
+    I("insp-sched", "Scheduled this year&#39;s inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)",
+      "Program&eacute; la inspecci&oacute;n de este a&ntilde;o (Dynamic: 833-205-8200, $299 - o mi propio inspector)", repeat=True)
+    I("insp-done", "Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary",
+      "Inspecci&oacute;n HECHA y papeles RECIBIDOS por Dynamic dentro de 30 d&iacute;as de mi aniversario",
+      "Missing this once voids the warranty. Questions? 912-208-6065.",
+      "Faltar una vez anula la garant&iacute;a. &iquest;Preguntas? 912-208-6065.", repeat=True)
+    H("If something breaks", "Si algo se da&ntilde;a")
+    I("call", "I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it",
+      "Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo",
+      "$75 service fee per visit. Unauthorized repairs are not reimbursed.",
+      "Cuota de $75 por visita. Reparaciones sin autorizaci&oacute;n no se reembolsan.")
+    content = ('<button class="wc-lang" id="langbtn" onclick="toggleLang()">Espa&ntilde;ol</button>'
+               '<div style="clear:both"></div>'
+               '<div class="wc-progress"><span class="wc-pct"><span id="done">0</span> '
+               '<span data-en="of" data-es="de">of</span> <span id="total">0</span> '
+               '<span data-en="done" data-es="listos">done</span></span>'
+               '<div class="wc-bar"><div id="bar"></div></div></div>'
+               + "".join(parts) +
+               '<div class="wc-actions">'
+               '<a class="wc-print" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" '
+               'data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versi&oacute;n en papel">&#128424; Print the paper version</a>'
+               '<button class="wc-reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo a&ntilde;o">Start a new year</button></div>'
+               '<p class="wc-note" data-en="Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." '
+               'data-es="Las marcas se guardan solo en este tel&eacute;fono. Al comenzar cada a&ntilde;o, toque &#39;Comenzar nuevo a&ntilde;o&#39;.">'
+               'Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items.</p>')
+    build_site_page("warranty-checklist",
+        title="Warranty Owner&#39;s Checklist",
+        desc="Keep your free lifetime home warranty active: the Select Home Center owner&#39;s checklist for new manufactured home owners.",
+        h1="Your Warranty Owner&#39;s Checklist",
+        tagline="Check things off as you do them - this page remembers, right on your phone. Hablamos Espa&ntilde;ol.",
+        content=content, css=WC_CSS, script=WC_SCRIPT, maxw="640px", noindex=False)
+    print("warranty checklist page: /warranty-checklist/")
 
 def status_class(text):
     t = (text or "").strip().lower()
@@ -413,6 +584,7 @@ def build_demo():
     team_code = slug_for("staff-page", "")
     build_team_gate(f"team-{team_code[5:]}")
     build_myhome_gate([("Johnson Family (demo)", "", "demo")])
+    build_warranty_page()
     print("built track/demo/ (+card +staff page)")
 
 def build_all():
@@ -447,6 +619,7 @@ def build_all():
     team_code = slug_for("staff-page", "")
     build_team_gate(f"team-{team_code[5:]}"[6:] if False else f"team-{team_code[5:]}")
     build_myhome_gate(gate_entries)
+    build_warranty_page()
     build_demo_page()
     print(f"{n} customer pages built. Commit + push to deploy.")
 

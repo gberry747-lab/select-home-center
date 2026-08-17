@@ -3,84 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Warranty Owner's Checklist | Select Home Center</title>
-<meta name="description" content="Keep your lifetime home warranty active: the Select Home Center owner's checklist for new manufactured home owners.">
+
+<title>Warranty Owner&#39;s Checklist | Select Home Center</title>
+<meta name="description" content="Keep your free lifetime home warranty active: the Select Home Center owner&#39;s checklist for new manufactured home owners.">
+<link rel="stylesheet" href="/css/styles.css?v=27">
 <style>
- :root{--navy:#101a7a;--indigo:#313a8d;--gold:#f5a623;--gold-dk:#e08c00;--paper:#f4f5fa;--card:#fff;--ink:#1c2340;--muted:#6a7090;--line:#e2e4f0;--done:#2e8b57}
- *{box-sizing:border-box;margin:0}
- body{background:var(--paper);color:var(--ink);font-family:Montserrat,"Avenir Next","Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
- .app{max-width:560px;margin:0 auto;min-height:100vh}
- header{background:linear-gradient(160deg,var(--navy),var(--indigo) 90%);color:#fff;padding:26px 22px 56px}
- .brandrow{display:flex;justify-content:space-between;align-items:center}
- .wordmark{font-weight:800;font-size:1rem;color:#fff;text-decoration:none}
- .wordmark span{color:var(--gold)}
- .lang{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:700;cursor:pointer}
- h1{font-size:1.45rem;margin-top:18px}
- .sub{font-size:.85rem;opacity:.92;margin-top:5px}
- .progresscard{background:var(--card);border-radius:14px;box-shadow:0 6px 24px rgba(16,26,122,.10);margin:-34px 18px 0;padding:16px 20px}
- .pct{font-size:1.3rem;font-weight:800;color:var(--navy)}
- .pbar{height:9px;background:var(--line);border-radius:999px;margin-top:8px;overflow:hidden}
- .pbar>div{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-dk));border-radius:999px;transition:width .3s}
- section{padding:20px 18px 0}
- h2{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:10px}
- h2.red{color:#a93226}
- .item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:8px;cursor:pointer;user-select:none}
- .item input{width:22px;height:22px;flex:0 0 22px;accent-color:var(--done);cursor:pointer}
- .item.done .t{text-decoration:line-through;color:var(--muted)}
- .t{font-size:.92rem;font-weight:600}
- .n{font-size:.8rem;color:var(--muted);font-weight:400;margin-top:2px}
- .repeat{display:inline-block;font-size:.65rem;font-weight:800;letter-spacing:.05em;background:#eef1ff;color:var(--indigo);border-radius:999px;padding:2px 8px;margin-top:6px;text-transform:uppercase}
- .actions{display:flex;gap:10px;margin:20px 18px 0}
- .actions a,.actions button{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:.85rem;border-radius:11px;padding:12px 8px;border:0;cursor:pointer;font-family:inherit}
- .print{background:var(--navy);color:#fff}
- .reset{background:#fff;border:2px solid var(--line);color:var(--muted)}
- .note{margin:14px 18px 0;font-size:.78rem;color:var(--muted)}
- footer{margin-top:22px;background:var(--navy);color:#c9cdf0;text-align:center;padding:18px;font-size:.76rem}
- footer a{color:#fff;font-weight:700}
+.wc-progress{background:#fff;border:1px solid #e2e4f0;border-radius:14px;box-shadow:0 6px 24px rgba(16,26,122,.08);padding:16px 20px;margin-bottom:18px}
+.wc-pct{font-size:1.3rem;font-weight:800;color:#101a7a}
+.wc-bar{height:9px;background:#e2e4f0;border-radius:999px;margin-top:8px;overflow:hidden}
+.wc-bar>div{height:100%;width:0%;background:linear-gradient(90deg,#f5a623,#e08c00);border-radius:999px;transition:width .3s}
+.wc-h{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:#6a7090;font-weight:800;margin:18px 0 10px}
+.wc-h.red{color:#a93226}
+.wc-item{display:flex;gap:12px;background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:13px 14px;margin-bottom:8px;cursor:pointer;user-select:none}
+.wc-item input{width:22px;height:22px;flex:0 0 22px;accent-color:#2e8b57;cursor:pointer}
+.wc-item.done .wc-t{text-decoration:line-through;color:#6a7090}
+.wc-t{font-size:.92rem;font-weight:600;color:#1c2340}
+.wc-n{font-size:.8rem;color:#6a7090;font-weight:400;margin-top:2px}
+.wc-r{display:inline-block;font-size:.65rem;font-weight:800;letter-spacing:.05em;background:#eef1ff;color:#313a8d;border-radius:999px;padding:2px 8px;margin-top:6px;text-transform:uppercase}
+.wc-actions{display:flex;gap:10px;margin-top:18px}
+.wc-actions a,.wc-actions button{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:.85rem;border-radius:11px;padding:12px 8px;border:0;cursor:pointer;font-family:inherit}
+.wc-print{background:#101a7a;color:#fff}
+.wc-reset{background:#fff;border:2px solid #e2e4f0;color:#6a7090}
+.wc-note{margin-top:12px;font-size:.78rem;color:#6a7090}
+.wc-lang{float:right;background:#eef1ff;border:1px solid #ccd3f5;color:#101a7a;border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
 </style>
 </head>
 <body>
-<div class="app">
-<header>
- <div class="brandrow">
-  <a class="wordmark" href="https://selecthomecenter.com">SELECT <span>HOME CENTER</span></a>
-  <button class="lang" id="langbtn" onclick="toggleLang()">Español</button>
- </div>
- <h1 data-en="Your Warranty Owner's Checklist" data-es="Su Lista de Garantía">Your Warranty Owner's Checklist</h1>
- <div class="sub" data-en="Check things off as you do them - this page remembers, right on your phone." data-es="Marque cada punto al completarlo - esta página lo recuerda, en su teléfono.">Check things off as you do them - this page remembers, right on your phone.</div>
+
+<a href="#main" class="skip-link">Skip to main content</a>
+
+<header class="header" id="header">
+<div class="annbar"><span class="lg-only">Financing with credit scores as low as <b>500</b> &middot; All credit situations welcome</span><span class="sm-only">Credit scores as low as <b>500</b></span> <span class="mid">&middot;</span> <a href="/financing.html" onclick="typeof gtag==='function'&&gtag('event','promo_500_click',{location:'bar'})">Get Pre-Approved &rarr;</a></div>
+  <div class="container nav">
+    <a href="/" class="logo"><span class="logo-badge"><img src="/assets/img/logo.png" alt="Select Home Center"></span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/">Home</a></li>
+      <li><a href="/inventory.html">Inventory</a></li>
+      <li class="has-dropdown"><a class="dropdown-toggle" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="ddFloorPlans">Floor Plans <span class="car">▾</span></a>
+        <ul class="dropdown" id="ddFloorPlans"><li><a href="/clayton-homes.html">Clayton Homes</a></li><li><a href="/scotbilt-homes.html">Scotbilt Homes</a></li></ul></li>
+      <li><a href="/lifetime-warranty.html">Lifetime Warranty</a></li>
+      <li><a href="/financing.html">Financing</a></li>
+      <li class="has-dropdown"><a class="dropdown-toggle" role="button" tabindex="0" aria-haspopup="true" aria-expanded="false" aria-controls="ddResources">Resources <span class="car">▾</span></a>
+        <ul class="dropdown" id="ddResources"><li><a href="/blog.html">Home Buyer's Guide</a></li><li><a href="/faq.html">FAQ</a></li><li><a href="/service-area.html">Areas We Serve</a></li></ul></li>
+      <li><a href="/realtors.html">Realtors</a></li>
+      <li><a href="/about.html">About</a></li>
+      <li><a href="/contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-cta"><div class="cta-stack"><a href="tel:9122086065" class="phone-link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>912-208-6065</span></a><div class="lang-switch"><a class="active" aria-current="true">EN</a><a href="/es/contact.html" hreflang="es" aria-label="Ver en Español">ES</a></div></div>
+      <button class="hamburger" id="hamburger" aria-label="Menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
 </header>
-<div class="progresscard">
- <span class="pct"><span id="done">0</span> <span data-en="of" data-es="de">of</span> <span id="total">0</span> <span data-en="done" data-es="listos">done</span></span>
- <div class="pbar"><div id="bar"></div></div>
-</div>
-<section>
- <h2 data-en="At closing (day one)" data-es="Al cierre (día uno)">At closing (day one)</h2>
- <div class="item" data-k="reg"><input type="checkbox"><div><div class="t" data-en="Signed the warranty Registration Page (including the annual-inspection acknowledgment)" data-es="Firmé la página de registro de la garantía (incluida la inspección anual)">Signed the warranty Registration Page (including the annual-inspection acknowledgment)</div></div></div>
- <div class="item" data-k="date"><input type="checkbox"><div><div class="t" data-en="Wrote down my Agreement Date (closing day) and my anniversary date" data-es="Anoté mi fecha de contrato (día de cierre) y mi aniversario">Wrote down my Agreement Date (closing day) and my anniversary date</div></div></div>
- <div class="item" data-k="docs"><input type="checkbox"><div><div class="t" data-en="Put the warranty booklet AND sales receipt together somewhere safe" data-es="Guardé juntos el folleto de garantía Y el recibo de compra">Put the warranty booklet AND sales receipt together somewhere safe</div><div class="n" data-en="You may need both to get service." data-es="Puede necesitar ambos para obtener servicio.">You may need both to get service.</div></div></div>
- <div class="item" data-k="remind"><input type="checkbox"><div><div class="t" data-en="Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date" data-es="Puse 3 recordatorios: 60 días antes, 30 días antes y EN mi aniversario">Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date</div></div></div>
- <h2 data-en="Your first year" data-es="Su primer año">Your first year</h2>
- <div class="item" data-k="wait"><input type="checkbox"><div><div class="t" data-en="I know the first 30 days are a waiting period (year-one problems go to the manufacturer's warranty)" data-es="Sé que los primeros 30 días son de espera (el primer año los problemas van a la garantía del fabricante)">I know the first 30 days are a waiting period (year-one problems go to the manufacturer's warranty)</div></div></div>
- <div class="item" data-k="factory"><input type="checkbox"><div><div class="t" data-en="Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended" data-es="Reporté TODO problema al fabricante por escrito antes de terminar la garantía de fábrica de 1 año">Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended</div><div class="n" data-en="Call us at 912-208-6065 if you need help writing it up." data-es="Llámenos al 912-208-6065 si necesita ayuda.">Call us at 912-208-6065 if you need help writing it up.</div></div></div>
- <h2 data-en="All year, every year" data-es="Todo el año, cada año">All year, every year</h2>
- <div class="item" data-k="filter"><input type="checkbox"><div><div class="t" data-en="Doing the owner's-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS" data-es="Hago el mantenimiento del manual (filtros, serpentines, drenajes) y GUARDO RECIBOS">Doing the owner's-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS</div><div class="n" data-en="No proof of maintenance can void coverage." data-es="Sin comprobantes, pueden anular la cobertura.">No proof of maintenance can void coverage.</div><span class="repeat" data-en="Repeats yearly" data-es="Se repite cada año">Repeats yearly</span></div></div>
- <h2 class="red" data-en="The big one: annual inspection" data-es="Lo más importante: inspección anual">The big one: annual inspection</h2>
- <div class="item" data-k="insp-sched"><input type="checkbox"><div><div class="t" data-en="Scheduled this year's inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)" data-es="Programé la inspección de este año (Dynamic: 833-205-8200, $299 - o mi propio inspector)">Scheduled this year's inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)</div><span class="repeat" data-en="Repeats yearly" data-es="Se repite cada año">Repeats yearly</span></div></div>
- <div class="item" data-k="insp-done"><input type="checkbox"><div><div class="t" data-en="Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary" data-es="Inspección HECHA y papeles RECIBIDOS por Dynamic dentro de 30 días de mi aniversario">Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary</div><div class="n" data-en="Missing this once voids the warranty. Questions? 912-208-6065." data-es="Faltar una vez anula la garantía. ¿Preguntas? 912-208-6065.">Missing this once voids the warranty. Questions? 912-208-6065.</div><span class="repeat" data-en="Repeats yearly" data-es="Se repite cada año">Repeats yearly</span></div></div>
- <h2 data-en="If something breaks" data-es="Si algo se daña">If something breaks</h2>
- <div class="item" data-k="call"><input type="checkbox"><div><div class="t" data-en="I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it" data-es="Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo">I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it</div><div class="n" data-en="$75 service fee per visit. Unauthorized repairs are not reimbursed." data-es="Cuota de $75 por visita. Reparaciones sin autorización no se reembolsan.">$75 service fee per visit. Unauthorized repairs are not reimbursed.</div></div></div>
+<section id="main" tabindex="-1" class="page-hero">
+  <div class="container">
+    <h1>Your Warranty Owner&#39;s Checklist</h1>
+    <p>Check things off as you do them - this page remembers, right on your phone. Hablamos Espa&ntilde;ol.</p>
+  </div>
 </section>
-<div class="actions">
- <a class="print" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versión en papel">&#128424; Print the paper version</a>
- <button class="reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo año">Start a new year</button>
-</div>
-<p class="note" data-en="Checkmarks are saved on this phone only. At the start of each warranty year, tap 'Start a new year' to un-check the yearly items and keep your streak honest." data-es="Las marcas se guardan solo en este teléfono. Al comenzar cada año de garantía, toque 'Comenzar nuevo año' para desmarcar los puntos anuales.">Checkmarks are saved on this phone only. At the start of each warranty year, tap "Start a new year" to un-check the yearly items and keep your streak honest.</p>
-<footer>Select Home Center · 912-208-6065 · Se Habla Español · <a href="https://selecthomecenter.com">SelectHomeCenter.com</a></footer>
-</div>
+<section>
+  <div class="container" style="max-width:640px;padding-top:34px;padding-bottom:56px">
+<button class="wc-lang" id="langbtn" onclick="toggleLang()">Espa&ntilde;ol</button><div style="clear:both"></div><div class="wc-progress"><span class="wc-pct"><span id="done">0</span> <span data-en="of" data-es="de">of</span> <span id="total">0</span> <span data-en="done" data-es="listos">done</span></span><div class="wc-bar"><div id="bar"></div></div></div><div class="wc-h" data-en="At closing (day one)" data-es="Al cierre (d&iacute;a uno)">At closing (day one)</div><div class="wc-item" data-k="reg"><input type="checkbox"><div><div class="wc-t" data-en="Signed the warranty Registration Page (including the annual-inspection acknowledgment)" data-es="Firm&eacute; la p&aacute;gina de registro de la garant&iacute;a (incluida la inspecci&oacute;n anual)">Signed the warranty Registration Page (including the annual-inspection acknowledgment)</div></div></div><div class="wc-item" data-k="date"><input type="checkbox"><div><div class="wc-t" data-en="Wrote down my Agreement Date (closing day) and my anniversary date" data-es="Anot&eacute; mi fecha de contrato (d&iacute;a de cierre) y mi aniversario">Wrote down my Agreement Date (closing day) and my anniversary date</div></div></div><div class="wc-item" data-k="docs"><input type="checkbox"><div><div class="wc-t" data-en="Put the warranty booklet AND sales receipt together somewhere safe" data-es="Guard&eacute; juntos el folleto de garant&iacute;a Y el recibo de compra">Put the warranty booklet AND sales receipt together somewhere safe</div><div class="wc-n" data-en="You may need both to get service." data-es="Puede necesitar ambos para obtener servicio.">You may need both to get service.</div></div></div><div class="wc-item" data-k="remind"><input type="checkbox"><div><div class="wc-t" data-en="Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date" data-es="Puse 3 recordatorios: 60 d&iacute;as antes, 30 d&iacute;as antes y EN mi aniversario">Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date</div></div></div><div class="wc-h" data-en="Your first year" data-es="Su primer a&ntilde;o">Your first year</div><div class="wc-item" data-k="wait"><input type="checkbox"><div><div class="wc-t" data-en="I know the first 30 days are a waiting period (year-one problems go to the manufacturer&#39;s warranty)" data-es="S&eacute; que los primeros 30 d&iacute;as son de espera (el primer a&ntilde;o los problemas van a la garant&iacute;a del fabricante)">I know the first 30 days are a waiting period (year-one problems go to the manufacturer&#39;s warranty)</div></div></div><div class="wc-item" data-k="factory"><input type="checkbox"><div><div class="wc-t" data-en="Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended" data-es="Report&eacute; TODO problema al fabricante por escrito antes de terminar la garant&iacute;a de f&aacute;brica de 1 a&ntilde;o">Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended</div><div class="wc-n" data-en="Call us at 912-208-6065 if you need help writing it up." data-es="Ll&aacute;menos al 912-208-6065 si necesita ayuda.">Call us at 912-208-6065 if you need help writing it up.</div></div></div><div class="wc-h" data-en="All year, every year" data-es="Todo el a&ntilde;o, cada a&ntilde;o">All year, every year</div><div class="wc-item" data-k="filter"><input type="checkbox"><div><div class="wc-t" data-en="Doing the owner&#39;s-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS" data-es="Hago el mantenimiento del manual (filtros, serpentines, drenajes) y GUARDO RECIBOS">Doing the owner&#39;s-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS</div><div class="wc-n" data-en="No proof of maintenance can void coverage." data-es="Sin comprobantes, pueden anular la cobertura.">No proof of maintenance can void coverage.</div><span class="wc-r" data-en="Repeats yearly" data-es="Se repite cada a&ntilde;o">Repeats yearly</span></div></div><div class="wc-h red" data-en="The big one: annual inspection" data-es="Lo m&aacute;s importante: inspecci&oacute;n anual">The big one: annual inspection</div><div class="wc-item" data-k="insp-sched"><input type="checkbox"><div><div class="wc-t" data-en="Scheduled this year&#39;s inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)" data-es="Program&eacute; la inspecci&oacute;n de este a&ntilde;o (Dynamic: 833-205-8200, $299 - o mi propio inspector)">Scheduled this year&#39;s inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)</div><span class="wc-r" data-en="Repeats yearly" data-es="Se repite cada a&ntilde;o">Repeats yearly</span></div></div><div class="wc-item" data-k="insp-done"><input type="checkbox"><div><div class="wc-t" data-en="Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary" data-es="Inspecci&oacute;n HECHA y papeles RECIBIDOS por Dynamic dentro de 30 d&iacute;as de mi aniversario">Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary</div><div class="wc-n" data-en="Missing this once voids the warranty. Questions? 912-208-6065." data-es="Faltar una vez anula la garant&iacute;a. &iquest;Preguntas? 912-208-6065.">Missing this once voids the warranty. Questions? 912-208-6065.</div><span class="wc-r" data-en="Repeats yearly" data-es="Se repite cada a&ntilde;o">Repeats yearly</span></div></div><div class="wc-h" data-en="If something breaks" data-es="Si algo se da&ntilde;a">If something breaks</div><div class="wc-item" data-k="call"><input type="checkbox"><div><div class="wc-t" data-en="I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it" data-es="Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo">I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it</div><div class="wc-n" data-en="$75 service fee per visit. Unauthorized repairs are not reimbursed." data-es="Cuota de $75 por visita. Reparaciones sin autorizaci&oacute;n no se reembolsan.">$75 service fee per visit. Unauthorized repairs are not reimbursed.</div></div></div><div class="wc-actions"><a class="wc-print" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versi&oacute;n en papel">&#128424; Print the paper version</a><button class="wc-reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo a&ntilde;o">Start a new year</button></div><p class="wc-note" data-en="Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." data-es="Las marcas se guardan solo en este tel&eacute;fono. Al comenzar cada a&ntilde;o, toque &#39;Comenzar nuevo a&ntilde;o&#39;.">Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items.</p>
+  </div>
+</section>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div><span class="flogo"><img src="/assets/img/logo.png" alt="Select Home Center"></span><p style="margin-bottom:16px;color:rgba(255,255,255,.92)">Affordable, stylish new manufactured homes for working families, backed by a free lifetime warranty.</p><span class="habla">🇪🇸 Se Habla Español</span></div>
+      <div><h4>Explore</h4><ul><li><a href="/">Home</a></li><li><a href="/inventory.html">Inventory</a></li><li><a href="/clayton-homes.html">Clayton Homes</a></li><li><a href="/scotbilt-homes.html">Scotbilt Homes</a></li><li><a href="/county-codes.html">County Codes</a></li>
+        <li><a href="/my-home/">Track My Home</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="/lifetime-warranty.html">Lifetime Warranty</a></li><li><a href="/financing.html">Financing</a></li><li><a href="/realtors.html">Realtors</a></li><li><a href="/about.html">About</a></li>
+        <li><a href="/team/">Team</a></li><li><a href="/contact.html">Contact</a></li></ul></div>
+      <div><h4>Visit / Contact</h4>
+        <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>6047 Second St. N.<br>Folkston, GA 31537</span></div>
+        <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:9122086065">912-208-6065</a></div>
+        <div class="contact-line"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Mon-Fri 9-5 · Sat 10-2<br>Sunday closed</span></div>
+        <div class="social"><a href="https://www.facebook.com/SelectHomeCenter/" target="_blank" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="https://www.instagram.com/selecthomecenter/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></svg></a></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 Select Home Center, LLC. All rights reserved.</span><span><svg style="width:19px;height:10px;vertical-align:-1px;border-radius:2px;margin-right:7px" viewBox="0 0 190 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="American flag"><rect width="190" height="100" fill="#fff"/><rect y="0.00" width="190" height="7.7" fill="#B22234"/><rect y="15.38" width="190" height="7.7" fill="#B22234"/><rect y="30.77" width="190" height="7.7" fill="#B22234"/><rect y="46.15" width="190" height="7.7" fill="#B22234"/><rect y="61.54" width="190" height="7.7" fill="#B22234"/><rect y="76.92" width="190" height="7.7" fill="#B22234"/><rect y="92.31" width="190" height="7.7" fill="#B22234"/><rect width="76" height="53.85" fill="#3C3B6E"/></svg>New Manufactured Homes · Folkston, Georgia</span></div>
+  </div>
+</footer>
+
+<div class="mobile-call"><a href="tel:9122086065"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Tap to Call: 912-208-6065</a></div>
+
+<script src="/js/main.js"></script>
+
 <script>
 const KEY='shc-warranty-checklist';
 const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
-const items=[...document.querySelectorAll('.item')];
+const items=[...document.querySelectorAll('.wc-item')];
 function refresh(){
  const done=items.filter(i=>i.querySelector('input').checked).length;
  document.getElementById('done').textContent=done;
