@@ -210,7 +210,8 @@ GATE_PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <title>{TITLE} | Select Home Center</title>
 <style>
  body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
- .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:8vh 16px 20px;overflow:hidden}
+ .back{display:inline-block;margin:5vh 16px 14px;background:#fff;border:2px solid #101a7a;color:#101a7a;font-weight:800;font-size:.9rem;text-decoration:none;border-radius:999px;padding:10px 18px}
+ .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:0 16px 20px;overflow:hidden}
  .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
  .top .brand{font-weight:800;font-size:.85rem}.top .brand span{color:#f5a623}
  .top h1{font-size:1.3rem;margin:10px 0 0}
@@ -225,8 +226,9 @@ GATE_PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
  .sample{display:block;text-align:center;margin-top:10px;font-size:.85rem;color:#101a7a;font-weight:700}
  footer{margin-top:auto;padding:16px;font-size:.75rem;color:#6a7090;text-align:center}
 </style></head><body>
+<a class="back" href="/">&larr; Back to SelectHomeCenter.com</a>
 <div class="card">
- <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div><h1>{TITLE}</h1></div>
+ <div class="top"><a href="/" style="text-decoration:none;color:#fff"><div class="brand">SELECT <span>HOME CENTER</span></div></a><h1>{TITLE}</h1></div>
  <div class="body">
   {FIELDS}
   <button onclick="go()" id="btn">{BUTTON}</button>

@@ -3,7 +3,8 @@
 <title>Team Sign-In | Select Home Center</title>
 <style>
  body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
- .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:8vh 16px 20px;overflow:hidden}
+ .back{display:inline-block;margin:5vh 16px 14px;background:#fff;border:2px solid #101a7a;color:#101a7a;font-weight:800;font-size:.9rem;text-decoration:none;border-radius:999px;padding:10px 18px}
+ .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:0 16px 20px;overflow:hidden}
  .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
  .top .brand{font-weight:800;font-size:.85rem}.top .brand span{color:#f5a623}
  .top h1{font-size:1.3rem;margin:10px 0 0}
@@ -18,8 +19,9 @@
  .sample{display:block;text-align:center;margin-top:10px;font-size:.85rem;color:#101a7a;font-weight:700}
  footer{margin-top:auto;padding:16px;font-size:.75rem;color:#6a7090;text-align:center}
 </style></head><body>
+<a class="back" href="/">&larr; Back to SelectHomeCenter.com</a>
 <div class="card">
- <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div><h1>Team Sign-In</h1></div>
+ <div class="top"><a href="/" style="text-decoration:none;color:#fff"><div class="brand">SELECT <span>HOME CENTER</span></div></a><h1>Team Sign-In</h1></div>
  <div class="body">
   <label for="pw">Team password</label><input id="pw" type="password" autocomplete="current-password">
   <button onclick="go()" id="btn">Open Team Page</button>
@@ -29,7 +31,7 @@
 </div>
 <footer>Select Home Center · 912-208-6065 · <a href="/" style="color:#101a7a">SelectHomeCenter.com</a></footer>
 <script>
-const ENTRIES=[{"s": "Xr5lcF8kjx8JdLW0n0MpTQ==", "c": "s7RqVtbAR/4QpTZH0jE="}];
+const ENTRIES=[{"s": "ovFA3K9lc+FTg2aDzYZ7Dw==", "c": "BHjb+4JBxPpo3/3PLzI="}];
 const ITER=200000;
 function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
 async function tryEntry(cred,e){
