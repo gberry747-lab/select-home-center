@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Warranty Owner's Checklist | Select Home Center</title>
+<meta name="description" content="Keep your lifetime home warranty active: the Select Home Center owner's checklist for new manufactured home owners.">
+<style>
+ :root{--navy:#101a7a;--indigo:#313a8d;--gold:#f5a623;--gold-dk:#e08c00;--paper:#f4f5fa;--card:#fff;--ink:#1c2340;--muted:#6a7090;--line:#e2e4f0;--done:#2e8b57}
+ *{box-sizing:border-box;margin:0}
+ body{background:var(--paper);color:var(--ink);font-family:Montserrat,"Avenir Next","Segoe UI",Roboto,Arial,sans-serif;line-height:1.5}
+ .app{max-width:560px;margin:0 auto;min-height:100vh}
+ header{background:linear-gradient(160deg,var(--navy),var(--indigo) 90%);color:#fff;padding:26px 22px 56px}
+ .brandrow{display:flex;justify-content:space-between;align-items:center}
+ .wordmark{font-weight:800;font-size:1rem;color:#fff;text-decoration:none}
+ .wordmark span{color:var(--gold)}
+ .lang{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:700;cursor:pointer}
+ h1{font-size:1.45rem;margin-top:18px}
+ .sub{font-size:.85rem;opacity:.92;margin-top:5px}
+ .progresscard{background:var(--card);border-radius:14px;box-shadow:0 6px 24px rgba(16,26,122,.10);margin:-34px 18px 0;padding:16px 20px}
+ .pct{font-size:1.3rem;font-weight:800;color:var(--navy)}
+ .pbar{height:9px;background:var(--line);border-radius:999px;margin-top:8px;overflow:hidden}
+ .pbar>div{height:100%;width:0%;background:linear-gradient(90deg,var(--gold),var(--gold-dk));border-radius:999px;transition:width .3s}
+ section{padding:20px 18px 0}
+ h2{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);font-weight:800;margin-bottom:10px}
+ h2.red{color:#a93226}
+ .item{display:flex;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 14px;margin-bottom:8px;cursor:pointer;user-select:none}
+ .item input{width:22px;height:22px;flex:0 0 22px;accent-color:var(--done);cursor:pointer}
+ .item.done .t{text-decoration:line-through;color:var(--muted)}
+ .t{font-size:.92rem;font-weight:600}
+ .n{font-size:.8rem;color:var(--muted);font-weight:400;margin-top:2px}
+ .repeat{display:inline-block;font-size:.65rem;font-weight:800;letter-spacing:.05em;background:#eef1ff;color:var(--indigo);border-radius:999px;padding:2px 8px;margin-top:6px;text-transform:uppercase}
+ .actions{display:flex;gap:10px;margin:20px 18px 0}
+ .actions a,.actions button{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:.85rem;border-radius:11px;padding:12px 8px;border:0;cursor:pointer;font-family:inherit}
+ .print{background:var(--navy);color:#fff}
+ .reset{background:#fff;border:2px solid var(--line);color:var(--muted)}
+ .note{margin:14px 18px 0;font-size:.78rem;color:var(--muted)}
+ footer{margin-top:22px;background:var(--navy);color:#c9cdf0;text-align:center;padding:18px;font-size:.76rem}
+ footer a{color:#fff;font-weight:700}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+ <div class="brandrow">
+  <a class="wordmark" href="https://selecthomecenter.com">SELECT <span>HOME CENTER</span></a>
+  <button class="lang" id="langbtn" onclick="toggleLang()">Español</button>
+ </div>
+ <h1 data-en="Your Warranty Owner's Checklist" data-es="Su Lista de Garantía">Your Warranty Owner's Checklist</h1>
+ <div class="sub" data-en="Check things off as you do them - this page remembers, right on your phone." data-es="Marque cada punto al completarlo - esta página lo recuerda, en su teléfono.">Check things off as you do them - this page remembers, right on your phone.</div>
+</header>
+<div class="progresscard">
+ <span class="pct"><span id="done">0</span> <span data-en="of" data-es="de">of</span> <span id="total">0</span> <span data-en="done" data-es="listos">done</span></span>
+ <div class="pbar"><div id="bar"></div></div>
+</div>
+<section>
+ <h2 data-en="At closing (day one)" data-es="Al cierre (día uno)">At closing (day one)</h2>
+ <div class="item" data-k="reg"><input type="checkbox"><div><div class="t" data-en="Signed the warranty Registration Page (including the annual-inspection acknowledgment)" data-es="Firmé la página de registro de la garantía (incluida la inspección anual)">Signed the warranty Registration Page (including the annual-inspection acknowledgment)</div></div></div>
+ <div class="item" data-k="date"><input type="checkbox"><div><div class="t" data-en="Wrote down my Agreement Date (closing day) and my anniversary date" data-es="Anoté mi fecha de contrato (día de cierre) y mi aniversario">Wrote down my Agreement Date (closing day) and my anniversary date</div></div></div>
+ <div class="item" data-k="docs"><input type="checkbox"><div><div class="t" data-en="Put the warranty booklet AND sales receipt together somewhere safe" data-es="Guardé juntos el folleto de garantía Y el recibo de compra">Put the warranty booklet AND sales receipt together somewhere safe</div><div class="n" data-en="You may need both to get service." data-es="Puede necesitar ambos para obtener servicio.">You may need both to get service.</div></div></div>
+ <div class="item" data-k="remind"><input type="checkbox"><div><div class="t" data-en="Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date" data-es="Puse 3 recordatorios: 60 días antes, 30 días antes y EN mi aniversario">Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date</div></div></div>
+ <h2 data-en="Your first year" data-es="Su primer año">Your first year</h2>
+ <div class="item" data-k="wait"><input type="checkbox"><div><div class="t" data-en="I know the first 30 days are a waiting period (year-one problems go to the manufacturer's warranty)" data-es="Sé que los primeros 30 días son de espera (el primer año los problemas van a la garantía del fabricante)">I know the first 30 days are a waiting period (year-one problems go to the manufacturer's warranty)</div></div></div>
+ <div class="item" data-k="factory"><input type="checkbox"><div><div class="t" data-en="Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended" data-es="Reporté TODO problema al fabricante por escrito antes de terminar la garantía de fábrica de 1 año">Reported ANY issues to the manufacturer in writing before the 1-year factory warranty ended</div><div class="n" data-en="Call us at 912-208-6065 if you need help writing it up." data-es="Llámenos al 912-208-6065 si necesita ayuda.">Call us at 912-208-6065 if you need help writing it up.</div></div></div>
+ <h2 data-en="All year, every year" data-es="Todo el año, cada año">All year, every year</h2>
+ <div class="item" data-k="filter"><input type="checkbox"><div><div class="t" data-en="Doing the owner's-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS" data-es="Hago el mantenimiento del manual (filtros, serpentines, drenajes) y GUARDO RECIBOS">Doing the owner's-manual maintenance (filters, coils, drain lines) and KEEPING RECEIPTS</div><div class="n" data-en="No proof of maintenance can void coverage." data-es="Sin comprobantes, pueden anular la cobertura.">No proof of maintenance can void coverage.</div><span class="repeat" data-en="Repeats yearly" data-es="Se repite cada año">Repeats yearly</span></div></div>
+ <h2 class="red" data-en="The big one: annual inspection" data-es="Lo más importante: inspección anual">The big one: annual inspection</h2>
+ <div class="item" data-k="insp-sched"><input type="checkbox"><div><div class="t" data-en="Scheduled this year's inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)" data-es="Programé la inspección de este año (Dynamic: 833-205-8200, $299 - o mi propio inspector)">Scheduled this year's inspection (Dynamic: 833-205-8200, $299 - or my own licensed inspector)</div><span class="repeat" data-en="Repeats yearly" data-es="Se repite cada año">Repeats yearly</span></div></div>
+ <div class="item" data-k="insp-done"><input type="checkbox"><div><div class="t" data-en="Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary" data-es="Inspección HECHA y papeles RECIBIDOS por Dynamic dentro de 30 días de mi aniversario">Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary</div><div class="n" data-en="Missing this once voids the warranty. Questions? 912-208-6065." data-es="Faltar una vez anula la garantía. ¿Preguntas? 912-208-6065.">Missing this once voids the warranty. Questions? 912-208-6065.</div><span class="repeat" data-en="Repeats yearly" data-es="Se repite cada año">Repeats yearly</span></div></div>
+ <h2 data-en="If something breaks" data-es="Si algo se daña">If something breaks</h2>
+ <div class="item" data-k="call"><input type="checkbox"><div><div class="t" data-en="I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it" data-es="Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo">I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it</div><div class="n" data-en="$75 service fee per visit. Unauthorized repairs are not reimbursed." data-es="Cuota de $75 por visita. Reparaciones sin autorización no se reembolsan.">$75 service fee per visit. Unauthorized repairs are not reimbursed.</div></div></div>
+</section>
+<div class="actions">
+ <a class="print" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versión en papel">&#128424; Print the paper version</a>
+ <button class="reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo año">Start a new year</button>
+</div>
+<p class="note" data-en="Checkmarks are saved on this phone only. At the start of each warranty year, tap 'Start a new year' to un-check the yearly items and keep your streak honest." data-es="Las marcas se guardan solo en este teléfono. Al comenzar cada año de garantía, toque 'Comenzar nuevo año' para desmarcar los puntos anuales.">Checkmarks are saved on this phone only. At the start of each warranty year, tap "Start a new year" to un-check the yearly items and keep your streak honest.</p>
+<footer>Select Home Center · 912-208-6065 · Se Habla Español · <a href="https://selecthomecenter.com">SelectHomeCenter.com</a></footer>
+</div>
+<script>
+const KEY='shc-warranty-checklist';
+const saved=JSON.parse(localStorage.getItem(KEY)||'{}');
+const items=[...document.querySelectorAll('.item')];
+function refresh(){
+ const done=items.filter(i=>i.querySelector('input').checked).length;
+ document.getElementById('done').textContent=done;
+ document.getElementById('total').textContent=items.length;
+ document.getElementById('bar').style.width=(100*done/items.length)+'%';
+}
+items.forEach(it=>{
+ const k=it.dataset.k, cb=it.querySelector('input');
+ cb.checked=!!saved[k];
+ it.classList.toggle('done',cb.checked);
+ it.addEventListener('click',e=>{
+  if(e.target!==cb) cb.checked=!cb.checked;
+  saved[k]=cb.checked;
+  it.classList.toggle('done',cb.checked);
+  localStorage.setItem(KEY,JSON.stringify(saved));
+  refresh();
+ });
+});
+refresh();
+function resetAll(){
+ ['filter','insp-sched','insp-done'].forEach(k=>{delete saved[k];});
+ localStorage.setItem(KEY,JSON.stringify(saved));
+ location.reload();
+}
+let es=false;
+function toggleLang(){
+ es=!es;
+ document.getElementById('langbtn').textContent=es?'English':'Español';
+ document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
+}
+</script>
+</body>
+</html>
