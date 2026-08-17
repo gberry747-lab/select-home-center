@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Team Sign-In | Select Home Center</title>
+<style>
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+ .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:8vh 16px 20px;overflow:hidden}
+ .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
+ .top .brand{font-weight:800;font-size:.85rem}.top .brand span{color:#f5a623}
+ .top h1{font-size:1.3rem;margin:10px 0 0}
+ .body{padding:22px 24px}
+ label{display:block;font-weight:700;font-size:.85rem;margin:12px 0 5px}
+ input{width:100%;padding:12px;border:2px solid #d9dcec;border-radius:10px;font-size:1rem;font-family:inherit}
+ input:focus{outline:none;border-color:#101a7a}
+ button{width:100%;margin-top:18px;background:#f5a623;color:#3a2a00;border:0;border-radius:11px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit}
+ .err{display:none;margin-top:12px;background:#fdecea;color:#8c2f26;border-radius:9px;padding:10px 12px;font-size:.85rem}
+ .help{margin-top:14px;font-size:.8rem;color:#6a7090;line-height:1.5}
+ .help a{color:#101a7a;font-weight:700}
+ .sample{display:block;text-align:center;margin-top:10px;font-size:.85rem;color:#101a7a;font-weight:700}
+ footer{margin-top:auto;padding:16px;font-size:.75rem;color:#6a7090;text-align:center}
+</style></head><body>
+<div class="card">
+ <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div><h1>Team Sign-In</h1></div>
+ <div class="body">
+  <label for="pw">Team password</label><input id="pw" type="password" autocomplete="current-password">
+  <button onclick="go()" id="btn">Open Team Page</button>
+  <div class="err" id="err">That password didn&#39;t match. Check with Gregory if you need it.</div>
+  
+ </div>
+</div>
+<footer>Select Home Center · 912-208-6065 · <a href="/" style="color:#101a7a">SelectHomeCenter.com</a></footer>
+<script>
+const ENTRIES=[{"s": "Xr5lcF8kjx8JdLW0n0MpTQ==", "c": "s7RqVtbAR/4QpTZH0jE="}];
+const ITER=200000;
+function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
+async function tryEntry(cred,e){
+ const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(cred),'PBKDF2',false,['deriveBits']);
+ const bits=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:b64(e.s),iterations:ITER,hash:'SHA-256'},km,512));
+ const ct=b64(e.c);const out=new Uint8Array(ct.length);
+ for(let i=0;i<ct.length;i++)out[i]=ct[i]^bits[i];
+ const txt=new TextDecoder().decode(out);
+ return txt.startsWith('OK:')?txt.slice(3):null;
+}
+async function go(){
+ const btn=document.getElementById('btn');btn.textContent='Checking...';
+ const cred=document.getElementById('pw').value.trim();
+ for(const e of ENTRIES){
+  try{const slug=await tryEntry(cred,e);if(slug){location.href='/track/'+slug+'/';return;}}catch(x){}
+ }
+ btn.textContent='Open Team Page';
+ document.getElementById('err').style.display='block';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+</script></body></html>

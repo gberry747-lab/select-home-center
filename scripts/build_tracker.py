@@ -192,6 +192,126 @@ def build_staff_page(entries):
     (outdir / "index.html").write_text(STAFF_TEMPLATE.replace("{ROWS}", "\n".join(rows)), encoding="utf-8")
     print(f"staff page: {SITE}/track/team-{code[5:]}/")
 
+
+# ---------- Access gates (Team + Track My Home) ----------
+import base64, secrets
+
+GATE_ITER = 200000
+
+def _gate_encrypt(credential, slug):
+    salt = secrets.token_bytes(16)
+    pad = hashlib.pbkdf2_hmac("sha256", credential.encode(), salt, GATE_ITER, dklen=64)
+    plain = ("OK:" + slug).encode()
+    ct = bytes(a ^ b for a, b in zip(plain, pad))
+    return {"s": base64.b64encode(salt).decode(), "c": base64.b64encode(ct).decode()}
+
+GATE_PAGE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">{ROBOTS}
+<title>{TITLE} | Select Home Center</title>
+<style>
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+ .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:8vh 16px 20px;overflow:hidden}
+ .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
+ .top .brand{font-weight:800;font-size:.85rem}.top .brand span{color:#f5a623}
+ .top h1{font-size:1.3rem;margin:10px 0 0}
+ .body{padding:22px 24px}
+ label{display:block;font-weight:700;font-size:.85rem;margin:12px 0 5px}
+ input{width:100%;padding:12px;border:2px solid #d9dcec;border-radius:10px;font-size:1rem;font-family:inherit}
+ input:focus{outline:none;border-color:#101a7a}
+ button{width:100%;margin-top:18px;background:#f5a623;color:#3a2a00;border:0;border-radius:11px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit}
+ .err{display:none;margin-top:12px;background:#fdecea;color:#8c2f26;border-radius:9px;padding:10px 12px;font-size:.85rem}
+ .help{margin-top:14px;font-size:.8rem;color:#6a7090;line-height:1.5}
+ .help a{color:#101a7a;font-weight:700}
+ .sample{display:block;text-align:center;margin-top:10px;font-size:.85rem;color:#101a7a;font-weight:700}
+ footer{margin-top:auto;padding:16px;font-size:.75rem;color:#6a7090;text-align:center}
+</style></head><body>
+<div class="card">
+ <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div><h1>{TITLE}</h1></div>
+ <div class="body">
+  {FIELDS}
+  <button onclick="go()" id="btn">{BUTTON}</button>
+  <div class="err" id="err">{ERRMSG}</div>
+  {EXTRA}
+ </div>
+</div>
+<footer>Select Home Center · 912-208-6065 · <a href="/" style="color:#101a7a">SelectHomeCenter.com</a></footer>
+<script>
+const ENTRIES={ENTRIES};
+const ITER={ITER};
+function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
+async function tryEntry(cred,e){
+ const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(cred),'PBKDF2',false,['deriveBits']);
+ const bits=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:b64(e.s),iterations:ITER,hash:'SHA-256'},km,512));
+ const ct=b64(e.c);const out=new Uint8Array(ct.length);
+ for(let i=0;i<ct.length;i++)out[i]=ct[i]^bits[i];
+ const txt=new TextDecoder().decode(out);
+ return txt.startsWith('OK:')?txt.slice(3):null;
+}
+async function go(){
+ const btn=document.getElementById('btn');btn.textContent='{CHECKING}';
+ const cred={CRED};
+ for(const e of ENTRIES){
+  try{const slug=await tryEntry(cred,e);if(slug){location.href='/track/'+slug+'/';return;}}catch(x){}
+ }
+ btn.textContent='{BUTTON}';
+ document.getElementById('err').style.display='block';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+</script></body></html>"""
+
+def _gate_page(path, title, fields, button, checking, errmsg, extra, entries, cred_js, robots='<meta name="robots" content="noindex,nofollow">'):
+    page = (GATE_PAGE.replace("{TITLE}", title).replace("{FIELDS}", fields)
+            .replace("{BUTTON}", button).replace("{CHECKING}", checking)
+            .replace("{ERRMSG}", errmsg).replace("{EXTRA}", extra)
+            .replace("{ENTRIES}", json.dumps(entries)).replace("{ITER}", str(GATE_ITER))
+            .replace("{CRED}", cred_js).replace("{ROBOTS}", robots))
+    outdir = REPO / path
+    outdir.mkdir(parents=True, exist_ok=True)
+    (outdir / "index.html").write_text(page, encoding="utf-8")
+
+def build_team_gate(team_slug):
+    pw_file = pathlib.Path.home() / ".config/shc/team_gate_password"
+    if not pw_file.exists():
+        print("  (no team gate password file - skipping team gate)")
+        return
+    pw = pw_file.read_text().strip()
+    _gate_page("team", "Team Sign-In",
+        '<label for="pw">Team password</label><input id="pw" type="password" autocomplete="current-password">',
+        "Open Team Page", "Checking...",
+        "That password didn&#39;t match. Check with Gregory if you need it.",
+        "", [_gate_encrypt(pw, team_slug)],
+        "document.getElementById('pw').value.trim()")
+    print("team gate: /team/")
+
+def _norm_last(name):
+    parts = [w for w in name.replace("&", " ").split() if w.isalpha()]
+    return (parts[-1] if parts else name).lower()
+
+def _norm_phone(raw):
+    d = "".join(ch for ch in raw if ch.isdigit())
+    return d[-10:]
+
+def build_myhome_gate(cust_entries):
+    """cust_entries: list of (item_name, phone, slug) - only those with phone are matchable."""
+    entries = []
+    for name, phone, slug in cust_entries:
+        ph = _norm_phone(phone or "")
+        if len(ph) == 10:
+            entries.append(_gate_encrypt(_norm_last(name) + ph, slug))
+    fields = ('<label for="ln">Last name / Apellido</label><input id="ln" autocomplete="family-name" placeholder="Smith">' 
+              '<label for="ph">Mobile phone / Tel&eacute;fono</label><input id="ph" type="tel" autocomplete="tel" placeholder="912-555-1234">')
+    extra = ('<div class="help">Use the last name and cell phone number from your purchase paperwork. '
+             'No luck? Call or text us at <a href="tel:9122086065">912-208-6065</a> and we&#39;ll send your link. '
+             '&iquest;Necesita ayuda en espa&ntilde;ol? Ll&aacute;menos.</div>'
+             '<a class="sample" href="/track/demo/">See a sample Home Tracker &rarr;</a>')
+    cred_js = ("document.getElementById('ln').value.toLowerCase().replace(/[^a-z]/g,'')"
+               "+document.getElementById('ph').value.replace(/[^0-9]/g,'').slice(-10)")
+    _gate_page("my-home", "Track My Home",
+        fields, "Find My Home", "Looking...",
+        "We couldn&#39;t find a match. Double-check the spelling and number, or call us at 912-208-6065 - we&#39;ll get you your link right away.",
+        extra, entries, cred_js, robots='<meta name="robots" content="index,follow">')
+    print(f"my-home gate: /my-home/ ({len(entries)} matchable customers)")
+
 def status_class(text):
     t = (text or "").strip().lower()
     if t in ("complete", "completed", "done"): return "done"
@@ -270,16 +390,21 @@ def build_demo():
                steps, outdir)
     build_card("Johnson Family", "demo", outdir)
     build_staff_page([("Johnson Family (demo)", "341", "demo")])
+    team_code = slug_for("staff-page", "")
+    build_team_gate(f"team-{team_code[5:]}")
+    build_myhome_gate([("Johnson Family (demo)", "", "demo")])
     print("built track/demo/ (+card +staff page)")
 
 def build_all():
     board = fetch_board()
     n = 0
     entries = []
+    gate_entries = []
     for item in board["items_page"]["items"]:
         if item["group"]["title"] not in ACTIVE_GROUPS:
             continue
         cols = {cv["column"]["title"]: cv for cv in item["column_values"]}
+        phone = (cols.get("Phone") or {}).get("text", "")
         deal = (cols.get("Deal Number") or {}).get("text", "")
         vin = (cols.get("VIN Number") or {}).get("text", "")
         make = (cols.get("Make") or {}).get("text", "")
@@ -296,8 +421,12 @@ def build_all():
         build_card(item["name"], slug, outdir)
         print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
         entries.append((item["name"], deal, slug))
+        gate_entries.append((item["name"], phone, slug))
         n += 1
     build_staff_page(entries)
+    team_code = slug_for("staff-page", "")
+    build_team_gate(f"team-{team_code[5:]}"[6:] if False else f"team-{team_code[5:]}")
+    build_myhome_gate(gate_entries)
     print(f"{n} customer pages built. Commit + push to deploy.")
 
 if __name__ == "__main__":

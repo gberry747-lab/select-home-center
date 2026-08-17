@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow">
+<title>Track My Home | Select Home Center</title>
+<style>
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;display:flex;flex-direction:column;align-items:center;min-height:100vh}
+ .card{width:100%;max-width:420px;background:#fff;border-radius:16px;box-shadow:0 8px 30px rgba(16,26,122,.12);margin:8vh 16px 20px;overflow:hidden}
+ .top{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;padding:22px 24px}
+ .top .brand{font-weight:800;font-size:.85rem}.top .brand span{color:#f5a623}
+ .top h1{font-size:1.3rem;margin:10px 0 0}
+ .body{padding:22px 24px}
+ label{display:block;font-weight:700;font-size:.85rem;margin:12px 0 5px}
+ input{width:100%;padding:12px;border:2px solid #d9dcec;border-radius:10px;font-size:1rem;font-family:inherit}
+ input:focus{outline:none;border-color:#101a7a}
+ button{width:100%;margin-top:18px;background:#f5a623;color:#3a2a00;border:0;border-radius:11px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit}
+ .err{display:none;margin-top:12px;background:#fdecea;color:#8c2f26;border-radius:9px;padding:10px 12px;font-size:.85rem}
+ .help{margin-top:14px;font-size:.8rem;color:#6a7090;line-height:1.5}
+ .help a{color:#101a7a;font-weight:700}
+ .sample{display:block;text-align:center;margin-top:10px;font-size:.85rem;color:#101a7a;font-weight:700}
+ footer{margin-top:auto;padding:16px;font-size:.75rem;color:#6a7090;text-align:center}
+</style></head><body>
+<div class="card">
+ <div class="top"><div class="brand">SELECT <span>HOME CENTER</span></div><h1>Track My Home</h1></div>
+ <div class="body">
+  <label for="ln">Last name / Apellido</label><input id="ln" autocomplete="family-name" placeholder="Smith"><label for="ph">Mobile phone / Tel&eacute;fono</label><input id="ph" type="tel" autocomplete="tel" placeholder="912-555-1234">
+  <button onclick="go()" id="btn">Find My Home</button>
+  <div class="err" id="err">We couldn&#39;t find a match. Double-check the spelling and number, or call us at 912-208-6065 - we&#39;ll get you your link right away.</div>
+  <div class="help">Use the last name and cell phone number from your purchase paperwork. No luck? Call or text us at <a href="tel:9122086065">912-208-6065</a> and we&#39;ll send your link. &iquest;Necesita ayuda en espa&ntilde;ol? Ll&aacute;menos.</div><a class="sample" href="/track/demo/">See a sample Home Tracker &rarr;</a>
+ </div>
+</div>
+<footer>Select Home Center · 912-208-6065 · <a href="/" style="color:#101a7a">SelectHomeCenter.com</a></footer>
+<script>
+const ENTRIES=[];
+const ITER=200000;
+function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
+async function tryEntry(cred,e){
+ const km=await crypto.subtle.importKey('raw',new TextEncoder().encode(cred),'PBKDF2',false,['deriveBits']);
+ const bits=new Uint8Array(await crypto.subtle.deriveBits({name:'PBKDF2',salt:b64(e.s),iterations:ITER,hash:'SHA-256'},km,512));
+ const ct=b64(e.c);const out=new Uint8Array(ct.length);
+ for(let i=0;i<ct.length;i++)out[i]=ct[i]^bits[i];
+ const txt=new TextDecoder().decode(out);
+ return txt.startsWith('OK:')?txt.slice(3):null;
+}
+async function go(){
+ const btn=document.getElementById('btn');btn.textContent='Looking...';
+ const cred=document.getElementById('ln').value.toLowerCase().replace(/[^a-z]/g,'')+document.getElementById('ph').value.replace(/[^0-9]/g,'').slice(-10);
+ for(const e of ENTRIES){
+  try{const slug=await tryEntry(cred,e);if(slug){location.href='/track/'+slug+'/';return;}}catch(x){}
+ }
+ btn.textContent='Find My Home';
+ document.getElementById('err').style.display='block';
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+</script></body></html>
