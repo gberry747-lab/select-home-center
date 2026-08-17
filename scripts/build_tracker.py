@@ -20,7 +20,9 @@ SITE = "https://selecthomecenter.com"
 PHONE = "9122086065"
 REVIEW_URL = "https://g.page/r/CaaWPBbx_KDPEBE/review"   # SHC Google review link (from master plan binder)
 SALT = "shc-tracker-2026"
-ACTIVE_GROUPS = ("Active Projects", "SHS/NADP Projects", "Finished Projects")
+# RULE (Gregory, 2026-08-17): NADP homes are NOT Select Home Center homes.
+# Never include the SHS/NADP group or any item mentioning NADP in SHC systems.
+ACTIVE_GROUPS = ("Active Projects", "Finished Projects")
 REPO = pathlib.Path(__file__).resolve().parent.parent
 
 # Milestones that come before the site-work statuses on the board.
@@ -594,6 +596,8 @@ def build_all():
     gate_entries = []
     for item in board["items_page"]["items"]:
         if item["group"]["title"] not in ACTIVE_GROUPS:
+            continue
+        if "NADP" in (item["name"] or "").upper():
             continue
         cols = {cv["column"]["title"]: cv for cv in item["column_values"]}
         phone = (cols.get("Phone") or {}).get("text", "")
