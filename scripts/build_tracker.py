@@ -42,6 +42,56 @@ ES_STEP = {
     "Trim out": "Acabados",
 }
 
+# Kristin's Permitting board (shared 2026-08-18). Same Select workspace.
+# The customer-facing "Permitting" milestone rolls up from these per-permit
+# status columns; Certificate of Occupancy is inspections, not permitting.
+PERMIT_BOARD_ID = "9771125882"
+PERMIT_COLS = ("Survey", "Site Plan", "Soil Test", "Tax Decal", "Driveway",
+               "Septic", "Move", "Electric", "Mechanical", "Plumbing")
+
+def _norm_vin(v):
+    v = "".join(ch for ch in (v or "").upper() if ch.isalnum())
+    return v if len(v) >= 6 and v != "HOMEONORDER" else ""
+
+def permit_rollup():
+    """{key: (approved, total)} keyed by normalized VIN and lowercased name.
+    total counts permit columns with a value (blank = not tracked yet,
+    'Not Needed' = excluded); approved counts Approved/Received/Done."""
+    q = ('query{boards(ids:[%s]){items_page(limit:100){items{name '
+         'column_values{column{title} text}}}}}' % PERMIT_BOARD_ID)
+    out = {}
+    try:
+        board = monday_query(q)["boards"][0]
+    except Exception as e:
+        print(f"WARNING: permit board unavailable ({e}); using Permitting column only")
+        return out
+    for item in board["items_page"]["items"]:
+        cols = {cv["column"]["title"].strip(): (cv.get("text") or "").strip()
+                for cv in item["column_values"]}
+        done = total = 0
+        for c in PERMIT_COLS:
+            t = cols.get(c, "").lower()
+            if not t or t.startswith("not need"):
+                continue
+            total += 1
+            if t in ("approved", "received", "done"):
+                done += 1
+        if not total:
+            continue
+        out[item["name"].strip().lower()] = (done, total)
+        vin = _norm_vin(cols.get("VIN Number", ""))
+        if vin:
+            out["vin:" + vin] = (done, total)
+    return out
+
+def permit_match(rollup, name, vin):
+    v = _norm_vin(vin)
+    if v:
+        for k, r in rollup.items():
+            if k.startswith("vin:") and (k[4:].endswith(v) or v.endswith(k[4:])):
+                return r
+    return rollup.get((name or "").strip().lower())
+
 def token():
     t = os.environ.get("MONDAY_API_TOKEN")
     if not t:
@@ -518,8 +568,13 @@ def build_page(name, deal, vin, make, model, steps, outdir):
         icon = "&#10003;" if cls == "done" else ("&#9679;" if cls == "active" else "&#9675;")
         badge = {"done": ("Complete", "Completado"), "active": ("In progress", "En proceso"),
                  "scheduled": ("Scheduled", "Programado"), "wait": ("Upcoming", "Pendiente")}[cls]
+        note = ""
+        if note_en:
+            note = (f'<div style="font-size:.78rem;color:#6a7090;margin-top:2px" '
+                    f'data-en="{html.escape(note_en)}" data-es="{html.escape(note_es or note_en)}">'
+                    f'{html.escape(note_en)}</div>')
         rows.append(f'''<div class="step {cls}"><div class="dot">{icon}</div><div class="scard">
-<div class="srow"><span class="sname" data-en="{html.escape(en)}" data-es="{html.escape(es)}">{html.escape(en)}</span></div>
+<div class="srow"><span class="sname" data-en="{html.escape(en)}" data-es="{html.escape(es)}">{html.escape(en)}</span></div>{note}
 <span class="badge" data-en="{badge[0]}" data-es="{badge[1]}">{badge[0]}</span></div></div>''')
     if all_done:
         head_en, head_es = f"Welcome home, {name}!", f"¡Bienvenidos a casa, {name}!"
@@ -539,6 +594,9 @@ def build_page(name, deal, vin, make, model, steps, outdir):
         next_h = (cur_en, cur_es)
         next_p = ("Our team is on it. We'll update this page and message you the moment it's done.",
                   "Nuestro equipo está en ello. Actualizaremos esta página y le avisaremos en cuanto esté listo.")
+        if current and current[3]:
+            next_p = (f"{current[3]}. " + next_p[0],
+                      f"{current[4] or current[3]}. " + next_p[1])
         review_html = ""
     page = (TEMPLATE
         .replace("{{HEAD_EN}}", html.escape(head_en)).replace("{{HEAD_ES}}", html.escape(head_es))
@@ -598,6 +656,8 @@ def build_demo():
 def build_all():
     board = fetch_board()
     n = 0
+    rollup = permit_rollup()
+    print(f"permit board: {len([k for k in rollup if not k.startswith('vin:')])} customers with permit data")
     entries = []
     gate_entries = []
     for item in board["items_page"]["items"]:
@@ -621,6 +681,18 @@ def build_all():
         # RULE (Gregory, 2026-08-18): Permitting comes before well/septic/transport,
         # so it always renders as the first site-work milestone.
         site_steps.sort(key=lambda s_: 0 if s_[0] == "Permitting" else 1)
+        pr = permit_match(rollup, item["name"], vin)
+        # Rollup never downgrades: if the team marked Permitting Complete on the
+        # Customer Projects board, that stands (e.g. delivered homes where a
+        # contractor still owes a trailing sub-permit).
+        cp_done = any(s_[0] == "Permitting" and s_[2] == "done" for s_ in site_steps)
+        if pr and not cp_done:
+            done_n, total_n = pr
+            cls = "done" if done_n == total_n else "active"
+            n_en = "" if cls == "done" else f"{done_n} of {total_n} permits approved"
+            n_es = "" if cls == "done" else f"{done_n} de {total_n} permisos aprobados"
+            site_steps = [(f"Permitting", ES_STEP["Permitting"], cls, n_en, n_es)
+                          if s_[0] == "Permitting" else s_ for s_ in site_steps]
         steps += site_steps
         slug = slug_for(item["id"], deal)
         outdir = REPO / "track" / slug
