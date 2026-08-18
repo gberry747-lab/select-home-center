@@ -38,6 +38,8 @@ ES_STEP = {
     "HVAC": "Aire acondicionado y calefacción", "Electric": "Conexión eléctrica",
     "Steps": "Escalones", "Septic": "Sistema séptico", "Skirting": "Faldón",
     "Trim Out": "Acabados", "Delivery": "Entrega", "Set": "Instalación",
+    "Permitting": "Permisos", "Plumbing": "Plomería", "Inspections": "Inspecciones",
+    "Trim out": "Acabados",
 }
 
 def token():
@@ -425,6 +427,8 @@ function toggleLang(){
  es=!es;
  document.getElementById('langbtn').textContent=es?'English':'Espa\u00f1ol';
  document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
+ const pp=document.getElementById('printpdf');
+ if(pp) pp.href='/assets/docs/SHC-Warranty-Owners-Checklist'+(es?'-ES':'')+'.pdf';
 }
 </script>"""
 
@@ -475,7 +479,7 @@ def build_warranty_page():
                '<div class="wc-bar"><div id="bar"></div></div></div>'
                + "".join(parts) +
                '<div class="wc-actions">'
-               '<a class="wc-print" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" '
+               '<a class="wc-print" id="printpdf" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" '
                'data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versi&oacute;n en papel">&#128424; Print the paper version</a>'
                '<button class="wc-reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo a&ntilde;o">Start a new year</button></div>'
                '<p class="wc-note" data-en="Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." '
@@ -555,7 +559,8 @@ def build_page(name, deal, vin, make, model, steps, outdir):
 def build_demo_page():
     """Just the Johnson demo page + card (safe to run after build_all)."""
     steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
-    steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
+    steps += [("Permitting", ES_STEP["Permitting"], "done", "", ""),
+              ("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
               ("Dirt Pad", ES_STEP["Dirt Pad"], "done", "", ""),
               ("Well", ES_STEP["Well"], "wait", "", ""),
               ("Septic", ES_STEP["Septic"], "done", "", ""),
@@ -570,7 +575,8 @@ def build_demo_page():
 
 def build_demo():
     steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
-    steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
+    steps += [("Permitting", ES_STEP["Permitting"], "done", "", ""),
+              ("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
               ("Dirt Pad", ES_STEP["Dirt Pad"], "done", "", ""),
               ("Well", ES_STEP["Well"], "wait", "", ""),
               ("Septic", ES_STEP["Septic"], "done", "", ""),
@@ -606,11 +612,16 @@ def build_all():
         make = (cols.get("Make") or {}).get("text", "")
         model = (cols.get("Model") or {}).get("text", "")
         steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
+        site_steps = []
         for cv in item["column_values"]:
             if cv["column"]["type"] != "status":
                 continue
             t = cv["column"]["title"]
-            steps.append((t, ES_STEP.get(t, t), status_class(cv.get("text")), "", ""))
+            site_steps.append((t, ES_STEP.get(t, t), status_class(cv.get("text")), "", ""))
+        # RULE (Gregory, 2026-08-18): Permitting comes before well/septic/transport,
+        # so it always renders as the first site-work milestone.
+        site_steps.sort(key=lambda s_: 0 if s_[0] == "Permitting" else 1)
+        steps += site_steps
         slug = slug_for(item["id"], deal)
         outdir = REPO / "track" / slug
         build_page(item["name"], deal, vin, make, model, steps, outdir)
