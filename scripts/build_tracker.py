@@ -251,10 +251,10 @@ function cp(u,btn){navigator.clipboard.writeText(u).then(()=>{btn.textContent="C
 </script></body></html>"""
 
 def build_staff_page(entries):
-    """entries: list of (name, deal, slug)"""
+    """entries: list of (name, deal, slug, home)"""
     rows = []
     import urllib.parse
-    for name, deal, slug in entries:
+    for name, deal, slug, home in entries:
         url = f"{SITE}/track/{slug}/"
         subj = urllib.parse.quote("Your Home Tracker - Select Home Center")
         body = urllib.parse.quote(
@@ -266,8 +266,9 @@ def build_staff_page(entries):
             "(o toque 'Espanol' al final de la pagina).\n\n"
             "Questions any time: 912-208-6065\n\n- Your Select Home Center Team\nSelectHomeCenter.com")
         mailto = f"mailto:?subject={subj}&body={body}"
+        home_bit = f" · {html.escape(home)}" if home.strip() else ""
         rows.append(f'''<div class="cust"><div><div class="who">{html.escape(name)}</div>
-<div class="deal">Deal #{html.escape(deal) if deal else "-"} · {url.replace("https://","")}</div></div>
+<div class="deal">Deal #{html.escape(deal) if deal else "-"}{home_bit}</div></div>
 <div class="btns"><a class="b-view" href="{url}team.html">View page</a>
 <a class="b-card" href="{url}card.html" target="_blank">Print card</a>
 <button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button>
@@ -726,7 +727,7 @@ def build_demo():
     build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”",
                steps, outdir)
     build_card("Johnson Family", "demo", outdir)
-    build_staff_page([("Johnson Family (demo)", "341", "demo")])
+    build_staff_page([("Johnson Family (demo)", "341", "demo", "Clayton Epic Journey")])
     team_code = slug_for("staff-page", "")
     build_team_gate(f"team-{team_code[5:]}")
     build_myhome_gate([("Johnson Family (demo)", "", "demo")])
@@ -782,7 +783,7 @@ def build_all():
                                 "cust": f"{SITE}/track/{slug}/", "phone": phone})
         build_card(item["name"], slug, outdir)
         print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
-        entries.append((item["name"], deal, slug))
+        entries.append((item["name"], deal, slug, f"{make} {model}".strip()))
         gate_entries.append((item["name"], phone, slug))
         n += 1
     build_staff_page(entries)
