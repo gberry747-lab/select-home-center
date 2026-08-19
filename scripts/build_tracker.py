@@ -590,9 +590,9 @@ def build_warranty_page():
                '<a class="wc-print" id="printpdf" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" '
                'data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versi&oacute;n en papel">&#128424; Print the paper version</a>'
                '<button class="wc-reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo a&ntilde;o">Start a new year</button></div>'
-               '<p class="wc-note" data-en="Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." '
-               'data-es="Las marcas se guardan solo en este tel&eacute;fono. Al comenzar cada a&ntilde;o, toque &#39;Comenzar nuevo a&ntilde;o&#39;.">'
-               'Checkmarks are saved on this phone only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items.</p>')
+               '<p class="wc-note" data-en="Checkmarks are saved on this device only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." '
+               'data-es="Las marcas se guardan solo en este dispositivo. Al comenzar cada a&ntilde;o, toque &#39;Comenzar nuevo a&ntilde;o&#39;.">'
+               'Checkmarks are saved on this device only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items.</p>')
     build_site_page("warranty-checklist",
         title="Warranty Owner&#39;s Checklist",
         desc="Keep your free lifetime home warranty active: the Select Home Center owner&#39;s checklist for new manufactured home owners.",
