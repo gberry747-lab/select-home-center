@@ -602,7 +602,7 @@ def status_class(text):
 TEMPLATE = open(REPO / "scripts" / "tracker_template.html", encoding="utf-8").read()
 
 def build_page(name, deal, vin, make, model, steps, outdir,
-               team_view=False, team_url="", outfile="index.html"):
+               team_view=False, team_url="", outfile="index.html", team_extras=None):
     """steps: list of (title_en, title_es, cls, note_en, note_es)"""
     total = len([s for s in steps if s[2] != "na"])
     done = len([s for s in steps if s[2] == "done"])
@@ -662,8 +662,18 @@ def build_page(name, deal, vin, make, model, steps, outdir,
         .replace("{{SITE}}", SITE).replace("{{PHONE}}", PHONE))
     if team_view:
         topbtn = (f'<a class="lang" style="text-decoration:none" href="{team_url}">&#8592; Back</a>')
-        cta = (f'  <a class="call" href="{team_url}" data-en="&#8592; Return to Team Home Page" '
-               f'data-es="&#8592; Volver a la página del equipo">&#8592; Return to Team Home Page</a>')
+        ex = team_extras or {}
+        parts = []
+        if ex.get("monday"):
+            parts.append(f'<a class="call" href="{ex["monday"]}" target="_blank" rel="noopener">Open in Monday</a>')
+        if ex.get("cust"):
+            parts.append('<a class="text" href="#" onclick="navigator.clipboard.writeText(\'' + ex["cust"] +
+                         '\');this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy customer link\',1500);return false">Copy customer link</a>')
+        if ex.get("phone"):
+            digits = "".join(ch for ch in ex["phone"] if ch.isdigit())
+            if digits:
+                parts.append(f'<a class="text" href="tel:{digits}">Call customer</a>')
+        cta = "  " + "\n  ".join(parts) if parts else ""
         savedisp = "display:none"
     else:
         topbtn = ""
@@ -698,7 +708,9 @@ def build_demo_page():
     team_code = slug_for("staff-page", "")
     build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”",
                steps, outdir, team_view=True,
-               team_url=f"{SITE}/track/team-{team_code[5:]}/", outfile="team.html")
+               team_url=f"{SITE}/track/team-{team_code[5:]}/", outfile="team.html",
+               team_extras={"monday": f"https://allieswholesaledepot.monday.com/boards/{BOARD_ID}",
+                            "cust": f"{SITE}/track/demo/", "phone": ""})
     build_card("Johnson Family", "demo", outdir)
     print("built track/demo/ (+card +team view)")
 
@@ -768,7 +780,9 @@ def build_all():
         team_url = f"{SITE}/track/team-{team_code[5:]}/"
         build_page(item["name"], deal, vin, make, model, cust_steps, outdir)
         build_page(item["name"], deal, vin, make, model, team_steps, outdir,
-                   team_view=True, team_url=team_url, outfile="team.html")
+                   team_view=True, team_url=team_url, outfile="team.html",
+                   team_extras={"monday": f"https://allieswholesaledepot.monday.com/boards/{BOARD_ID}/pulses/{item['id']}",
+                                "cust": f"{SITE}/track/{slug}/", "phone": phone})
         build_card(item["name"], slug, outdir)
         print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
         entries.append((item["name"], deal, slug))

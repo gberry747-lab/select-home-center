@@ -50,7 +50,7 @@
   .save ol{margin:8px 0 0 2px;padding-left:20px;font-size:.87rem;color:var(--ink)}
   .save li{margin:6px 0}
   .save .lost{margin-top:10px;padding-top:9px;border-top:1px dashed #ccd3f5;font-size:.8rem;color:var(--muted)}
-  .cta{display:flex;gap:10px;margin:14px 18px 0}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin:14px 18px 0}
   .cta a{flex:1;text-align:center;text-decoration:none;font-weight:800;font-size:.9rem;border-radius:11px;padding:13px 8px}
   .call{background:var(--navy);color:#fff}
   .text{background:#fff;border:2px solid var(--navy);color:var(--navy)}
@@ -163,11 +163,12 @@
   <p class="lost" data-en="Lost this link? No problem - it's also in the welcome message we sent you, or call us at 912-208-6065 and we'll send it again." data-es="¿Perdió este enlace? No hay problema: también está en el mensaje de bienvenida que le enviamos, o llámenos al 912-208-6065 y se lo reenviamos.">Lost this link? No problem - it's also in the welcome message we sent you, or call us at 912-208-6065 and we'll send it again.</p>
 </div>
 <div class="cta">
-  <a class="call" href="https://selecthomecenter.com/track/team-U8ATJR/" data-en="&#8592; Return to Team Home Page" data-es="&#8592; Volver a la página del equipo">&#8592; Return to Team Home Page</a>
+  <a class="call" href="https://allieswholesaledepot.monday.com/boards/9770686595/pulses/9771046628" target="_blank" rel="noopener">Open in Monday</a>
+  <a class="text" href="#" onclick="navigator.clipboard.writeText('https://selecthomecenter.com/track/deal160-3R7HY7/');this.textContent='Copied!';setTimeout(()=>this.textContent='Copy customer link',1500);return false">Copy customer link</a>
 </div>
 <footer>
   <div>Select Home Center · 6047 2nd St N, Folkston, GA · 912-208-6065 · Se Habla Español</div>
-  <div style="margin-top:8px"><a href="https://selecthomecenter.com" data-en="Visit SelectHomeCenter.com" data-es="Visite SelectHomeCenter.com">Visit SelectHomeCenter.com</a> &nbsp;·&nbsp; <a href="https://selecthomecenter.com/warranty-checklist/" target="_blank" rel="noopener" data-en="Warranty Owner's Checklist" data-es="Lista de garantía">Warranty Owner's Checklist</a> &nbsp;·&nbsp; <a href="#" id="langfoot" onclick="toggleLang();return false">Español</a></div>
+  <div style="margin-top:8px"><a href="https://selecthomecenter.com" data-en="Visit SelectHomeCenter.com" data-es="Visite SelectHomeCenter.com">Visit SelectHomeCenter.com</a> &nbsp;·&nbsp; <a href="https://selecthomecenter.com/warranty-checklist/" target="_blank" rel="noopener" data-en="Warranty Owner's Checklist" data-es="Lista de garantía">Warranty Owner's Checklist</a></div>
 </footer>
 </div>
 <script>
@@ -181,20 +182,10 @@
   else if (isAndroid) { document.getElementById('save-android').style.display = 'block'; }
   else { document.getElementById('save-ios').style.display = 'block'; document.getElementById('save-android').style.display = 'block'; }
 })();
-let es=false;
-function applyLang(){
-  document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
-  const f=document.getElementById('langfoot'); if(f)f.textContent=es?'In English':'Español';
-}
-function toggleLang(){
-  es=!es;
-  try{localStorage.setItem('shc-lang',es?'es':'en')}catch(e){}
-  applyLang();
-}
 (function(){
   let p=null; try{p=localStorage.getItem('shc-lang')}catch(e){}
-  es = p ? p==='es' : ((navigator.language||'').toLowerCase().indexOf('es')===0);
-  if(es)applyLang();
+  const es = p ? p==='es' : ((navigator.language||'').toLowerCase().indexOf('es')===0);
+  if(es)document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=el.getAttribute('data-es');});
 })();
 </script>
 </body>
