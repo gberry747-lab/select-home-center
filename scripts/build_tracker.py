@@ -669,10 +669,6 @@ def build_page(name, deal, vin, make, model, steps, outdir,
         if ex.get("cust"):
             parts.append('<a class="text" href="#" onclick="navigator.clipboard.writeText(\'' + ex["cust"] +
                          '\');this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy customer link\',1500);return false">Copy customer link</a>')
-        if ex.get("phone"):
-            digits = "".join(ch for ch in ex["phone"] if ch.isdigit())
-            if digits:
-                parts.append(f'<a class="text" href="tel:{digits}">Call customer</a>')
         cta = "  " + "\n  ".join(parts) if parts else ""
         savedisp = "display:none"
     else:
