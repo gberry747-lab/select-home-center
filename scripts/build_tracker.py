@@ -244,7 +244,7 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 &nbsp;&nbsp;&bull; Or <b>Copy link</b> and paste into a text from your phone: <i>"Congratulations! Here's your personal Home Tracker - watch every step of your new home: [paste link]. Save this text!"</i><br>
 3. That's it. The page updates by itself as Monday statuses change. Keep this team page bookmarked; do not share this page's address with customers.</div>
 {ROWS}
-<div class="note">Updated automatically from the Monday board each time the tracker refreshes. Questions: ask Gregory.</div>
+<div class="note">Updated automatically from the Monday board each time the tracker refreshes.</div>
 </div>
 <script>
 function cp(u,btn){navigator.clipboard.writeText(u).then(()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy link",1500);});}
