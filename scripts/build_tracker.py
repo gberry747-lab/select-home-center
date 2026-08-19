@@ -500,6 +500,7 @@ WC_CSS = """
 .wc-reset{background:#fff;border:2px solid #e2e4f0;color:#6a7090}
 .wc-note{margin-top:12px;font-size:.78rem;color:#6a7090}
 .wc-lang{float:right;background:#eef1ff;border:1px solid #ccd3f5;color:#101a7a;border-radius:999px;padding:4px 12px;font-size:.75rem;font-weight:700;cursor:pointer;font-family:inherit}
+.wc-back{display:inline-block;background:#eef1ff;border:1px solid #ccd3f5;color:#101a7a;border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:800;text-decoration:none;margin-bottom:14px}
 """
 
 def _wc_item(k, t_en, t_es, n_en=None, n_es=None, repeat=False):
@@ -577,7 +578,10 @@ def build_warranty_page():
       "Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo",
       "$75 service fee per visit. Unauthorized repairs are not reimbursed.",
       "Cuota de $75 por visita. Reparaciones sin autorizaci&oacute;n no se reembolsan.")
-    content = ('<div class="wc-progress"><span class="wc-pct"><span id="done">0</span> '
+    content = ('<a class="wc-back" href="/" '
+               'onclick="if(history.length>1){history.back();return false}" '
+               'data-en="&#8592; Back" data-es="&#8592; Atr&aacute;s">&#8592; Back</a>'
+               '<div class="wc-progress"><span class="wc-pct"><span id="done">0</span> '
                '<span data-en="of" data-es="de">of</span> <span id="total">0</span> '
                '<span data-en="done" data-es="listos">done</span></span>'
                '<div class="wc-bar"><div id="bar"></div></div></div>'
