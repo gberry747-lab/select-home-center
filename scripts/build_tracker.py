@@ -225,9 +225,10 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
  header h1{font-size:1.3rem;margin:8px 0 0}
  .howto{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:16px 0;font-size:.88rem;line-height:1.6}
  .howto b{color:#101a7a}
- .cust{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:10px 0;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
- .cust .who{font-weight:800;font-size:1rem} .cust .deal{color:#6a7090;font-size:.8rem}
- .btns{display:flex;gap:8px;flex-wrap:wrap}
+ .cust{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:10px 0;display:flex;gap:12px;align-items:center;justify-content:space-between}
+ .cust .info{flex:1 1 auto;min-width:0}
+ .cust .who{font-weight:800;font-size:1rem;overflow-wrap:anywhere} .cust .deal{color:#6a7090;font-size:.8rem}
+ .btns{flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:248px}
  .btns a,.btns button{border:0;cursor:pointer;text-decoration:none;font-weight:700;font-size:.8rem;border-radius:9px;padding:9px 13px;font-family:inherit}
  .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00} .b-mail{background:#2e8b57;color:#fff}
  .note{font-size:.75rem;color:#6a7090;margin-top:18px;text-align:center}
@@ -267,7 +268,7 @@ def build_staff_page(entries):
             "Questions any time: 912-208-6065\n\n- Your Select Home Center Team\nSelectHomeCenter.com")
         mailto = f"mailto:?subject={subj}&body={body}"
         home_bit = f" · {html.escape(home)}" if home.strip() else ""
-        rows.append(f'''<div class="cust"><div><div class="who">{html.escape(name)}</div>
+        rows.append(f'''<div class="cust"><div class="info"><div class="who">{html.escape(name)}</div>
 <div class="deal">Deal #{html.escape(deal) if deal else "-"}{home_bit}</div></div>
 <div class="btns"><a class="b-view" href="{url}team.html">View page</a>
 <a class="b-card" href="{url}card.html" target="_blank">Print card</a>
