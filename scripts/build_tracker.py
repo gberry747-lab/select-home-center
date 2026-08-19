@@ -219,7 +219,7 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 <title>Home Tracker - Team Page</title>
 <style>
  body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;padding:0 16px 40px}
- .wrap{max-width:640px;margin:0 auto}
+ .wrap{max-width:780px;margin:0 auto}
  header{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;margin:0 -16px;padding:22px 20px}
  header .brand{font-weight:800;font-size:.9rem} header .brand span{color:#f5a623}
  header h1{font-size:1.3rem;margin:8px 0 0}
@@ -228,7 +228,8 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
  .cust{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:14px 18px;margin:10px 0;display:flex;gap:12px;align-items:center;justify-content:space-between}
  .cust .info{flex:1 1 auto;min-width:0}
  .cust .who{font-weight:800;font-size:1rem;overflow-wrap:anywhere} .cust .deal{color:#6a7090;font-size:.8rem}
- .btns{flex:0 0 auto;display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;max-width:248px}
+ .btns{flex:0 0 auto;display:flex;gap:8px;flex-wrap:nowrap}
+ @media(max-width:660px){.cust{flex-wrap:wrap}.btns{width:100%;gap:6px}.btns a,.btns button{font-size:.72rem;padding:8px 9px}}
  .btns a,.btns button{border:0;cursor:pointer;text-decoration:none;font-weight:700;font-size:.8rem;border-radius:9px;padding:9px 13px;font-family:inherit}
  .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00} .b-mail{background:#2e8b57;color:#fff}
  .note{font-size:.75rem;color:#6a7090;margin-top:18px;text-align:center}
