@@ -503,11 +503,11 @@ WC_CSS = """
 .wc-back{display:inline-block;background:#eef1ff;border:1px solid #ccd3f5;color:#101a7a;border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:800;text-decoration:none;margin-bottom:14px}
 """
 
-def _wc_item(k, t_en, t_es, n_en=None, n_es=None, repeat=False):
+def _wc_item(k, t_en, t_es, n_en=None, n_es=None, repeat=False, extra=""):
     note = (f'<div class="wc-n" data-en="{n_en}" data-es="{n_es}">{n_en}</div>' if n_en else "")
     rep = ('<span class="wc-r" data-en="Repeats yearly" data-es="Se repite cada a&ntilde;o">Repeats yearly</span>' if repeat else "")
     return (f'<div class="wc-item" data-k="{k}"><input type="checkbox"><div>'
-            f'<div class="wc-t" data-en="{t_en}" data-es="{t_es}">{t_en}</div>{note}{rep}</div></div>')
+            f'<div class="wc-t" data-en="{t_en}" data-es="{t_es}">{t_en}</div>{note}{rep}{extra}</div></div>')
 
 WC_SCRIPT = """<script>
 const KEY='shc-warranty-checklist';
@@ -524,6 +524,7 @@ items.forEach(it=>{
  cb.checked=!!saved[k];
  it.classList.toggle('done',cb.checked);
  it.addEventListener('click',e=>{
+  if(e.target.closest('.wc-anniv'))return;
   if(e.target!==cb) cb.checked=!cb.checked;
   saved[k]=cb.checked;
   it.classList.toggle('done',cb.checked);
@@ -532,6 +533,11 @@ items.forEach(it=>{
  });
 });
 refresh();
+const ad=document.getElementById('annivdate');
+if(ad){
+ ad.value=localStorage.getItem('shc-warranty-anniv')||'';
+ ad.addEventListener('input',()=>localStorage.setItem('shc-warranty-anniv',ad.value));
+}
 function resetAll(){
  ['filter','insp-sched','insp-done'].forEach(k=>{delete saved[k];});
  localStorage.setItem(KEY,JSON.stringify(saved));
@@ -554,8 +560,8 @@ def build_warranty_page():
     I("docs", "Put the warranty booklet AND sales receipt together somewhere safe",
       "Guard&eacute; juntos el folleto de garant&iacute;a Y el recibo de compra",
       "You may need both to get service.", "Puede necesitar ambos para obtener servicio.")
-    I("remind", "Set 3 phone reminders: 60 days before, 30 days before, and ON my anniversary date",
-      "Puse 3 recordatorios: 60 d&iacute;as antes, 30 d&iacute;as antes y EN mi aniversario")
+    I("remind", "Set 4 phone reminders: 90, 60, 30 days, and 1 week before my anniversary date",
+      "Puse 4 recordatorios: 90, 60, 30 d&iacute;as y 1 semana antes de mi aniversario")
     H("Your first year", "Su primer a&ntilde;o")
     I("wait", "I know the first 30 days are a waiting period (year-one problems go to the manufacturer&#39;s warranty)",
       "S&eacute; que los primeros 30 d&iacute;as son de espera (el primer a&ntilde;o los problemas van a la garant&iacute;a del fabricante)")
@@ -572,7 +578,11 @@ def build_warranty_page():
     I("insp-done", "Inspection DONE and paperwork RECEIVED by Dynamic within 30 days of my anniversary",
       "Inspecci&oacute;n HECHA y papeles RECIBIDOS por Dynamic dentro de 30 d&iacute;as de mi aniversario",
       "Missing this once voids the warranty. Questions? 912-208-6065.",
-      "Faltar una vez anula la garant&iacute;a. &iquest;Preguntas? 912-208-6065.", repeat=True)
+      "Faltar una vez anula la garant&iacute;a. &iquest;Preguntas? 912-208-6065.", repeat=True,
+      extra=('<div class="wc-anniv" style="margin-top:8px"><span class="wc-n" '
+             'data-en="My anniversary date:" data-es="Mi fecha de aniversario:">My anniversary date:</span> '
+             '<input type="text" id="annivdate" placeholder="e.g. June 14" '
+             'style="border:1.5px solid #ccd3f5;border-radius:8px;padding:5px 9px;font-family:inherit;font-size:.85rem;width:130px"></div>'))
     H("If something breaks", "Si algo se da&ntilde;a")
     I("call", "I know the rule: call 833-205-8200 BEFORE any repair, turn the item off, protect it",
       "Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo",
@@ -590,9 +600,9 @@ def build_warranty_page():
                '<a class="wc-print" id="printpdf" href="/assets/docs/SHC-Warranty-Owners-Checklist.pdf" target="_blank" rel="noopener" '
                'data-en="&#128424; Print the paper version" data-es="&#128424; Imprimir la versi&oacute;n en papel">&#128424; Print the paper version</a>'
                '<button class="wc-reset" onclick="resetAll()" data-en="Start a new year" data-es="Comenzar nuevo a&ntilde;o">Start a new year</button></div>'
-               '<p class="wc-note" data-en="Checkmarks are saved on this device only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." '
-               'data-es="Las marcas se guardan solo en este dispositivo. Al comenzar cada a&ntilde;o, toque &#39;Comenzar nuevo a&ntilde;o&#39;.">'
-               'Checkmarks are saved on this device only. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items.</p>')
+               '<p class="wc-note" data-en="Checkmarks are saved on this device only, and your browser can clear them over time - they may not still be here after the first year, so keep your printed copy too. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items." '
+               'data-es="Las marcas se guardan solo en este dispositivo y el navegador puede borrarlas con el tiempo - puede que no sigan aqu&iacute; despu&eacute;s del primer a&ntilde;o; guarde tambi&eacute;n su copia impresa. Al comenzar cada a&ntilde;o, toque &#39;Comenzar nuevo a&ntilde;o&#39;.">'
+               'Checkmarks are saved on this device only, and your browser can clear them over time - they may not still be here after the first year, so keep your printed copy too. At the start of each warranty year, tap &#39;Start a new year&#39; to un-check the yearly items.</p>')
     build_site_page("warranty-checklist",
         title="Warranty Owner&#39;s Checklist",
         desc="Keep your free lifetime home warranty active: the Select Home Center owner&#39;s checklist for new manufactured home owners.",
