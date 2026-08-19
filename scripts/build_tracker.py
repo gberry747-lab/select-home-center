@@ -232,7 +232,10 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
  .b-view{background:#eef1ff;color:#101a7a} .b-card{background:#101a7a;color:#fff} .b-copy{background:#f5a623;color:#3a2a00} .b-mail{background:#2e8b57;color:#fff}
  .note{font-size:.75rem;color:#6a7090;margin-top:18px;text-align:center}
 </style></head><body><div class="wrap">
-<header><div class="brand">SELECT <span>HOME CENTER</span> - TEAM ONLY</div>
+<header><div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+<div class="brand">SELECT <span>HOME CENTER</span> - TEAM ONLY</div>
+<a href="https://selecthomecenter.com" style="background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:5px 14px;font-size:.75rem;font-weight:700;text-decoration:none;white-space:nowrap">&#8592; Back to SelectHomeCenter.com</a>
+</div>
 <h1>Customer Home Trackers</h1></header>
 <div class="howto"><b>New customer checklist:</b><br>
 1. <b>Print card:</b> tap their gold-framed "Print card" button, then File &gt; Print. Card goes in their paperwork folder.<br>
