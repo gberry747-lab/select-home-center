@@ -265,7 +265,7 @@ def build_staff_page(entries):
         mailto = f"mailto:?subject={subj}&body={body}"
         rows.append(f'''<div class="cust"><div><div class="who">{html.escape(name)}</div>
 <div class="deal">Deal #{html.escape(deal) if deal else "-"} · {url.replace("https://","")}</div></div>
-<div class="btns"><a class="b-view" href="{url}team.html" target="_blank">View page</a>
+<div class="btns"><a class="b-view" href="{url}team.html">View page</a>
 <a class="b-card" href="{url}card.html" target="_blank">Print card</a>
 <button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button>
 <a class="b-mail" href="{mailto}">Email customer</a></div></div>''')
