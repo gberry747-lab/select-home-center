@@ -664,10 +664,8 @@ def build_page(name, deal, vin, make, model, steps, outdir,
         topbtn = (f'<a class="lang" style="text-decoration:none" href="{team_url}">&#8592; Back</a>')
         ex = team_extras or {}
         parts = []
-        if ex.get("monday"):
-            parts.append(f'<a class="call" href="{ex["monday"]}" target="_blank" rel="noopener">Open in Monday</a>')
         if ex.get("cust"):
-            parts.append('<a class="text" href="#" onclick="navigator.clipboard.writeText(\'' + ex["cust"] +
+            parts.append('<a class="call" href="#" onclick="navigator.clipboard.writeText(\'' + ex["cust"] +
                          '\');this.textContent=\'Copied!\';setTimeout(()=>this.textContent=\'Copy customer link\',1500);return false">Copy customer link</a>')
         cta = "  " + "\n  ".join(parts) if parts else ""
         savedisp = "display:none"
