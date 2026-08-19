@@ -23,7 +23,7 @@
   .pct{font-size:1.5rem;font-weight:800;color:var(--navy)}
   .sdate{font-size:.74rem;color:var(--muted);font-weight:600;white-space:nowrap}
   .pbar{height:10px;background:var(--line);border-radius:999px;margin-top:10px;overflow:hidden}
-  .pbar>div{height:100%;width:{{PCT}}%;background:linear-gradient(90deg,var(--gold),var(--gold-dk));border-radius:999px}
+  .pbar>div{height:100%;width:94%;background:linear-gradient(90deg,var(--gold),var(--gold-dk));border-radius:999px}
   .next{margin:16px 18px 0;background:var(--active-soft);border:1px solid #f3ddb0;border-radius:14px;padding:14px 16px}
   .next .tag{font-size:.68rem;font-weight:800;letter-spacing:.1em;color:var(--gold-dk);text-transform:uppercase}
   .next h2{font-size:1.05rem;margin-top:3px}
@@ -72,28 +72,81 @@
 <div class="app">
 <header>
   <div class="brandrow">
-    <a class="wordmark" href="{{SITE}}">SELECT <span>HOME CENTER</span></a>
-    {{TOPBTN}}
+    <a class="wordmark" href="https://selecthomecenter.com">SELECT <span>HOME CENTER</span></a>
+    <a class="lang" style="text-decoration:none" href="https://selecthomecenter.com/track/team-U8ATJR/">&#8592; Back</a>
   </div>
-  <div class="apptitle" data-en="{{HEAD_EN}}" data-es="{{HEAD_ES}}">{{HEAD_EN}}</div>
-  <div class="custline" data-en="{{SUB_EN}}" data-es="{{SUB_ES}}">{{SUB_EN}}</div>
-  <div class="dealchip">{{DEALCHIP}}</div>
+  <div class="apptitle" data-en="Your home is on its way, Brandon Squibb!" data-es="¡Su casa está en camino, Brandon Squibb!">Your home is on its way, Brandon Squibb!</div>
+  <div class="custline" data-en="Liveoak Tundra" data-es="Liveoak Tundra">Liveoak Tundra</div>
+  <div class="dealchip">Deal #120 · Folkston, GA</div>
 </header>
 <div class="progresscard">
-  <div class="srow"><span class="pct">{{DONE}} of {{TOTAL}}</span><span class="sdate" data-en="steps complete" data-es="pasos completados">steps complete</span></div>
+  <div class="srow"><span class="pct">17 of 18</span><span class="sdate" data-en="steps complete" data-es="pasos completados">steps complete</span></div>
   <div class="pbar"><div></div></div>
 </div>
 <div class="next">
-  <div class="tag" data-en="{{NEXT_TAG_EN}}" data-es="{{NEXT_TAG_ES}}">{{NEXT_TAG_EN}}</div>
-  <h2 data-en="{{NEXT_H_EN}}" data-es="{{NEXT_H_ES}}">{{NEXT_H_EN}}</h2>
-  <p data-en="{{NEXT_P_EN}}" data-es="{{NEXT_P_ES}}">{{NEXT_P_EN}}</p>
-  {{REVIEW}}
+  <div class="tag" data-en="Happening now" data-es="En proceso">Happening now</div>
+  <h2 data-en="Inspections" data-es="Inspecciones">Inspections</h2>
+  <p data-en="Our team is on it. We&#x27;ll update this page and message you the moment it&#x27;s done." data-es="Nuestro equipo está en ello. Actualizaremos esta página y le avisaremos en cuanto esté listo.">Our team is on it. We&#x27;ll update this page and message you the moment it&#x27;s done.</p>
+  
 </div>
 <section class="tl">
   <h3 data-en="Your journey home" data-es="El camino a su casa">Your journey home</h3>
-  {{STEPS}}
+  <div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Financing approved" data-es="Financiamiento aprobado">Financing approved</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Home ordered" data-es="Casa ordenada">Home ordered</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Home arrived at our lot" data-es="Casa llegó a nuestro lote">Home arrived at our lot</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Permitting" data-es="Permisos">Permitting</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Land Clearing" data-es="Limpieza del terreno">Land Clearing</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Dirt Pad" data-es="Plataforma de tierra">Dirt Pad</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Delivery" data-es="Entrega">Delivery</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Set" data-es="Instalación">Set</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Trim out" data-es="Acabados">Trim out</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Plumbing" data-es="Plomería">Plumbing</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Septic" data-es="Sistema séptico">Septic</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Well" data-es="Pozo de agua">Well</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Power Pole" data-es="Poste de electricidad">Power Pole</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="HVAC" data-es="Aire acondicionado y calefacción">HVAC</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Electric" data-es="Conexión eléctrica">Electric</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Steps" data-es="Escalones">Steps</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step done"><div class="dot">&#10003;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Skirting" data-es="Faldón">Skirting</span></div>
+<span class="badge" data-en="Complete" data-es="Completado">Complete</span></div></div>
+<div class="step wait"><div class="dot">&#9675;</div><div class="scard">
+<div class="srow"><span class="sname" data-en="Inspections" data-es="Inspecciones">Inspections</span></div>
+<span class="badge" data-en="Upcoming" data-es="Pendiente">Upcoming</span></div></div>
 </section>
-<div class="save" id="savecard" style="{{SAVEDISP}}">
+<div class="save" id="savecard" style="display:none">
   <div class="savehead">
     <span data-en="&#128204; Save this page so you never lose it" data-es="&#128204; Guarde esta página para no perderla">&#128204; Save this page so you never lose it</span>
   </div>
@@ -110,11 +163,11 @@
   <p class="lost" data-en="Lost this link? No problem - it's also in the welcome message we sent you, or call us at 912-208-6065 and we'll send it again." data-es="¿Perdió este enlace? No hay problema: también está en el mensaje de bienvenida que le enviamos, o llámenos al 912-208-6065 y se lo reenviamos.">Lost this link? No problem - it's also in the welcome message we sent you, or call us at 912-208-6065 and we'll send it again.</p>
 </div>
 <div class="cta">
-{{CTA}}
+  <a class="call" href="https://selecthomecenter.com/track/team-U8ATJR/" data-en="&#8592; Return to Team Home Page" data-es="&#8592; Volver a la página del equipo">&#8592; Return to Team Home Page</a>
 </div>
 <footer>
   <div>Select Home Center · 6047 2nd St N, Folkston, GA · 912-208-6065 · Se Habla Español</div>
-  <div style="margin-top:8px"><a href="{{SITE}}" data-en="Visit SelectHomeCenter.com" data-es="Visite SelectHomeCenter.com">Visit SelectHomeCenter.com</a> &nbsp;·&nbsp; <a href="{{SITE}}/warranty-checklist/" target="_blank" rel="noopener" data-en="Warranty Owner's Checklist" data-es="Lista de garantía">Warranty Owner's Checklist</a> &nbsp;·&nbsp; <a href="#" id="langfoot" onclick="toggleLang();return false">Español</a></div>
+  <div style="margin-top:8px"><a href="https://selecthomecenter.com" data-en="Visit SelectHomeCenter.com" data-es="Visite SelectHomeCenter.com">Visit SelectHomeCenter.com</a> &nbsp;·&nbsp; <a href="https://selecthomecenter.com/warranty-checklist/" target="_blank" rel="noopener" data-en="Warranty Owner's Checklist" data-es="Lista de garantía">Warranty Owner's Checklist</a> &nbsp;·&nbsp; <a href="#" id="langfoot" onclick="toggleLang();return false">Español</a></div>
 </footer>
 </div>
 <script>

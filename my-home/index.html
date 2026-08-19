@@ -86,7 +86,7 @@
 <script src="/js/main.js"></script>
 
 <script>
-const ENTRIES=[{"s": "QFnRgk5oI0JkLvQLZm4Beg==", "c": "XTapUxdk3yaUq584taX73VU="}, {"s": "y/1qxwOGF4wRg1MFE5kC2A==", "c": "thFBluYXHPVcsFMgBOZez3M="}, {"s": "a1hCd7wxO094lzW8Kqz3Sw==", "c": "I2ozqUOkBszxBwFMtJdvokU="}, {"s": "YTSqB4MQzjGweNu1N5AYZw==", "c": "bOctLtgdO7wZn9S8mQ2Efn0="}];
+const ENTRIES=[{"s": "tdN39HGSKdzoBwNXQnahzw==", "c": "VWYmf4FluWuCQiK7AjnBe2o="}, {"s": "EVqhKVQQ5FdumRCcRJ0WKw==", "c": "JGVhZY8O/tSdSdrz8AQLKHw="}, {"s": "+ri+cVXkGLYdIRuATnpoDw==", "c": "t7rElYLrdDyNM/zHATCwQNg="}, {"s": "JBCxWhU7q6VrA8Yn2BKUBQ==", "c": "Ag+6NtJ8DPeo2ywuXsRYm64="}];
 const ITER=200000;
 function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
 async function tryEntry(cred,e){
@@ -107,6 +107,30 @@ async function go(){
  document.getElementById('gerr').style.display='block';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+</script><script>
+(function(){
+ let es=false;
+ function apply(){
+  document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
+  const pp=document.getElementById('printpdf');
+  if(pp)pp.href='/assets/docs/SHC-Warranty-Owners-Checklist'+(es?'-ES':'')+'.pdf';
+  const sw=document.querySelector('.lang-switch');
+  if(sw){const a=sw.querySelectorAll('a');if(a.length>1){a[0].classList.toggle('active',!es);a[1].classList.toggle('active',es);}}
+ }
+ const sw=document.querySelector('.lang-switch');
+ if(sw){
+  const a=sw.querySelectorAll('a');
+  if(a.length>1){
+   a[0].removeAttribute('href');a[1].removeAttribute('href');
+   a[0].style.cursor=a[1].style.cursor='pointer';
+   a[0].addEventListener('click',()=>{es=false;try{localStorage.setItem('shc-lang','en')}catch(e){}apply();});
+   a[1].addEventListener('click',()=>{es=true;try{localStorage.setItem('shc-lang','es')}catch(e){}apply();});
+  }
+ }
+ let p=null;try{p=localStorage.getItem('shc-lang')}catch(e){}
+ es = p ? p==='es' : ((navigator.language||'').toLowerCase().indexOf('es')===0);
+ if(es)apply();
+})();
 </script>
 </body>
 </html>

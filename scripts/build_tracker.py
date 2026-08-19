@@ -53,10 +53,25 @@ def _norm_vin(v):
     v = "".join(ch for ch in (v or "").upper() if ch.isalnum())
     return v if len(v) >= 6 and v != "HOMEONORDER" else ""
 
+# Milestone names for each permit column (EN, ES). Doc-type items stand alone,
+# true permits get the word "Permit".
+PERMIT_STEP_NAMES = {
+    "Survey": ("Survey", "Levantamiento topográfico"),
+    "Site Plan": ("Site Plan", "Plano del sitio"),
+    "Soil Test": ("Soil Test", "Estudio de suelo"),
+    "Tax Decal": ("Tax Decal", "Calcomanía fiscal"),
+    "Driveway": ("Driveway Permit", "Permiso de entrada"),
+    "Septic": ("Septic Permit", "Permiso séptico"),
+    "Move": ("Move Permit", "Permiso de traslado"),
+    "Electric": ("Electric Permit", "Permiso eléctrico"),
+    "Mechanical": ("Mechanical Permit", "Permiso mecánico"),
+    "Plumbing": ("Plumbing Permit", "Permiso de plomería"),
+}
+
 def permit_rollup():
-    """{key: (approved, total)} keyed by normalized VIN and lowercased name.
-    total counts permit columns with a value (blank = not tracked yet,
-    'Not Needed' = excluded); approved counts Approved/Received/Done."""
+    """{key: [(col_title, label), ...]} keyed by normalized VIN ('vin:...') and
+    lowercased name. Items where every permit column is blank/Not Needed are
+    skipped (no data yet - the single Permitting milestone is used instead)."""
     q = ('query{boards(ids:[%s]){items_page(limit:100){items{name '
          'column_values{column{title} text}}}}}' % PERMIT_BOARD_ID)
     out = {}
@@ -68,21 +83,34 @@ def permit_rollup():
     for item in board["items_page"]["items"]:
         cols = {cv["column"]["title"].strip(): (cv.get("text") or "").strip()
                 for cv in item["column_values"]}
-        done = total = 0
-        for c in PERMIT_COLS:
-            t = cols.get(c, "").lower()
-            if not t or t.startswith("not need"):
-                continue
-            total += 1
-            if t in ("approved", "received", "done"):
-                done += 1
-        if not total:
+        detail = [(c, cols.get(c, "")) for c in PERMIT_COLS]
+        if not any(l and not l.lower().startswith("not need") for _, l in detail):
             continue
-        out[item["name"].strip().lower()] = (done, total)
+        out[item["name"].strip().lower()] = detail
         vin = _norm_vin(cols.get("VIN Number", ""))
         if vin:
-            out["vin:" + vin] = (done, total)
+            out["vin:" + vin] = detail
     return out
+
+def permit_steps(detail, team_view):
+    """Individual permit milestones from one permit-board row."""
+    steps = []
+    for title, label in detail:
+        l = (label or "").strip().lower()
+        if l.startswith("not need"):
+            continue
+        if l in ("approved", "received", "done"):
+            cls, note = "done", ("", "")
+        elif not l:
+            cls, note = "wait", ("", "")
+        elif l in ("denied", "stuck") and not team_view:
+            cls, note = "active", ("Resubmitting - our team is on it",
+                                   "Reenviando - nuestro equipo se encarga")
+        else:
+            cls, note = "active", (label, label)
+        en, es_ = PERMIT_STEP_NAMES.get(title, (title, title))
+        steps.append((en, es_, cls, note[0], note[1]))
+    return steps
 
 def permit_match(rollup, name, vin):
     v = _norm_vin(vin)
@@ -163,7 +191,7 @@ CARD_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
    1. Point your phone camera at this code<br>
    2. Tap the link that pops up<br>
    3. On the page, follow the 3 steps under<br>&nbsp;&nbsp;&nbsp;"Save this page" so it's always one tap away<br>
-   <span style="color:#6a7090">Para español: toque "Español" en la página</span></div>
+   <span style="color:#6a7090">Para español: la página cambia sola si su teléfono está en español</span></div>
  </div>
  <div class="url">{URL}</div>
  <div class="keep">Keep this card - you can type the address above into any phone or computer, any time.</div>
@@ -231,12 +259,13 @@ def build_staff_page(entries):
             "Here is your personal Home Tracker - watch every step of your new home, "
             f"from financing to keys day:\n\n{url}\n\n"
             "Tip: open it on your phone and follow the 'Save this page' steps so it's always one tap away. "
-            "Para espanol, toque 'Espanol' arriba en la pagina.\n\n"
+            "Para espanol: la pagina cambia sola si su telefono esta en espanol "
+            "(o toque 'Espanol' al final de la pagina).\n\n"
             "Questions any time: 912-208-6065\n\n- Your Select Home Center Team\nSelectHomeCenter.com")
         mailto = f"mailto:?subject={subj}&body={body}"
         rows.append(f'''<div class="cust"><div><div class="who">{html.escape(name)}</div>
 <div class="deal">Deal #{html.escape(deal) if deal else "-"} · {url.replace("https://","")}</div></div>
-<div class="btns"><a class="b-view" href="{url}" target="_blank">View page</a>
+<div class="btns"><a class="b-view" href="{url}team.html" target="_blank">View page</a>
 <a class="b-card" href="{url}card.html" target="_blank">Print card</a>
 <button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button>
 <a class="b-mail" href="{mailto}">Email customer</a></div></div>''')
@@ -267,6 +296,35 @@ def site_chrome():
         footer = src[src.index('<footer class="footer">') : src.index("</body>")]
         _CHROME = (f'<link rel="stylesheet" href="/{css}">', _absolutize(header), _absolutize(footer))
     return _CHROME
+
+# On chrome-built tracker-system pages the header's EN/ES pill toggles the
+# page in place (these pages have no /es/ twins) and saves the choice so the
+# Home Tracker and checklists open in Spanish automatically afterwards.
+LANGJS = """<script>
+(function(){
+ let es=false;
+ function apply(){
+  document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
+  const pp=document.getElementById('printpdf');
+  if(pp)pp.href='/assets/docs/SHC-Warranty-Owners-Checklist'+(es?'-ES':'')+'.pdf';
+  const sw=document.querySelector('.lang-switch');
+  if(sw){const a=sw.querySelectorAll('a');if(a.length>1){a[0].classList.toggle('active',!es);a[1].classList.toggle('active',es);}}
+ }
+ const sw=document.querySelector('.lang-switch');
+ if(sw){
+  const a=sw.querySelectorAll('a');
+  if(a.length>1){
+   a[0].removeAttribute('href');a[1].removeAttribute('href');
+   a[0].style.cursor=a[1].style.cursor='pointer';
+   a[0].addEventListener('click',()=>{es=false;try{localStorage.setItem('shc-lang','en')}catch(e){}apply();});
+   a[1].addEventListener('click',()=>{es=true;try{localStorage.setItem('shc-lang','es')}catch(e){}apply();});
+  }
+ }
+ let p=null;try{p=localStorage.getItem('shc-lang')}catch(e){}
+ es = p ? p==='es' : ((navigator.language||'').toLowerCase().indexOf('es')===0);
+ if(es)apply();
+})();
+</script>"""
 
 SITE_PAGE = """<!DOCTYPE html>
 <html lang="en">
@@ -303,7 +361,7 @@ def build_site_page(outpath, *, title, desc, h1, tagline, content, css, script, 
             .replace("{TITLE}", title).replace("{DESC}", desc).replace("{CSSLINK}", csslink)
             .replace("{CSS}", css).replace("{HEADER}", header).replace("{H1}", h1)
             .replace("{TAGLINE}", tagline).replace("{MAXW}", maxw).replace("{CONTENT}", content)
-            .replace("{FOOTER}", footer).replace("{SCRIPT}", script))
+            .replace("{FOOTER}", footer).replace("{SCRIPT}", script + LANGJS))
     outdir = REPO / outpath
     outdir.mkdir(parents=True, exist_ok=True)
     (outdir / "index.html").write_text(page, encoding="utf-8")
@@ -472,14 +530,6 @@ function resetAll(){
  localStorage.setItem(KEY,JSON.stringify(saved));
  location.reload();
 }
-let es=false;
-function toggleLang(){
- es=!es;
- document.getElementById('langbtn').textContent=es?'English':'Espa\u00f1ol';
- document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
- const pp=document.getElementById('printpdf');
- if(pp) pp.href='/assets/docs/SHC-Warranty-Owners-Checklist'+(es?'-ES':'')+'.pdf';
-}
 </script>"""
 
 def build_warranty_page():
@@ -521,9 +571,7 @@ def build_warranty_page():
       "Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo",
       "$75 service fee per visit. Unauthorized repairs are not reimbursed.",
       "Cuota de $75 por visita. Reparaciones sin autorizaci&oacute;n no se reembolsan.")
-    content = ('<button class="wc-lang" id="langbtn" onclick="toggleLang()">Espa&ntilde;ol</button>'
-               '<div style="clear:both"></div>'
-               '<div class="wc-progress"><span class="wc-pct"><span id="done">0</span> '
+    content = ('<div class="wc-progress"><span class="wc-pct"><span id="done">0</span> '
                '<span data-en="of" data-es="de">of</span> <span id="total">0</span> '
                '<span data-en="done" data-es="listos">done</span></span>'
                '<div class="wc-bar"><div id="bar"></div></div></div>'
@@ -553,7 +601,8 @@ def status_class(text):
 
 TEMPLATE = open(REPO / "scripts" / "tracker_template.html", encoding="utf-8").read()
 
-def build_page(name, deal, vin, make, model, steps, outdir):
+def build_page(name, deal, vin, make, model, steps, outdir,
+               team_view=False, team_url="", outfile="index.html"):
     """steps: list of (title_en, title_es, cls, note_en, note_es)"""
     total = len([s for s in steps if s[2] != "na"])
     done = len([s for s in steps if s[2] == "done"])
@@ -611,14 +660,32 @@ def build_page(name, deal, vin, make, model, steps, outdir):
         .replace("{{REVIEW}}", review_html)
         .replace("{{STEPS}}", "\n".join(rows))
         .replace("{{SITE}}", SITE).replace("{{PHONE}}", PHONE))
+    if team_view:
+        topbtn = (f'<a class="lang" style="text-decoration:none" href="{team_url}">&#8592; Back</a>')
+        cta = (f'  <a class="call" href="{team_url}" data-en="&#8592; Return to Team Home Page" '
+               f'data-es="&#8592; Volver a la página del equipo">&#8592; Return to Team Home Page</a>')
+        savedisp = "display:none"
+    else:
+        topbtn = ""
+        cta = ('  <a class="call" href="tel:{{PHONE}}" data-en="&#128222; Call us" '
+               'data-es="&#128222; Llámenos">&#128222; Call us</a>').replace("{{PHONE}}", PHONE)
+        savedisp = ""
+    page = (page.replace("{{TOPBTN}}", topbtn)
+                .replace("{{CTA}}", cta)
+                .replace("{{SAVEDISP}}", savedisp))
     outdir.mkdir(parents=True, exist_ok=True)
-    (outdir / "index.html").write_text(page, encoding="utf-8")
+    (outdir / outfile).write_text(page, encoding="utf-8")
+
+DEMO_PERMITS = [("Survey", "Received"), ("Site Plan", "Received"), ("Soil Test", ""),
+                ("Tax Decal", "Approved"), ("Driveway", "Approved"), ("Septic", "Approved"),
+                ("Move", "Applied, In Review"), ("Electric", ""), ("Mechanical", ""),
+                ("Plumbing", "Approved")]
 
 def build_demo_page():
     """Just the Johnson demo page + card (safe to run after build_all)."""
     steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
-    steps += [("Permitting", ES_STEP["Permitting"], "done", "", ""),
-              ("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
+    steps += permit_steps(DEMO_PERMITS, team_view=False)
+    steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
               ("Dirt Pad", ES_STEP["Dirt Pad"], "done", "", ""),
               ("Well", ES_STEP["Well"], "wait", "", ""),
               ("Septic", ES_STEP["Septic"], "done", "", ""),
@@ -628,13 +695,17 @@ def build_demo_page():
               ("Steps", ES_STEP["Steps"], "wait", "", "")]
     outdir = REPO / "track" / "demo"
     build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”", steps, outdir)
+    team_code = slug_for("staff-page", "")
+    build_page("Johnson Family", "341", "DEMO", "Clayton", "Epic Journey “Desoto”",
+               steps, outdir, team_view=True,
+               team_url=f"{SITE}/track/team-{team_code[5:]}/", outfile="team.html")
     build_card("Johnson Family", "demo", outdir)
-    print("built track/demo/ (+card)")
+    print("built track/demo/ (+card +team view)")
 
 def build_demo():
     steps = [(en, es, "done", "", "") for en, es in zip(PRE_STEPS_EN, PRE_STEPS_ES)]
-    steps += [("Permitting", ES_STEP["Permitting"], "done", "", ""),
-              ("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
+    steps += permit_steps(DEMO_PERMITS, team_view=False)
+    steps += [("Land Clearing", ES_STEP["Land Clearing"], "done", "", ""),
               ("Dirt Pad", ES_STEP["Dirt Pad"], "done", "", ""),
               ("Well", ES_STEP["Well"], "wait", "", ""),
               ("Septic", ES_STEP["Septic"], "done", "", ""),
@@ -679,24 +750,25 @@ def build_all():
             t = cv["column"]["title"]
             site_steps.append((t, ES_STEP.get(t, t), status_class(cv.get("text")), "", ""))
         # RULE (Gregory, 2026-08-18): Permitting comes before well/septic/transport,
-        # so it always renders as the first site-work milestone.
+        # so permits always render first among the site-work milestones.
         site_steps.sort(key=lambda s_: 0 if s_[0] == "Permitting" else 1)
         pr = permit_match(rollup, item["name"], vin)
-        # Rollup never downgrades: if the team marked Permitting Complete on the
-        # Customer Projects board, that stands (e.g. delivered homes where a
-        # contractor still owes a trailing sub-permit).
-        cp_done = any(s_[0] == "Permitting" and s_[2] == "done" for s_ in site_steps)
-        if pr and not cp_done:
-            done_n, total_n = pr
-            cls = "done" if done_n == total_n else "active"
-            n_en = "" if cls == "done" else f"{done_n} of {total_n} permits approved"
-            n_es = "" if cls == "done" else f"{done_n} de {total_n} permisos aprobados"
-            site_steps = [(f"Permitting", ES_STEP["Permitting"], cls, n_en, n_es)
-                          if s_[0] == "Permitting" else s_ for s_ in site_steps]
-        steps += site_steps
+        if pr:
+            # RULE (Gregory, 2026-08-19): each permit is its own milestone, on
+            # both the customer page and the team view, replacing the single
+            # Permitting milestone.
+            rest = [s_ for s_ in site_steps if s_[0] != "Permitting"]
+            cust_steps = steps + permit_steps(pr, team_view=False) + rest
+            team_steps = steps + permit_steps(pr, team_view=True) + rest
+        else:
+            cust_steps = team_steps = steps + site_steps
         slug = slug_for(item["id"], deal)
         outdir = REPO / "track" / slug
-        build_page(item["name"], deal, vin, make, model, steps, outdir)
+        team_code = slug_for("staff-page", "")
+        team_url = f"{SITE}/track/team-{team_code[5:]}/"
+        build_page(item["name"], deal, vin, make, model, cust_steps, outdir)
+        build_page(item["name"], deal, vin, make, model, team_steps, outdir,
+                   team_view=True, team_url=team_url, outfile="team.html")
         build_card(item["name"], slug, outdir)
         print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
         entries.append((item["name"], deal, slug))

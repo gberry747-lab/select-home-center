@@ -86,7 +86,7 @@
 <script src="/js/main.js"></script>
 
 <script>
-const ENTRIES=[{"s": "PHVqHcjsf9oO4LC6lqU8ZA==", "c": "p+9T/EYZhlRUT1EgBFE="}];
+const ENTRIES=[{"s": "pl12A6AHmxYafspUVjDfvQ==", "c": "BtE0xYvDKiFLe5lQ6Ko="}];
 const ITER=200000;
 function b64(s){return Uint8Array.from(atob(s),c=>c.charCodeAt(0));}
 async function tryEntry(cred,e){
@@ -107,6 +107,30 @@ async function go(){
  document.getElementById('gerr').style.display='block';
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter')go();});
+</script><script>
+(function(){
+ let es=false;
+ function apply(){
+  document.querySelectorAll('[data-en]').forEach(el=>{el.innerHTML=es?el.getAttribute('data-es'):el.getAttribute('data-en');});
+  const pp=document.getElementById('printpdf');
+  if(pp)pp.href='/assets/docs/SHC-Warranty-Owners-Checklist'+(es?'-ES':'')+'.pdf';
+  const sw=document.querySelector('.lang-switch');
+  if(sw){const a=sw.querySelectorAll('a');if(a.length>1){a[0].classList.toggle('active',!es);a[1].classList.toggle('active',es);}}
+ }
+ const sw=document.querySelector('.lang-switch');
+ if(sw){
+  const a=sw.querySelectorAll('a');
+  if(a.length>1){
+   a[0].removeAttribute('href');a[1].removeAttribute('href');
+   a[0].style.cursor=a[1].style.cursor='pointer';
+   a[0].addEventListener('click',()=>{es=false;try{localStorage.setItem('shc-lang','en')}catch(e){}apply();});
+   a[1].addEventListener('click',()=>{es=true;try{localStorage.setItem('shc-lang','es')}catch(e){}apply();});
+  }
+ }
+ let p=null;try{p=localStorage.getItem('shc-lang')}catch(e){}
+ es = p ? p==='es' : ((navigator.language||'').toLowerCase().indexOf('es')===0);
+ if(es)apply();
+})();
 </script>
 </body>
 </html>
