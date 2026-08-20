@@ -588,9 +588,9 @@ def build_warranty_page():
       "Conozco la regla: llamar al 833-205-8200 ANTES de reparar, apagar y proteger el equipo",
       "$75 service fee per visit. Unauthorized repairs are not reimbursed.",
       "Cuota de $75 por visita. Reparaciones sin autorizaci&oacute;n no se reembolsan.")
-    content = ('<a class="wc-back" href="/" '
+    content = ('<div style="text-align:right"><a class="wc-back" href="/" '
                'onclick="if(history.length>1){history.back();return false}" '
-               'data-en="&#8592; Back" data-es="&#8592; Atr&aacute;s">&#8592; Back</a>'
+               'data-en="&#8592; Back" data-es="&#8592; Atr&aacute;s">&#8592; Back</a></div>'
                '<div class="wc-progress"><span class="wc-pct"><span id="done">0</span> '
                '<span data-en="of" data-es="de">of</span> <span id="total">0</span> '
                '<span data-en="done" data-es="listos">done</span></span>'
