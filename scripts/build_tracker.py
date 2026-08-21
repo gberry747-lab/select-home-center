@@ -49,6 +49,52 @@ PERMIT_BOARD_ID = "9771125882"
 PERMIT_COLS = ("Survey", "Site Plan", "Soil Test", "Tax Decal", "Driveway",
                "Septic", "Move", "Electric", "Mechanical", "Plumbing")
 
+# EMAIL TRIGGERS - which HOME milestones fire an automated customer email when
+# they flip to Complete (milestone_notify_agent reads this same list).
+# PENDING sign-off by Gregory + Kristin. Milestones not listed still show on the
+# tracker and ride along inside a batch email if they complete together with a
+# listed one - they just never trigger an email alone.
+EMAIL_TRIGGERS = [
+    ("Permitting",  True,  "Permits approved - construction can begin!"),
+    ("Delivery",    True,  "Your home has arrived!"),
+    ("Set",         True,  "Your home is set on its foundation!"),
+    ("Inspections", True,  "Inspection passed - almost move-in time!"),
+    ("ALL DONE",    True,  "Welcome home! (+ Google review ask + warranty checklist)"),
+    ("Land Clearing", False, "rides along in batches only"),
+    ("Dirt Pad",      False, "rides along in batches only"),
+    ("Well",          False, "rides along in batches only"),
+    ("Septic",        False, "rides along in batches only"),
+    ("Power Pole",    False, "rides along in batches only"),
+    ("HVAC",          False, "rides along in batches only"),
+    ("Electric",      False, "rides along in batches only"),
+    ("Steps",         False, "rides along in batches only"),
+    ("Skirting",      False, "rides along in batches only"),
+    ("Trim out",      False, "rides along in batches only"),
+    ("Plumbing",      False, "rides along in batches only"),
+]
+WARRANTY_SCHEDULE = [
+    ("Day 0 - closing day", "Welcome + warranty checklist"),
+    ("Day 25", "Coverage starts this week"),
+    ("Day 180", "6-month maintenance checkup"),
+    ("45 days before 1st anniversary", "Factory-warranty deadline - report issues NOW"),
+    ("90 / 60 / 30 / 7 days before every anniversary", "Annual inspection reminders"),
+    ("14 days after anniversary", "FINAL warning - 16 days left in window"),
+]
+
+def load_email_log():
+    """Send history: Mini agents append to ~/.config/shc/email_log.json; each
+    build copies it into repo data/ so team pages can show what went out."""
+    import shutil
+    cfg = pathlib.Path.home() / ".config/shc/email_log.json"
+    dest = REPO / "data"
+    try:
+        if cfg.exists():
+            dest.mkdir(exist_ok=True)
+            shutil.copy(cfg, dest / "email_log.json")
+        return json.loads((dest / "email_log.json").read_text())
+    except Exception:
+        return []
+
 def _norm_vin(v):
     v = "".join(ch for ch in (v or "").upper() if ch.isalnum())
     return v if len(v) >= 6 and v != "HOMEONORDER" else ""
@@ -252,6 +298,90 @@ STAFF_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
 function cp(u,btn){navigator.clipboard.writeText(u).then(()=>{btn.textContent="Copied!";setTimeout(()=>btn.textContent="Copy link",1500);});}
 </script></body></html>"""
 
+EMAILS_TEMPLATE = """<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>{NAME} - Customer Emails</title>
+<style>
+ body{font-family:Montserrat,"Avenir Next","Segoe UI",Arial,sans-serif;background:#f4f5fa;color:#1c2340;margin:0;padding:0 16px 40px}
+ .wrap{max-width:720px;margin:0 auto}
+ header{background:linear-gradient(160deg,#101a7a,#313a8d);color:#fff;margin:0 -16px;padding:20px 20px}
+ header .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+ header .brand{font-weight:800;font-size:.85rem} header .brand span{color:#f5a623}
+ .backbtn{background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:5px 14px;font-size:.75rem;font-weight:700;text-decoration:none;white-space:nowrap}
+ header h1{font-size:1.25rem;margin:10px 0 2px} header .sub{color:rgba(255,255,255,.8);font-size:.85rem}
+ h2{font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#6a7090;margin:26px 0 10px}
+ .card{background:#fff;border:1px solid #e2e4f0;border-radius:12px;padding:4px 18px;margin-bottom:8px}
+ table{width:100%;border-collapse:collapse;font-size:.85rem}
+ td,th{padding:9px 8px;border-bottom:1px solid #eef0f6;text-align:left;vertical-align:top}
+ tr:last-child td{border-bottom:0}
+ .on{color:#2e8b57;font-weight:800} .off{color:#a0a4b8;font-weight:700}
+ .pend{background:#fff7e6;border:1px solid #f5d9a0;border-radius:10px;padding:10px 14px;font-size:.8rem;color:#7a5b13;margin-bottom:14px}
+ .empty{color:#6a7090;font-size:.85rem;padding:14px 4px}
+ .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+ .btns a{flex:1;min-width:180px;text-align:center;text-decoration:none;font-weight:800;font-size:.85rem;border-radius:11px;padding:12px 10px}
+ .b-mail{background:#2e8b57;color:#fff} .b-view{background:#eef1ff;color:#101a7a}
+</style></head><body><div class="wrap">
+<header><div class="top"><div class="brand">SELECT <span>HOME CENTER</span> - TEAM ONLY</div>
+<a class="backbtn" href="{TEAMURL}">&#8592; Back</a></div>
+<h1>{NAME} - Emails</h1><div class="sub">Deal #{DEAL} &middot; {EMAILLINE}</div></header>
+
+<div class="pend" style="margin-top:18px"><b>Automation status:</b> {STATUS}</div>
+
+<h2>Home-milestone emails (from hello@) - plan pending Gregory + Kristin sign-off</h2>
+<div class="card"><table>
+<tr><th>Milestone completes</th><th>Email</th><th></th></tr>
+{TRIGROWS}
+</table></div>
+
+<h2>Warranty emails (from service@) - date-driven, runs from closing date</h2>
+<div class="card"><table>
+<tr><th>When</th><th>Email</th></tr>
+{WARRROWS}
+</table></div>
+
+<h2>Sent history</h2>
+<div class="card">{HISTORY}</div>
+
+<div class="btns">
+<a class="b-mail" href="{MAILTO}">Compose email to customer</a>
+<a class="b-view" href="index.html">View their tracker</a>
+</div>
+</div></body></html>"""
+
+def build_email_page(name, deal, email, slug, team_url, log):
+    import urllib.parse
+    trig = "\n".join(
+        f'<tr><td>{html.escape(t)}</td><td>{html.escape(d)}</td>'
+        f'<td class="{"on" if on else "off"}">{"ON (recommended)" if on else "off"}</td></tr>'
+        for t, on, d in EMAIL_TRIGGERS)
+    warr = "\n".join(f'<tr><td>{html.escape(w)}</td><td>{html.escape(d)}</td></tr>'
+                      for w, d in WARRANTY_SCHEDULE)
+    rows = [e for e in log if e.get("name") == name or (email and e.get("email") == email)]
+    if rows:
+        hist = '<table><tr><th>Sent</th><th>From</th><th>Email</th></tr>' + "".join(
+            f'<tr><td>{html.escape(str(e.get("ts",""))[:16].replace("T"," "))}</td>'
+            f'<td>{html.escape(e.get("sender",""))}</td><td>{html.escape(e.get("subject",""))}</td></tr>'
+            for e in sorted(rows, key=lambda x: x.get("ts",""), reverse=True)) + '</table>'
+    else:
+        hist = '<div class="empty">Nothing sent yet. History appears here automatically once the email automation goes live on the Mini.</div>'
+    url = f"{SITE}/track/{slug}/"
+    subj = urllib.parse.quote("Your Home Tracker - Select Home Center")
+    body = urllib.parse.quote(
+        "Congratulations from all of us at Select Home Center!\n\n"
+        f"Here is your personal Home Tracker:\n\n{url}\n\n"
+        "Questions any time: 912-208-6065\n\n- Your Select Home Center Team")
+    mailto = f"mailto:{email}?subject={subj}&body={body}" if email else f"mailto:?subject={subj}&body={body}"
+    status = ("DRY RUN - nothing emails customers yet. Goes live only after Gregory's explicit go, "
+              "the hello@/service@ accounts are licensed, and the Mini is scheduled.")
+    page = (EMAILS_TEMPLATE.replace("{NAME}", html.escape(name)).replace("{DEAL}", html.escape(deal or "-"))
+        .replace("{EMAILLINE}", html.escape(email) if email else "NO EMAIL ON MONDAY YET - Kristin to add")
+        .replace("{TEAMURL}", team_url).replace("{STATUS}", status)
+        .replace("{TRIGROWS}", trig).replace("{WARRROWS}", warr)
+        .replace("{HISTORY}", hist).replace("{MAILTO}", mailto))
+    outdir = REPO / "track" / slug
+    outdir.mkdir(parents=True, exist_ok=True)
+    (outdir / "emails.html").write_text(page, encoding="utf-8")
+
 def build_staff_page(entries):
     """entries: list of (name, deal, slug, home)"""
     rows = []
@@ -274,7 +404,7 @@ def build_staff_page(entries):
 <div class="btns"><a class="b-view" href="{url}team.html">View page</a>
 <a class="b-card" href="{url}card.html" target="_blank">Print card</a>
 <button class="b-copy" onclick="cp(\'{url}\',this)">Copy link</button>
-<a class="b-mail" href="{mailto}">Email customer</a></div></div>''')
+<a class="b-mail" href="{url}emails.html">Email customer</a></div></div>''')
     code = slug_for("staff-page", "")
     outdir = REPO / "track" / f"team-{code[5:]}"
     outdir.mkdir(parents=True, exist_ok=True)
@@ -753,6 +883,7 @@ def build_demo():
 def build_all():
     board = fetch_board()
     n = 0
+    email_log = load_email_log()
     rollup = permit_rollup()
     print(f"permit board: {len([k for k in rollup if not k.startswith('vin:')])} customers with permit data")
     entries = []
@@ -764,6 +895,7 @@ def build_all():
             continue
         cols = {cv["column"]["title"]: cv for cv in item["column_values"]}
         phone = (cols.get("Phone") or {}).get("text", "")
+        cust_email = (cols.get("Email") or {}).get("text", "").strip()
         deal = (cols.get("Deal Number") or {}).get("text", "")
         vin = (cols.get("VIN Number") or {}).get("text", "")
         make = (cols.get("Make") or {}).get("text", "")
@@ -798,7 +930,8 @@ def build_all():
                    team_extras={"monday": f"https://allieswholesaledepot.monday.com/boards/{BOARD_ID}/pulses/{item['id']}",
                                 "cust": f"{SITE}/track/{slug}/", "phone": phone})
         build_card(item["name"], slug, outdir)
-        print(f"built track/{slug}/ (+card)  ({item['name']}, deal {deal})")
+        build_email_page(item["name"], deal, cust_email, slug, team_url, email_log)
+        print(f"built track/{slug}/ (+card +emails)  ({item['name']}, deal {deal})")
         entries.append((item["name"], deal, slug, f"{make} {model}".strip()))
         gate_entries.append((item["name"], phone, slug))
         n += 1

@@ -124,6 +124,19 @@ def send(to, subject, html, text):
         s.login(cfg["user"], cfg["password"])
         s.send_message(msg)
 
+EMAILABLE = {t for t, on, _ in bt.EMAIL_TRIGGERS if on}
+LOG_JSON = CFG_DIR / "email_log.json"
+
+def log_send(name, email, sender, subject, milestones):
+    try:
+        data = json.loads(LOG_JSON.read_text()) if LOG_JSON.exists() else []
+    except Exception:
+        data = []
+    data.append({"ts": datetime.datetime.now().isoformat(timespec="seconds"),
+                 "name": name, "email": email, "sender": sender,
+                 "subject": subject, "milestones": milestones})
+    LOG_JSON.write_text(json.dumps(data, indent=1))
+
 def main():
     CFG_DIR.mkdir(parents=True, exist_ok=True)
     paused = PAUSE_F.exists()
@@ -141,6 +154,13 @@ def main():
         state[c["id"]] = c["steps"]
         if not completed:
             continue
+        all_done = all(cls == "done" for cls in c["steps"].values())
+        # curated triggers (EMAIL_TRIGGERS in build_tracker.py - Gregory+Kristin's
+        # list): minor milestones ride along in a batch but never email alone
+        if not all_done and not any(m in EMAILABLE or m.endswith("Permit") or m == "Site Plan"
+                                    for m in completed):
+            log(f"quiet completions for {c['name']} (not email-worthy alone): {completed}")
+            continue
         if not c["email"]:
             log(f"SKIP {c['name']}: completed {completed} but no Email on Monday row")
             continue
@@ -153,6 +173,7 @@ def main():
                 send(c["email"], subject, html, text)
                 sent += 1
                 log(f"SENT {c['email']} ({c['name']}): {completed}")
+                log_send(c["name"], c["email"], "hello@selecthomecenter.com", subject, completed)
             except Exception as e:
                 log(f"ERROR sending to {c['email']} ({c['name']}): {e}")
     json.dump(state, open(STATE_F, "w"), indent=1)
